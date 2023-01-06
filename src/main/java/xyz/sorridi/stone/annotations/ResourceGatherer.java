@@ -11,12 +11,24 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Set;
 
+/**
+ * Class used to gather resources.
+ * @author Sorridi
+ * @since 1.0
+ */
 public class ResourceGatherer
 {
 
+    /**
+     * Executes a given action for each annotation found.
+     * @param annotation The annotation.
+     * @param action The action.
+     * @param type The element type.
+     * @param base The class to search into.
+     */
     @SneakyThrows
-    public static <T> void forEachAnnotationInTypes(
-            Class<? extends Annotation> clazz,
+    public static void forEachAnnotationInTypes(
+            Class<? extends Annotation> annotation,
             IResourceAction action,
             ElementType type,
             Class<?> base
@@ -27,24 +39,24 @@ public class ResourceGatherer
 
         switch (type)
         {
-            case METHOD -> found = reflections.getMethodsAnnotatedWith(clazz);
-            case FIELD  -> found = reflections.getFieldsAnnotatedWith(clazz);
-            case TYPE   -> found = reflections.getTypesAnnotatedWith(clazz);
+            case METHOD -> found = reflections.getMethodsAnnotatedWith(annotation);
+            case FIELD  -> found = reflections.getFieldsAnnotatedWith(annotation);
+            case TYPE   -> found = reflections.getTypesAnnotatedWith(annotation);
             default     -> throw new IllegalArgumentException(ErrorMessages.NOT_IMPLEMENTED.getMessage());
         }
 
         found.forEach(foundClass ->
         {
-            Annotation annotation = null;
+            Annotation foundAnnotation = null;
 
             switch (type)
             {
-                case METHOD -> annotation = ((Method) foundClass).getAnnotation(clazz);
-                case FIELD  -> annotation = ((Field) foundClass).getAnnotation(clazz);
-                case TYPE   -> annotation = ((Class<?>) foundClass).getAnnotation(clazz);
+                case METHOD -> foundAnnotation = ((Method) foundClass).getAnnotation(annotation);
+                case FIELD  -> foundAnnotation = ((Field) foundClass).getAnnotation(annotation);
+                case TYPE   -> foundAnnotation = ((Class<?>) foundClass).getAnnotation(annotation);
             }
 
-            action.expression(annotation, foundClass);
+            action.expression(foundAnnotation, foundClass);
         });
     }
 

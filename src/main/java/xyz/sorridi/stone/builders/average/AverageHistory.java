@@ -3,6 +3,11 @@ package xyz.sorridi.stone.builders.average;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Class used to calculate the average of a given set of numbers.
+ * @author Sorridi
+ * @since 1.0
+ */
 public class AverageHistory
 {
     private final Queue<Double> entries;

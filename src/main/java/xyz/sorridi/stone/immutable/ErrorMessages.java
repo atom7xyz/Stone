@@ -2,6 +2,11 @@ package xyz.sorridi.stone.immutable;
 
 import lombok.Getter;
 
+/**
+ * Error messages.
+ * @author Sorridi
+ * @since 1.0
+ */
 @Getter
 public enum ErrorMessages
 {
@@ -21,11 +26,11 @@ public enum ErrorMessages
         this.message = message;
     }
 
-    public String at(String at)
-    {
-        return String.format(message + " At: %s", at);
-    }
-
+    /**
+     * Returns the error message with the expected value.
+      * @param arg The expected value.
+     * @return The error message.
+     */
     public String expected(Object arg)
     {
         return String.format(message + " Expected: %s", arg);

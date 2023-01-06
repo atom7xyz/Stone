@@ -13,6 +13,11 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * Versioning utilities.
+ * @author Sorridi
+ * @since 1.0
+ */
 @Getter
 public class Versioning
 {

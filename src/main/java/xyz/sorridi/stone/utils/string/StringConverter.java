@@ -10,6 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * String conversion utilities.
+ * @author Sorridi
+ * @since 1.0
+ */
 public class StringConverter
 {
 

@@ -7,6 +7,11 @@ import xyz.sorridi.stone.immutable.ErrorMessages;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * Conversion of locations.
+ * @author Sorridi
+ * @since 1.0
+ */
 public class LocationConverter
 {
     /**

@@ -9,6 +9,11 @@ import xyz.sorridi.stone.immutable.ErrorMessages;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * Serializer for {@link PotionEffect}.
+ * @author Sorridi
+ * @since 1.0
+ */
 @RegisterSerializer(of = PotionEffect.class)
 public class PotionEffectSerializer extends Serializer<PotionEffect>
 {

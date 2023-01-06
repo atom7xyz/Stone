@@ -3,7 +3,7 @@ package xyz.sorridi.stone.builders.average;
 import lombok.Getter;
 
 /**
- * Monitors averages of execution times. Lightweight.
+ * Class used to calculate the average of a given set of numbers. Lightweight version of {@link AverageHistory}.
  * @author Sorridi
  * @since 1.0
  */

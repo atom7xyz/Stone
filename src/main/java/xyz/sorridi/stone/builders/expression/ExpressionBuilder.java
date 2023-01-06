@@ -41,15 +41,6 @@ public class ExpressionBuilder
     }
 
     /**
-     * Clears the stacks.
-     */
-    public void clear()
-    {
-        operations.clear();
-        values.clear();
-    }
-
-    /**
      * Evaluates the expression.
      */
     private void eval()

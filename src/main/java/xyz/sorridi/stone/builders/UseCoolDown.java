@@ -16,7 +16,6 @@ public class UseCoolDown
     private final long time;
 
     /**
-     * Constructor for a new UseCoolDown.
      * @param time Time between each use.
      * @param timeUnit Time unit.
      */

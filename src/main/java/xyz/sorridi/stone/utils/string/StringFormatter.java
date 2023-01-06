@@ -6,6 +6,11 @@ import java.text.DecimalFormat;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * String formatting utilities.
+ * @author Sorridi
+ * @since 1.0
+ */
 public class StringFormatter
 {
     private static final DecimalFormat singleDigitFormat    = new DecimalFormat("0.0");
@@ -14,6 +19,12 @@ public class StringFormatter
     private static final DecimalFormat quadrupleDigitFormat = new DecimalFormat("0.0000");
     private static final DecimalFormat quintupleDigitFormat = new DecimalFormat("0.00000");
 
+    /**
+     * Formats a double to a single digit.
+     * @param value The value to format.
+     * @param decimals The number of decimals.
+     * @return The formatted value.
+     */
     public static String format(double value, int decimals)
     {
         return switch (decimals) {
@@ -33,26 +44,51 @@ public class StringFormatter
         return new DecimalFormat("0." + "0".repeat(decimals)).format(value);
     }
 
+    /**
+     * Formats a double to a single digit.
+     * @param value The value to format.
+     * @return The formatted value.
+     */
     public static String formatSingle(double value)
     {
         return singleDigitFormat.format(value);
     }
 
+    /**
+     * Formats a double to a double digit.
+     * @param value The value to format.
+     * @return The formatted value.
+     */
     public static String formatDouble(double value)
     {
         return doubleDigitFormat.format(value);
     }
 
+    /**
+     * Formats a double to a triple digit.
+     * @param value The value to format.
+     * @return The formatted value.
+     */
     public static String formatTriple(double value)
     {
         return tripleDigitFormat.format(value);
     }
 
+    /**
+     * Formats a double to a quadruple digit.
+     * @param value The value to format.
+     * @return The formatted value.
+     */
     public static String formatQuadruple(double value)
     {
         return quadrupleDigitFormat.format(value);
     }
 
+    /**
+     * Formats a double to a quintuple digit.
+     * @param value The value to format.
+     * @return The formatted value.
+     */
     public static String formatQuintuple(double value)
     {
         return quintupleDigitFormat.format(value);
