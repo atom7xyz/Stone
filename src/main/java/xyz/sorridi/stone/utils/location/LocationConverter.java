@@ -44,7 +44,7 @@ public class LocationConverter
      */
     public static String extractString(Location location, boolean precise, boolean yawPitch)
     {
-        checkNotNull(location, ErrorMessages.NULL.expected(Location.class));
+        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
 
         double x = location.getX();
         double y = location.getY();
@@ -70,7 +70,7 @@ public class LocationConverter
      */
     public static String getStringFromLocation(Location location)
     {
-        checkNotNull(location, ErrorMessages.NULL.expected(Location.class));
+        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
 
         String worldName = location.getWorld().getName();
 
@@ -92,7 +92,7 @@ public class LocationConverter
      */
     public static Location getLocationFromString(String stringLocation, boolean yawPitch)
     {
-        checkNotNull(stringLocation, ErrorMessages.NULL.expected(String.class));
+        checkNotNull(stringLocation, ErrorMessages.NULL.expect(String.class));
 
         String[] parts = stringLocation.split(":");
 

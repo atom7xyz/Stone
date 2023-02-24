@@ -115,8 +115,8 @@ public class SkullBuilder
     @Deprecated
     public static ItemStack itemWithName(ItemStack item, String name)
     {
-        checkNotNull(item, ErrorMessages.NULL.expected("item"));
-        checkNotNull(item, ErrorMessages.NULL.expected("name"));
+        checkNotNull(item, ErrorMessages.NULL.expect("item"));
+        checkNotNull(item, ErrorMessages.NULL.expect("name"));
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         meta.setOwner(name);
@@ -134,8 +134,8 @@ public class SkullBuilder
      */
     public static ItemStack itemWithUuid(ItemStack item, UUID id)
     {
-        checkNotNull(item, ErrorMessages.NULL.expected("item"));
-        checkNotNull(id, ErrorMessages.NULL.expected("id"));
+        checkNotNull(item, ErrorMessages.NULL.expect("item"));
+        checkNotNull(id, ErrorMessages.NULL.expect("id"));
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         meta.setOwner(Bukkit.getOfflinePlayer(id).getName());
@@ -153,8 +153,8 @@ public class SkullBuilder
      */
     public static ItemStack itemWithUrl(ItemStack item, String url)
     {
-        checkNotNull(item, ErrorMessages.NULL.expected("item"));
-        checkNotNull(url, ErrorMessages.NULL.expected("url"));
+        checkNotNull(item, ErrorMessages.NULL.expect("item"));
+        checkNotNull(url, ErrorMessages.NULL.expect("url"));
         url = "https://textures.minecraft.net/texture/" + url;
 
         return itemWithBase64(item, urlToBase64(url));
@@ -169,8 +169,8 @@ public class SkullBuilder
      */
     public static ItemStack itemWithBase64(ItemStack item, String base64)
     {
-        checkNotNull(item, ErrorMessages.NULL.expected("item"));
-        checkNotNull(base64, ErrorMessages.NULL.expected("base64"));
+        checkNotNull(item, ErrorMessages.NULL.expect("item"));
+        checkNotNull(base64, ErrorMessages.NULL.expect("base64"));
 
         if (!(item.getItemMeta() instanceof SkullMeta))
         {
@@ -194,7 +194,7 @@ public class SkullBuilder
     @Deprecated
     public static void blockWithName(Block block, String name)
     {
-        checkNotNull(block, ErrorMessages.NULL.expected("block"));
+        checkNotNull(block, ErrorMessages.NULL.expect("block"));
         notNull(name, "name");
 
         Skull state = (Skull) block.getState();
@@ -210,8 +210,8 @@ public class SkullBuilder
      */
     public static void blockWithUuid(Block block, UUID id)
     {
-        checkNotNull(block, ErrorMessages.NULL.expected("block"));
-        checkNotNull(id, ErrorMessages.NULL.expected("id"));
+        checkNotNull(block, ErrorMessages.NULL.expect("block"));
+        checkNotNull(id, ErrorMessages.NULL.expect("id"));
 
         setToSkull(block);
         Skull state = (Skull) block.getState();
@@ -227,8 +227,8 @@ public class SkullBuilder
      */
     public static void blockWithUrl(Block block, String url)
     {
-        checkNotNull(block, ErrorMessages.NULL.expected("block"));
-        checkNotNull(url, ErrorMessages.NULL.expected("url"));
+        checkNotNull(block, ErrorMessages.NULL.expect("block"));
+        checkNotNull(url, ErrorMessages.NULL.expect("url"));
 
         blockWithBase64(block, urlToBase64(url));
     }
@@ -241,8 +241,8 @@ public class SkullBuilder
      */
     public static void blockWithBase64(Block block, String base64)
     {
-        checkNotNull(block, ErrorMessages.NULL.expected("block"));
-        checkNotNull(base64, ErrorMessages.NULL.expected("base64"));
+        checkNotNull(block, ErrorMessages.NULL.expect("block"));
+        checkNotNull(base64, ErrorMessages.NULL.expect("base64"));
 
         setToSkull(block);
         Skull state = (Skull) block.getState();

@@ -31,13 +31,16 @@ public class PotionEffectSerializer extends Serializer<PotionEffect>
     public PotionEffect deserialize(String path, BukkitConfiguration configuration)
     {
         // In deserialize() method you have to load data from config and return instance of object
-        PotionEffectType type = PotionEffectType.getByName(configuration.getString(path + ".type"));
-        int duration = configuration.getInt(path + ".duration");
-        int amplifier = configuration.getInt(path + ".amplifier");
+        String type     = configuration.getString(path + ".type");
+        int duration    = configuration.getInt(path + ".duration");
+        int amplifier   = configuration.getInt(path + ".amplifier");
 
-        checkNotNull(type, ErrorMessages.NULL.expected(PotionEffectType.class));
+        checkNotNull(type, ErrorMessages.NULL.expect(path + ".type"));
 
-        return new PotionEffect(type, duration, amplifier);
+        PotionEffectType effectType = PotionEffectType.getByName(type);
+        checkNotNull(effectType, ErrorMessages.NULL.expect(PotionEffectType.class));
+
+        return new PotionEffect(effectType, duration, amplifier);
     }
 
 }

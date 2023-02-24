@@ -21,8 +21,8 @@ public class LocationEvaluate
      */
     public static boolean isEqual(Location location, Location toCompare)
     {
-        checkNotNull(location, ErrorMessages.NULL.expected(Location.class));
-        checkNotNull(toCompare, ErrorMessages.NULL.expected(Location.class));
+        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
+        checkNotNull(toCompare, ErrorMessages.NULL.expect(Location.class));
 
         World world     = location.getWorld();
         World _world    = toCompare.getWorld();
@@ -46,7 +46,7 @@ public class LocationEvaluate
      */
     public static Location getMiddleLocation(Location location, boolean yawPitch)
     {
-        checkNotNull(location, ErrorMessages.NULL.expected(Location.class));
+        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
 
         World world = location.getWorld();
 

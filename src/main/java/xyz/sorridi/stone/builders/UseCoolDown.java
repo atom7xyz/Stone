@@ -31,7 +31,7 @@ public class UseCoolDown
      */
     public void put(Player player)
     {
-        checkNotNull(player, ErrorMessages.NULL.expected(Player.class));
+        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
 
         coolDowns.putIfAbsent(player, 0L);
     }
@@ -42,7 +42,7 @@ public class UseCoolDown
      */
     public void renew(Player player)
     {
-        checkNotNull(player, ErrorMessages.NULL.expected(Player.class));
+        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
 
         coolDowns.replace(player, System.currentTimeMillis());
     }
@@ -53,7 +53,7 @@ public class UseCoolDown
      */
     public void remove(Player player)
     {
-        checkNotNull(player, ErrorMessages.NULL.expected(Player.class));
+        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
 
         coolDowns.remove(player);
     }
@@ -73,7 +73,7 @@ public class UseCoolDown
      */
     public long timeDiff(Player player)
     {
-        checkNotNull(player, ErrorMessages.NULL.expected(Player.class));
+        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
 
         return System.currentTimeMillis() - coolDowns.get(player);
     }

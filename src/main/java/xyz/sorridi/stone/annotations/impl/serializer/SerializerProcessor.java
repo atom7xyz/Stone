@@ -39,10 +39,10 @@ public class SerializerProcessor implements IProcessor
         {
             logger.info("Found serializer: " + found);
 
-            Class<?> foundClass     = (Class<?>) found;
-            val registerSerializer  = (RegisterSerializer) annotation;
+            val toRegister = (RegisterSerializer) annotation;
+            val foundClass = (Class<?>) found;
 
-            val of = checkNotNull(registerSerializer.of(), ErrorMessages.NULL);
+            val of = checkNotNull(toRegister.of(), ErrorMessages.NULL);
 
             ConstructorCaller
                     .call(foundClass)

@@ -27,13 +27,13 @@ public enum ErrorMessages
     }
 
     /**
-     * Returns the error message with the expected value.
-      * @param arg The expected value.
+     * Returns the error message with the expect value.
+      * @param arg The expect value.
      * @return The error message.
      */
-    public String expected(Object arg)
+    public String expect(Object arg)
     {
-        return String.format(message + " Expected: %s", arg);
+        return String.format(message + " expect: %s", arg);
     }
 
 }

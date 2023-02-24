@@ -72,11 +72,11 @@ public class PlaySound
      */
     public static void play(Player player, Sound sound, int volume, int pitch, Location location)
     {
-        checkNotNull(player, ErrorMessages.NULL.expected(Player.class));
-        checkNotNull(sound, ErrorMessages.NULL.expected(Sound.class));
-        checkNotNull(location, ErrorMessages.NULL.expected(Location.class));
-        checkArgument(volume > 0, ErrorMessages.NEGATIVE.expected("volume"));
-        checkArgument(pitch > 0, ErrorMessages.NEGATIVE.expected("pitch"));
+        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
+        checkNotNull(sound, ErrorMessages.NULL.expect(Sound.class));
+        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
+        checkArgument(volume > 0, ErrorMessages.NEGATIVE.expect("volume"));
+        checkArgument(pitch > 0, ErrorMessages.NEGATIVE.expect("pitch"));
 
         player.playSound(location, sound, volume, pitch);
     }

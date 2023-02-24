@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ErrorMessagesTest
 {
     private static final String INIT_PART   = "The value is %s.";
-    private static final String FINAL_PART  = " Expected: ";
+    private static final String FINAL_PART  = " expect: ";
 
     @Test
-    void expected()
+    void expect()
     {
-        String string = ErrorMessages.EMPTY.expected("something");
+        String string = ErrorMessages.EMPTY.expect("something");
         String result = String.format(INIT_PART, "empty") + FINAL_PART + "something";
 
         assertEquals(result, string);
@@ -25,9 +25,9 @@ class ErrorMessagesTest
 
     @ParameterizedTest
     @ValueSource(classes = { Location.class, World.class, Player.class })
-    void expected(Object arg)
+    void expect(Object arg)
     {
-        String string = ErrorMessages.NULL.expected(arg);
+        String string = ErrorMessages.NULL.expect(arg);
         String result = String.format(INIT_PART, "null") + FINAL_PART;
 
         switch (arg.getClass().getSimpleName())

@@ -1,6 +1,7 @@
 package xyz.sorridi.stone;
 
 import lombok.SneakyThrows;
+import me.lucko.helper.internal.HelperImplementationPlugin;
 import me.lucko.helper.maven.MavenLibrary;
 import me.lucko.helper.maven.Repository;
 import me.lucko.helper.plugin.ExtendedJavaPlugin;
@@ -9,12 +10,18 @@ import me.lucko.helper.plugin.ap.PluginDependency;
 import org.bukkit.plugin.PluginLoadOrder;
 import xyz.sorridi.stone.annotations.impl.serializer.SerializerProcessor;
 
+//@MavenLibrary(groupId = "me.lucko", artifactId = "helper-sql", version = "1.3.0")
+
 @MavenLibrary(groupId = "commons-codec", artifactId = "commons-codec", version = "1.15")
 @MavenLibrary(groupId = "com.google.guava", artifactId = "guava", version = "31.1-jre")
 @MavenLibrary(groupId = "org.apache.commons", artifactId = "commons-math3", version = "3.6.1")
 
 @MavenLibrary(groupId = "org.javassist", artifactId = "javassist", version = "3.29.2-GA")
 @MavenLibrary(groupId = "org.reflections", artifactId = "reflections", version = "0.10.2")
+
+@MavenLibrary(groupId = "org.jooq", artifactId = "jooq", version = "3.17.6")
+@MavenLibrary(groupId = "com.zaxxer", artifactId = "HikariCP", version = "5.0.1")
+@MavenLibrary(groupId = "org.mariadb.jdbc", artifactId = "mariadb-java-client", version = "3.0.6")
 
 @MavenLibrary(
         groupId = "com.mojang",
@@ -47,6 +54,7 @@ import xyz.sorridi.stone.annotations.impl.serializer.SerializerProcessor;
         depends = @PluginDependency("helper")
 )
 
+@HelperImplementationPlugin
 public final class Stone extends ExtendedJavaPlugin
 {
 
@@ -54,7 +62,6 @@ public final class Stone extends ExtendedJavaPlugin
     @SneakyThrows
     public void enable()
     {
-        // Plugin startup logic
         new SerializerProcessor(this).process();
     }
 
