@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ErrorMessagesTest
 {
     private static final String INIT_PART   = "The value is %s.";
-    private static final String FINAL_PART  = " expect: ";
+    private static final String FINAL_PART  = " Expected: ";
 
     @Test
     void expect()

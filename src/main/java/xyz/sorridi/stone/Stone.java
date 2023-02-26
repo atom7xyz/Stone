@@ -44,6 +44,13 @@ import xyz.sorridi.stone.annotations.impl.serializer.SerializerProcessor;
         repo = @Repository(url = "https://repo.mikigal.pl/releases")
 )
 
+@MavenLibrary(
+        groupId = "com.github.bwaldvogel",
+        artifactId = "base91",
+        version = "26d6fc6207",
+        repo = @Repository(url = "https://www.jitpack.io")
+)
+
 @Plugin(
         name = "Stone",
         version = "1.0-SNAPSHOT",
