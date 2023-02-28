@@ -10,8 +10,6 @@ import me.lucko.helper.plugin.ap.PluginDependency;
 import org.bukkit.plugin.PluginLoadOrder;
 import xyz.sorridi.stone.annotations.impl.serializer.SerializerProcessor;
 
-//@MavenLibrary(groupId = "me.lucko", artifactId = "helper-sql", version = "1.3.0")
-
 @MavenLibrary(groupId = "commons-codec", artifactId = "commons-codec", version = "1.15")
 @MavenLibrary(groupId = "com.google.guava", artifactId = "guava", version = "31.1-jre")
 @MavenLibrary(groupId = "org.apache.commons", artifactId = "commons-math3", version = "3.6.1")

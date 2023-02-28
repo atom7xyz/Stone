@@ -21,6 +21,16 @@ public class SingleHashMap<K> extends HashMap<K, K>
     }
 
     /**
+     * Puts a value in the Map if the key is not present.
+     * @param key The key and the value of the Map.
+     * @return The value of the Map.
+     */
+    public K putIfAbsent(K key)
+    {
+        return putIfAbsent(key, key);
+    }
+
+    /**
      * Returns a stream of the keys.
      * @return The key of the Map.
      */
