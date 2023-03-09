@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LocationEvaluateTest {
+class LocationEvaluateTest
+{
 
     @Test
     void isEqual()

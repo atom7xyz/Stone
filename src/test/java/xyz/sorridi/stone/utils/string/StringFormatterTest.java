@@ -5,7 +5,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class StringFormatterTest {
+class StringFormatterTest
+{
 
     @ParameterizedTest
     @ValueSource(doubles = { 1.5556, 2.0001, 30.060400115 })
