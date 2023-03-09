@@ -20,9 +20,9 @@ public class Serve
      * @param <K> The type of the service.
      * @throws NullPointerException If the service is not found.
      */
-    public static <K extends ExtendedJavaPlugin> K of(@NotNull Class<K> plugin) throws NullPointerException
+    public static <G, K extends ExtendedJavaPlugin> G of(@NotNull Class<K> plugin, Class<G> target) throws NullPointerException
     {
-        val service = Services.get(plugin);
+        val service = Services.get(target);
 
         if (service.isPresent())
         {
