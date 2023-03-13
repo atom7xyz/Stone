@@ -3,6 +3,8 @@ package xyz.sorridi.stone.utils;
 import lombok.val;
 import me.lucko.helper.Services;
 
+import java.util.function.Consumer;
+
 /**
  * Services utilities.
  * @author Sorridi
@@ -26,6 +28,21 @@ public class Serve
         {
             return service.get();
         }
+
+        throw new NullPointerException("Service " + target + " not found.");
+    }
+
+    /**
+     * Gets a service that a plugin might have.
+     * @param target The target service to get.
+     * @param consumer The action to execute if the service is found.
+     * @param <G> The service type.
+     */
+    public static <G> void of(Class<G> target, Consumer<G> consumer) throws NullPointerException
+    {
+        val service = Services.get(target);
+
+        service.ifPresent(consumer);
 
         throw new NullPointerException("Service " + target + " not found.");
     }
