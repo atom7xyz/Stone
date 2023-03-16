@@ -17,7 +17,7 @@ import xyz.sorridi.stone.annotations.impl.serializer.SerializerProcessor;
 @MavenLibrary(groupId = "org.javassist", artifactId = "javassist", version = "3.29.2-GA")
 @MavenLibrary(groupId = "org.reflections", artifactId = "reflections", version = "0.10.2")
 
-@MavenLibrary(groupId = "org.jooq", artifactId = "jooq", version = "3.17.6")
+@MavenLibrary(groupId = "org.jooq", artifactId = "jooq", version = "3.18.0")
 @MavenLibrary(groupId = "com.zaxxer", artifactId = "HikariCP", version = "5.0.1")
 @MavenLibrary(groupId = "org.mariadb.jdbc", artifactId = "mariadb-java-client", version = "3.0.6")
 
