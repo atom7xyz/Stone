@@ -42,7 +42,7 @@ public class ResourceGatherer
             case METHOD -> found = reflections.getMethodsAnnotatedWith(annotation);
             case FIELD  -> found = reflections.getFieldsAnnotatedWith(annotation);
             case TYPE   -> found = reflections.getTypesAnnotatedWith(annotation);
-            default     -> throw new IllegalArgumentException(ErrorMessages.NOT_IMPLEMENTED.getMessage());
+            default     -> throw new IllegalArgumentException(ErrorMessages.NOT_IMPLEMENTED.get());
         }
 
         found.forEach(foundClass ->

@@ -1,13 +1,10 @@
 package xyz.sorridi.stone.immutable;
 
-import lombok.Getter;
-
 /**
  * Error messages.
  * @author Sorridi
  * @since 1.0
  */
-@Getter
 public enum ErrorMessages
 {
     NULL("The value is null."),
@@ -17,13 +14,23 @@ public enum ErrorMessages
     ZERO("The value is zero."),
     NOT_FOUND("The value is not found."),
     CONFIG_ERROR("The config is invalid."),
-    NOT_IMPLEMENTED("The value is not implemented yet.");
+    NOT_IMPLEMENTED("The value is not implemented yet."),
+    ARGS_NOT_SAME_SIZE("The arguments must have the same number of elements.");
 
     private final String message;
 
     ErrorMessages(String message)
     {
         this.message = message;
+    }
+
+    /**
+     * Returns the error message.
+     * @return The error message.
+     */
+    public String get()
+    {
+        return message;
     }
 
     /**

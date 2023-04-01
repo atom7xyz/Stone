@@ -1,10 +1,13 @@
 package xyz.sorridi.stone.utils;
 
-import java.util.ArrayList;
+import lombok.NonNull;
+import xyz.sorridi.stone.immutable.ErrorMessages;
+
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Replacements utilities for strings.
@@ -14,13 +17,16 @@ import java.util.stream.Collectors;
 public class Replace
 {
 
-    public static <T> String of(String what, String target, T with)
+    public static <T> String of(@NonNull String what, @NonNull String target, @NonNull T with)
     {
         return what.replaceAll(target, with.toString());
     }
 
-    public static <T> String of(String what, String[] target, T[] with)
+    @SafeVarargs
+    public static <T> String of(@NonNull String what, @NonNull String[] target, @NonNull T... with)
     {
+        checkArgument(target.length == with.length, ErrorMessages.ARGS_NOT_SAME_SIZE.get());
+
         for (int i = 0; i < target.length; i++)
         {
             what = what.replaceAll(target[i], with[i].toString());
@@ -29,13 +35,16 @@ public class Replace
         return what;
     }
 
-    public static <T> String[] of(String[] what, String target, T with)
+    public static <T> String[] of(@NonNull String[] what, @NonNull String target, @NonNull T with)
     {
         return Arrays.stream(what).map(s -> s.replaceAll(target, with.toString())).toArray(String[]::new);
     }
 
-    public static <T> String[] of(String[] what, String[] target, T[] with)
+    @SafeVarargs
+    public static <T> String[] of(@NonNull String[] what, @NonNull String[] target, @NonNull T... with)
     {
+        checkArgument(target.length == with.length, ErrorMessages.ARGS_NOT_SAME_SIZE.get());
+
         for (int i = 0; i < what.length; i++)
         {
             for (int j = 0; j < target.length; j++)
@@ -47,13 +56,17 @@ public class Replace
         return what;
     }
 
-    public static <W extends Collection<String>, T> W of(W what, String target, T with)
+    @SuppressWarnings("unchecked")
+    public static <W extends Collection<String>, T> W of(@NonNull W what, @NonNull String target, @NonNull T with)
     {
         return (W) what.stream().map(s -> s.replaceAll(target, with.toString())).collect(Collectors.toList());
     }
 
-    public static <W extends Collection<String>, T> W of(W what, String[] target, T[] with)
+    @SuppressWarnings("unchecked")
+    public static <W extends Collection<String>, T> W of(@NonNull W what, @NonNull String[] target, @NonNull T... with)
     {
+        checkArgument(target.length == with.length, ErrorMessages.ARGS_NOT_SAME_SIZE.get());
+
         return (W) what.stream().map(s ->
         {
             for (int i = 0; i < target.length; i++)
