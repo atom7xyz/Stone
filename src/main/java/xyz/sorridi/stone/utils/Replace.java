@@ -19,7 +19,7 @@ public class Replace
 
     public static <T> String of(@NonNull String what, @NonNull String target, @NonNull T with)
     {
-        return what.replaceAll(target, with.toString());
+        return what.replace(target, with.toString());
     }
 
     @SafeVarargs
@@ -29,7 +29,7 @@ public class Replace
 
         for (int i = 0; i < target.length; i++)
         {
-            what = what.replaceAll(target[i], with[i].toString());
+            what = what.replace(target[i], with[i].toString());
         }
 
         return what;
@@ -37,7 +37,7 @@ public class Replace
 
     public static <T> String[] of(@NonNull String[] what, @NonNull String target, @NonNull T with)
     {
-        return Arrays.stream(what).map(s -> s.replaceAll(target, with.toString())).toArray(String[]::new);
+        return Arrays.stream(what).map(s -> s.replace(target, with.toString())).toArray(String[]::new);
     }
 
     @SafeVarargs
@@ -49,7 +49,7 @@ public class Replace
         {
             for (int j = 0; j < target.length; j++)
             {
-                what[i] = what[i].replaceAll(target[j], with[j].toString());
+                what[i] = what[i].replace(target[j], with[j].toString());
             }
         }
 
@@ -59,7 +59,7 @@ public class Replace
     @SuppressWarnings("unchecked")
     public static <W extends Collection<String>, T> W of(@NonNull W what, @NonNull String target, @NonNull T with)
     {
-        return (W) what.stream().map(s -> s.replaceAll(target, with.toString())).collect(Collectors.toList());
+        return (W) what.stream().map(s -> s.replace(target, with.toString())).collect(Collectors.toList());
     }
 
     @SuppressWarnings("unchecked")
@@ -71,7 +71,7 @@ public class Replace
         {
             for (int i = 0; i < target.length; i++)
             {
-                s = s.replaceAll(target[i], with[i].toString());
+                s = s.replace(target[i], with[i].toString());
             }
 
             return s;

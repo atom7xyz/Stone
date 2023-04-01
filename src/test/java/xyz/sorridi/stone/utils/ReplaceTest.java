@@ -29,8 +29,8 @@ class ReplaceTest
     @Test
     void ofStringArray()
     {
-        val what        = new String[] { "Hello %p!", "How's your day? %a" };
-        val toReplace   = new String[] { "%p", "%a" };
+        val what        = new String[] { "Hello {p}!", "How's your day? {a}" };
+        val toReplace   = new String[] { "{p}", "{a}" };
         val replaceWith = new String[] { "Sorridi", ":)" };
 
         assertEquals(Replace.of(what, toReplace, replaceWith)[0], "Hello Sorridi!");
