@@ -5,6 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Messaging utilities.
@@ -98,6 +101,40 @@ public class Reply
     public static <T extends Collection<String>> void toAllExcept(Player player, T collection)
     {
         toAllExcept(player, collection.toArray(new String[0]));
+    }
+
+    /**
+     * Sends messages to every online player except the specified ones.
+     * @param toExclude Players to exclude.
+     * @param messages Messages to send.
+     */
+    public static <T extends Collection<Player>> void toAllExcept(T toExclude, String... messages)
+    {
+        HashSet<Player> excluded = new HashSet<>(toExclude);
+
+        for (Player p : Bukkit.getOnlinePlayers())
+        {
+            if (excluded.contains(p))
+            {
+                continue;
+            }
+
+            for (String message : messages)
+            {
+                p.sendMessage(Text.colorize(message));
+            }
+        }
+    }
+
+    /**
+     * Sends messages to every online player except the specified ones.
+     * @param toExclude Players to exclude.
+     * @param collection Messages to send.
+     * @param <T> The collection type.
+     */
+    public static <P extends Collection<Player>, T extends Collection<String>> void toAllExcept(P toExclude, T collection)
+    {
+        toAllExcept(toExclude, collection.toArray(new String[0]));
     }
 
 }
