@@ -13,11 +13,11 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class StringFormatter
 {
-    private static final DecimalFormat singleDigitFormat    = new DecimalFormat("0.0");
-    private static final DecimalFormat doubleDigitFormat    = new DecimalFormat("0.00");
-    private static final DecimalFormat tripleDigitFormat    = new DecimalFormat("0.000");
-    private static final DecimalFormat quadrupleDigitFormat = new DecimalFormat("0.0000");
-    private static final DecimalFormat quintupleDigitFormat = new DecimalFormat("0.00000");
+    private static final DecimalFormat SINGLE_DIGIT_FORMAT  = new DecimalFormat("0.0");
+    private static final DecimalFormat DOUBLE_DIGIT_FORMAT  = new DecimalFormat("0.00");
+    private static final DecimalFormat TRIPLE_DIGIT_FORMAT  = new DecimalFormat("0.000");
+    private static final DecimalFormat QUAD_DIGIT_FORMAT    = new DecimalFormat("0.0000");
+    private static final DecimalFormat QUINT_DIGIT_FORMAT   = new DecimalFormat("0.00000");
 
     /**
      * Formats a double to a single digit.
@@ -39,7 +39,7 @@ public class StringFormatter
 
     private static String formatCustom(double value, int decimals)
     {
-        checkArgument(decimals > 0, ErrorMessages.ZERO);
+        checkArgument(decimals > 0, ErrorMessages.ZERO.get());
 
         return new DecimalFormat("0." + "0".repeat(decimals)).format(value);
     }
@@ -51,7 +51,7 @@ public class StringFormatter
      */
     public static String formatSingle(double value)
     {
-        return singleDigitFormat.format(value);
+        return SINGLE_DIGIT_FORMAT.format(value);
     }
 
     /**
@@ -61,7 +61,7 @@ public class StringFormatter
      */
     public static String formatDouble(double value)
     {
-        return doubleDigitFormat.format(value);
+        return DOUBLE_DIGIT_FORMAT.format(value);
     }
 
     /**
@@ -71,7 +71,7 @@ public class StringFormatter
      */
     public static String formatTriple(double value)
     {
-        return tripleDigitFormat.format(value);
+        return TRIPLE_DIGIT_FORMAT.format(value);
     }
 
     /**
@@ -81,7 +81,7 @@ public class StringFormatter
      */
     public static String formatQuadruple(double value)
     {
-        return quadrupleDigitFormat.format(value);
+        return QUAD_DIGIT_FORMAT.format(value);
     }
 
     /**
@@ -91,7 +91,7 @@ public class StringFormatter
      */
     public static String formatQuintuple(double value)
     {
-        return quintupleDigitFormat.format(value);
+        return QUINT_DIGIT_FORMAT.format(value);
     }
 
 }

@@ -57,7 +57,7 @@ public class Versioning
      */
     public String getHash(int length)
     {
-        checkArgument(length > 0, ErrorMessages.ZERO);
+        checkArgument(length > 0, ErrorMessages.ZERO.get());
 
         String fileName = name + "-" + version + ".jar";
         String fileHash = "unknown hash";

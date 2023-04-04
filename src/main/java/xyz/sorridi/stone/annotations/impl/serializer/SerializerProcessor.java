@@ -42,7 +42,7 @@ public class SerializerProcessor implements IProcessor
             val toRegister = (RegisterSerializer) annotation;
             val foundClass = (Class<?>) found;
 
-            val of = checkNotNull(toRegister.of(), ErrorMessages.NULL);
+            val of = checkNotNull(toRegister.of(), ErrorMessages.NULL.get());
 
             ConstructorCaller
                     .call(foundClass)

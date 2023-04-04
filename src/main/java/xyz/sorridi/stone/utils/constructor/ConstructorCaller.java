@@ -37,8 +37,8 @@ public class ConstructorCaller
      */
     public static <T> Optional<T> call(Class<T> clazz, int index, Object... args)
     {
-        checkNotNull(clazz, ErrorMessages.NULL);
-        checkArgument(index >= 0, ErrorMessages.NEGATIVE);
+        checkNotNull(clazz, ErrorMessages.NULL.get());
+        checkArgument(index >= 0, ErrorMessages.NEGATIVE.get());
 
         Optional<T> instance = Optional.empty();
 

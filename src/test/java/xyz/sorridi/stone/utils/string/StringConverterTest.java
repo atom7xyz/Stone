@@ -1,7 +1,10 @@
 package xyz.sorridi.stone.utils.string;
 
+import lombok.val;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import xyz.sorridi.stone.utils.Array;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -110,6 +113,20 @@ class StringConverterTest
             case 105    -> assertEquals("CV", converted);
             case 1_600  -> assertEquals("MDC", converted);
         }
+    }
+
+    @Test
+    void fromMillisToHumanShortForm()
+    {
+        val arr = Array.of("g", "h", "m", "s");
+
+        assertEquals("", StringConverter.fromMillisToHumanShortForm(arr, 0));
+        assertEquals("3s", StringConverter.fromMillisToHumanShortForm(arr, 3_000));
+        assertEquals("1m 3s", StringConverter.fromMillisToHumanShortForm(arr, 63_000));
+        assertEquals("6m 3s", StringConverter.fromMillisToHumanShortForm(arr, 363_000));
+
+        assertEquals("11g 13h 46m 40s", StringConverter.fromMillisToHumanShortForm(arr, 1_000_000_000));
+        assertEquals("23g 3h 33m 20s", StringConverter.fromMillisToHumanShortForm(arr, 2_000_000_000));
     }
 
 }

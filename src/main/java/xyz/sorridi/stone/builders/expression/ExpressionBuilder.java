@@ -24,7 +24,7 @@ public class ExpressionBuilder
      */
     public ExpressionBuilder(String raw)
     {
-        checkNotNull(raw, ErrorMessages.NULL);
+        checkNotNull(raw, ErrorMessages.NULL.get());
         this.raw        = raw;
         this.operations = new Stack<>();
         this.values     = new Stack<>();

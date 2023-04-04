@@ -19,13 +19,78 @@ public class StringConverter
 {
 
     /**
+     * Converts a long to a human-readable format.
+     * @param type The type of the time.
+     * @param time The time to convert.
+     * @return The converted time.
+     */
+    public static String fromMillisToHumanShortForm(String[] type, long time)
+    {
+        checkArgument(type.length == 4, ErrorMessages.INVALID_ARRAY_LENGTH.expect(4));
+
+        long _days       = TimeUnit.MILLISECONDS.toDays(time);
+        long _hours      = TimeUnit.MILLISECONDS.toHours(time);
+        long _minutes    = TimeUnit.MILLISECONDS.toMinutes(time);
+        long _seconds    = TimeUnit.MILLISECONDS.toSeconds(time);
+
+        long hours       = _hours - TimeUnit.DAYS.toHours(_days);
+        long minutes     = _minutes - TimeUnit.HOURS.toMinutes(_hours);
+        long seconds     = _seconds - TimeUnit.MINUTES.toSeconds(_minutes);
+
+        StringBuilder builder = new StringBuilder();
+
+        boolean pending = false;
+
+        if (_days > 0)
+        {
+            pending = true;
+            builder.append(_days).append(type[0]);
+        }
+
+        if (hours > 0)
+        {
+            if (pending)
+            {
+                builder.append(" ");
+            }
+
+            pending = true;
+            builder.append(hours).append(type[1]);
+        }
+
+        if (minutes > 0)
+        {
+            if (pending)
+            {
+                builder.append(" ");
+            }
+
+            pending = true;
+            builder.append(minutes).append(type[2]);
+        }
+
+        if (seconds > 0)
+        {
+            if (pending)
+            {
+                builder.append(" ");
+            }
+
+            builder.append(seconds).append(type[3]);
+        }
+
+        return builder.toString();
+    }
+
+
+    /**
      * Converts minutes to HH:mm format.
      * @param minutes The minutes to convert.
      * @return The converted minutes.
      */
     public static String fromMinutesToHHmm(int minutes)
     {
-        checkArgument(minutes > 0, ErrorMessages.ZERO);
+        checkArgument(minutes > 0, ErrorMessages.ZERO.get());
 
         long hours          = TimeUnit.MINUTES.toHours(minutes);
         long hoursAsMinutes = TimeUnit.HOURS.toMinutes(hours);

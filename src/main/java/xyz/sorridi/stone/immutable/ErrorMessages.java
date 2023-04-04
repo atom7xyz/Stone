@@ -15,7 +15,8 @@ public enum ErrorMessages
     NOT_FOUND("The value is not found."),
     CONFIG_ERROR("The config is invalid."),
     NOT_IMPLEMENTED("The value is not implemented yet."),
-    ARGS_NOT_SAME_SIZE("The arguments must have the same number of elements.");
+    ARGS_NOT_SAME_SIZE("The arguments must have the same number of elements."),
+    INVALID_ARRAY_LENGTH("The array length is invalid.");
 
     private final String message;
 
