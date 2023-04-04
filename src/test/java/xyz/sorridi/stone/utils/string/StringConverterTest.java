@@ -116,17 +116,25 @@ class StringConverterTest
     }
 
     @Test
-    void fromMillisToHumanShortForm()
+    void fromMillisToHuman()
     {
-        val arr = Array.of("g", "h", "m", "s");
+        val plur = Array.of(" giorni", " ore", " minuti", " secondi", " millisecondi");
+        val sing = Array.of(" giorno", " ora", " minuto", " secondo", " millisecondo");
 
-        assertEquals("", StringConverter.fromMillisToHumanShortForm(arr, 0));
-        assertEquals("3s", StringConverter.fromMillisToHumanShortForm(arr, 3_000));
-        assertEquals("1m 3s", StringConverter.fromMillisToHumanShortForm(arr, 63_000));
-        assertEquals("6m 3s", StringConverter.fromMillisToHumanShortForm(arr, 363_000));
+        assertEquals("", StringConverter.fromMillisToHuman(plur, sing, 0));
+        assertEquals("1 millisecondo", StringConverter.fromMillisToHuman(plur, sing, 1));
+        assertEquals("3 millisecondi", StringConverter.fromMillisToHuman(plur, sing, 3));
+        assertEquals("3 secondi", StringConverter.fromMillisToHuman(plur, sing, 3_000));
+        assertEquals("1 minuto 3 secondi", StringConverter.fromMillisToHuman(plur, sing, 63_000));
+        assertEquals("6 minuti 3 secondi", StringConverter.fromMillisToHuman(plur, sing, 363_000));
 
-        assertEquals("11g 13h 46m 40s", StringConverter.fromMillisToHumanShortForm(arr, 1_000_000_000));
-        assertEquals("23g 3h 33m 20s", StringConverter.fromMillisToHumanShortForm(arr, 2_000_000_000));
+        String expected = "11 giorni 13 ore 46 minuti 40 secondi";
+
+        assertEquals(expected, StringConverter.fromMillisToHuman(plur, sing, 1_000_000_000));
+
+        expected = "23 giorni 3 ore 33 minuti 20 secondi";
+
+        assertEquals(expected, StringConverter.fromMillisToHuman(plur, sing, 2_000_000_000));
     }
 
 }

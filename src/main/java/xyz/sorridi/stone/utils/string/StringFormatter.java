@@ -27,7 +27,8 @@ public class StringFormatter
      */
     public static String format(double value, int decimals)
     {
-        return switch (decimals) {
+        return switch (decimals)
+        {
             case 1  -> formatSingle(value);
             case 2  -> formatDouble(value);
             case 3  -> formatTriple(value);

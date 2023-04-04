@@ -20,22 +20,25 @@ public class StringConverter
 
     /**
      * Converts a long to a human-readable format.
-     * @param type The type of the time.
+     * @param plurals The plurals of the time units.
+     * @param singulars The singulars of the time units.
      * @param time The time to convert.
      * @return The converted time.
      */
-    public static String fromMillisToHumanShortForm(String[] type, long time)
+    public static String fromMillisToHuman(String[] plurals, String[] singulars, long time)
     {
-        checkArgument(type.length == 4, ErrorMessages.INVALID_ARRAY_LENGTH.expect(4));
+        checkArgument(plurals.length == 5, ErrorMessages.INVALID_ARRAY_LENGTH.expect(5));
+        checkArgument(singulars.length == 5, ErrorMessages.INVALID_ARRAY_LENGTH.expect(5));
 
-        long _days       = TimeUnit.MILLISECONDS.toDays(time);
-        long _hours      = TimeUnit.MILLISECONDS.toHours(time);
-        long _minutes    = TimeUnit.MILLISECONDS.toMinutes(time);
-        long _seconds    = TimeUnit.MILLISECONDS.toSeconds(time);
+        long _days      = TimeUnit.MILLISECONDS.toDays(time);
+        long _hours     = TimeUnit.MILLISECONDS.toHours(time);
+        long _minutes   = TimeUnit.MILLISECONDS.toMinutes(time);
+        long _seconds   = TimeUnit.MILLISECONDS.toSeconds(time);
 
-        long hours       = _hours - TimeUnit.DAYS.toHours(_days);
-        long minutes     = _minutes - TimeUnit.HOURS.toMinutes(_hours);
-        long seconds     = _seconds - TimeUnit.MINUTES.toSeconds(_minutes);
+        long hours      = _hours - TimeUnit.DAYS.toHours(_days);
+        long minutes    = _minutes - TimeUnit.HOURS.toMinutes(_hours);
+        long seconds    = _seconds - TimeUnit.MINUTES.toSeconds(_minutes);
+        long millis     = time - TimeUnit.SECONDS.toMillis(_seconds);
 
         StringBuilder builder = new StringBuilder();
 
@@ -44,7 +47,16 @@ public class StringConverter
         if (_days > 0)
         {
             pending = true;
-            builder.append(_days).append(type[0]);
+            builder.append(_days);
+
+            if (_days < 2)
+            {
+                builder.append(singulars[0]);
+            }
+            else
+            {
+                builder.append(plurals[0]);
+            }
         }
 
         if (hours > 0)
@@ -55,7 +67,16 @@ public class StringConverter
             }
 
             pending = true;
-            builder.append(hours).append(type[1]);
+            builder.append(hours);
+
+            if (hours < 2)
+            {
+                builder.append(singulars[1]);
+            }
+            else
+            {
+                builder.append(plurals[1]);
+            }
         }
 
         if (minutes > 0)
@@ -66,7 +87,16 @@ public class StringConverter
             }
 
             pending = true;
-            builder.append(minutes).append(type[2]);
+            builder.append(minutes);
+
+            if (minutes < 2)
+            {
+                builder.append(singulars[2]);
+            }
+            else
+            {
+                builder.append(plurals[2]);
+            }
         }
 
         if (seconds > 0)
@@ -76,12 +106,39 @@ public class StringConverter
                 builder.append(" ");
             }
 
-            builder.append(seconds).append(type[3]);
+            builder.append(seconds);
+
+            if (seconds < 2)
+            {
+                builder.append(singulars[3]);
+            }
+            else
+            {
+                builder.append(plurals[3]);
+            }
+        }
+
+        if (millis > 0 && minutes == 0 && seconds == 0)
+        {
+            if (pending)
+            {
+                builder.append(" ");
+            }
+
+            builder.append(millis);
+
+            if (millis < 2)
+            {
+                builder.append(singulars[4]);
+            }
+            else
+            {
+                builder.append(plurals[4]);
+            }
         }
 
         return builder.toString();
     }
-
 
     /**
      * Converts minutes to HH:mm format.
