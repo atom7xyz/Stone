@@ -1,8 +1,12 @@
 package xyz.sorridi.stone.annotations;
 
 import lombok.SneakyThrows;
+import org.checkerframework.checker.units.qual.C;
 import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.util.ConfigurationBuilder;
 import xyz.sorridi.stone.immutable.ErrorMessages;
+import xyz.sorridi.stone.utils.Array;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
@@ -10,6 +14,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 /**
  * Class used to gather resources.
@@ -18,6 +23,12 @@ import java.util.Set;
  */
 public class ResourceGatherer
 {
+    private static final Scanners[] SCANNERS = Array.of(
+            Scanners.TypesAnnotated,
+            Scanners.SubTypes,
+            Scanners.MethodsAnnotated,
+            Scanners.FieldsAnnotated
+    );
 
     /**
      * Executes a given action for each annotation found.
@@ -27,13 +38,13 @@ public class ResourceGatherer
      * @param base The class to search into.
      */
     @SneakyThrows
-    public static void forEachAnnotationInTypes(
-            Class<? extends Annotation> annotation,
-            IResourceAction action,
+    public static <A extends Annotation, CA extends Class<A>> void forEachAnnotationInTypes(
+            CA annotation,
+            BiConsumer<A, Object> action,
             ElementType type,
             Class<?> base
     ) {
-        Reflections reflections = new Reflections(getPath(base));
+        Reflections reflections = new Reflections(getPath(base), SCANNERS);
 
         Set<?> found;
 
@@ -45,18 +56,18 @@ public class ResourceGatherer
             default     -> throw new IllegalArgumentException(ErrorMessages.NOT_IMPLEMENTED.get());
         }
 
-        found.forEach(foundClass ->
+        found.forEach(elem ->
         {
-            Annotation foundAnnotation = null;
+            A foundAnnotation = null;
 
             switch (type)
             {
-                case METHOD -> foundAnnotation = ((Method) foundClass).getAnnotation(annotation);
-                case FIELD  -> foundAnnotation = ((Field) foundClass).getAnnotation(annotation);
-                case TYPE   -> foundAnnotation = ((Class<?>) foundClass).getAnnotation(annotation);
+                case METHOD -> foundAnnotation = ((Method) elem).getAnnotation(annotation);
+                case FIELD  -> foundAnnotation = ((Field) elem).getAnnotation(annotation);
+                case TYPE   -> foundAnnotation = ((Class<?>) elem).getAnnotation(annotation);
             }
 
-            action.expression(foundAnnotation, foundClass);
+            action.accept(foundAnnotation, elem);
         });
     }
 

@@ -1,6 +1,7 @@
 package xyz.sorridi.stone.annotations.impl.serializer;
 
-import javax.annotation.CheckForNull;
+import lombok.NonNull;
+
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import java.lang.annotation.ElementType;
@@ -22,5 +23,5 @@ public @interface RegisterSerializer
      * The type of serializer.
      * @return The type of serializer.
      */
-    @CheckForNull Class<?> of();
+    @NonNull Class<?> of();
 }

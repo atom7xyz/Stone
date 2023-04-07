@@ -37,12 +37,11 @@ public class SerializerProcessor implements IProcessor
 
         ResourceGatherer.forEachAnnotationInTypes(RegisterSerializer.class, (annotation, found) ->
         {
-            logger.info("Found serializer: " + found);
-
-            val toRegister = (RegisterSerializer) annotation;
             val foundClass = (Class<?>) found;
 
-            val of = checkNotNull(toRegister.of(), ErrorMessages.NULL.get());
+            logger.info("Found serializer: " + foundClass.getName());
+
+            val of = checkNotNull(annotation.of(), ErrorMessages.NULL.get());
 
             ConstructorCaller
                     .call(foundClass)
