@@ -6,7 +6,6 @@ import xyz.sorridi.stone.immutable.ErrorMessages;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Constructor caller utilities.

@@ -3,9 +3,6 @@ package xyz.sorridi.stone.utils.location;
 import lombok.NonNull;
 import org.bukkit.Location;
 import org.bukkit.World;
-import xyz.sorridi.stone.immutable.ErrorMessages;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Evaluation of locations.

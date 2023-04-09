@@ -1,6 +1,5 @@
 package xyz.sorridi.stone.utils.string;
 
-import javassist.scopedpool.SoftValueHashMap;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
 import xyz.sorridi.stone.immutable.ErrorMessages;

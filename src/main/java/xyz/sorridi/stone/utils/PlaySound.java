@@ -10,7 +10,6 @@ import xyz.sorridi.stone.immutable.ErrorMessages;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Sound utilities.

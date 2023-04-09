@@ -1,11 +1,8 @@
 package xyz.sorridi.stone.builders.expression;
 
 import lombok.NonNull;
-import xyz.sorridi.stone.immutable.ErrorMessages;
 
 import java.util.Stack;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Implementation of the Djikstra's two stack algorithm for evaluating arithmetic expressions.
