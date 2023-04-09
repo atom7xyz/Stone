@@ -1,18 +1,15 @@
 package xyz.sorridi.stone.builders;
 
 import lombok.Getter;
-import org.bukkit.entity.Player;
-import xyz.sorridi.stone.immutable.ErrorMessages;
+import lombok.NonNull;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 @Getter
-public class UseCoolDown
+public class UseCoolDown<T>
 {
-    private final HashMap<Player, Long> coolDowns;
+    private final HashMap<T, Long> coolDowns;
     private final long time;
 
     /**
@@ -26,36 +23,30 @@ public class UseCoolDown
     }
 
     /**
-     * Puts a player in the cool down.
-     * @param player Player to be put in the cool down.
+     * Puts a target in the cool down.
+     * @param target Target to be put in the cool down.
      */
-    public void put(Player player)
+    public void putIfAbsent(@NonNull T target)
     {
-        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
-
-        coolDowns.putIfAbsent(player, 0L);
+        coolDowns.putIfAbsent(target, 0L);
     }
 
     /**
-     * Renews the cool down for a player.
-     * @param player The player.
+     * Renews the cool down for a target.
+     * @param target The target.
      */
-    public void renew(Player player)
+    public void renew(@NonNull T target)
     {
-        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
-
-        coolDowns.replace(player, System.currentTimeMillis());
+        coolDowns.replace(target, System.currentTimeMillis());
     }
 
     /**
-     * Removes a player from the cool down.
-     * @param player Player to be removed.
+     * Removes a target from the cool down.
+     * @param target Target to be removed.
      */
-    public void remove(Player player)
+    public void remove(@NonNull T target)
     {
-        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
-
-        coolDowns.remove(player);
+        coolDowns.remove(target);
     }
 
     /**
@@ -68,45 +59,43 @@ public class UseCoolDown
 
     /**
      * Checks the time difference between the current time and the players' last cool down entry.
-     * @param player Player to check.
+     * @param target Target to check.
      * @return The time difference.
      */
-    public long timeDiff(Player player)
+    public long timeDiff(@NonNull T target)
     {
-        checkNotNull(player, ErrorMessages.NULL.expect(Player.class));
-
-        return System.currentTimeMillis() - coolDowns.get(player);
+        return System.currentTimeMillis() - coolDowns.get(target);
     }
 
     /**
-     * Retrieves the cool down left for a player.
-     * @param player Player to check.
+     * Retrieves the cool down left for a target.
+     * @param target Target to check.
      * @return Time left in milliseconds.
      */
-    public long usableIn(Player player)
+    public long usableIn(@NonNull T target)
     {
-        return time - timeDiff(player);
+        return time - timeDiff(target);
     }
 
     /**
-     * Retrieves the cool down left for a player.
-     * @param player Player to check.
+     * Retrieves the cool down left for a target.
+     * @param target Target to check.
      * @param timeUnit Time unit to convert to.
      * @return Time left in the specified time unit.
      */
-    public long usableIn(Player player, TimeUnit timeUnit)
+    public long usableIn(@NonNull T target, TimeUnit timeUnit)
     {
-        return timeUnit.convert(usableIn(player), TimeUnit.MILLISECONDS);
+        return timeUnit.convert(usableIn(target), TimeUnit.MILLISECONDS);
     }
 
     /**
      * Checks if the cool down has expired.
-     * @param player Player to check.
+     * @param target Target to check.
      * @return If the cool down has expired.
      */
-    public boolean isUsable(Player player)
+    public boolean isUsable(@NonNull T target)
     {
-        return timeDiff(player) >= time;
+        return timeDiff(target) >= time;
     }
 
 }

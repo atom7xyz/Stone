@@ -38,7 +38,7 @@ public class ResourceGatherer
      * @param base The class to search into.
      */
     @SneakyThrows
-    public static <A extends Annotation, CA extends Class<A>> void forEachAnnotationInTypes(
+    public static <A extends Annotation, CA extends Class<A>> void forEachAnnotation(
             CA annotation,
             BiConsumer<A, Object> action,
             ElementType type,
@@ -71,6 +71,11 @@ public class ResourceGatherer
         });
     }
 
+    /**
+     * Returns the file path of a given class.
+     * @param clazz The class.
+     * @return The file path.
+     */
     public static URL getPath(Class<?> clazz)
     {
         return clazz.getProtectionDomain().getCodeSource().getLocation();

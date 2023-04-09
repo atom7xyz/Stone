@@ -2,6 +2,7 @@ package xyz.sorridi.stone.builders;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -66,7 +67,7 @@ public class SkullBuilder
      * @return The head of the Player.
      * @deprecated names don't make for good identifiers.
      */
-    public static ItemStack itemFromName(String name)
+    public static ItemStack itemFromName(@NonNull String name)
     {
         return itemWithName(createSkull(), name);
     }
@@ -77,7 +78,7 @@ public class SkullBuilder
      * @param id The Player's UUID.
      * @return The head of the Player.
      */
-    public static ItemStack itemFromUuid(UUID id)
+    public static ItemStack itemFromUuid(@NonNull UUID id)
     {
         return itemWithUuid(createSkull(), id);
     }
@@ -88,7 +89,7 @@ public class SkullBuilder
      * @param url The Mojang URL.
      * @return The head of the Player.
      */
-    public static ItemStack itemFromUrl(String url)
+    public static ItemStack itemFromUrl(@NonNull String url)
     {
         return itemWithUrl(createSkull(), url);
     }
@@ -99,7 +100,7 @@ public class SkullBuilder
      * @param base64 The Mojang URL.
      * @return The head of the Player.
      */
-    public static ItemStack itemFromBase64(String base64)
+    public static ItemStack itemFromBase64(@NonNull String base64)
     {
         return itemWithBase64(createSkull(), base64);
     }
@@ -113,11 +114,8 @@ public class SkullBuilder
      * @deprecated names don't make for good identifiers.
      */
     @Deprecated
-    public static ItemStack itemWithName(ItemStack item, String name)
+    public static ItemStack itemWithName(@NonNull ItemStack item, @NonNull String name)
     {
-        checkNotNull(item, ErrorMessages.NULL.expect("item"));
-        checkNotNull(item, ErrorMessages.NULL.expect("name"));
-
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         meta.setOwner(name);
         item.setItemMeta(meta);
@@ -132,11 +130,8 @@ public class SkullBuilder
      * @param id   The Player's UUID.
      * @return The head of the Player.
      */
-    public static ItemStack itemWithUuid(ItemStack item, UUID id)
+    public static ItemStack itemWithUuid(@NonNull ItemStack item, @NonNull UUID id)
     {
-        checkNotNull(item, ErrorMessages.NULL.expect("item"));
-        checkNotNull(id, ErrorMessages.NULL.expect("id"));
-
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         meta.setOwner(Bukkit.getOfflinePlayer(id).getName());
         item.setItemMeta(meta);
@@ -151,10 +146,8 @@ public class SkullBuilder
      * @param url  The URL of the Mojang skin.
      * @return The head associated with the URL.
      */
-    public static ItemStack itemWithUrl(ItemStack item, String url)
+    public static ItemStack itemWithUrl(@NonNull ItemStack item, @NonNull String url)
     {
-        checkNotNull(item, ErrorMessages.NULL.expect("item"));
-        checkNotNull(url, ErrorMessages.NULL.expect("url"));
         url = "https://textures.minecraft.net/texture/" + url;
 
         return itemWithBase64(item, urlToBase64(url));
@@ -167,11 +160,8 @@ public class SkullBuilder
      * @param base64 The base64 string containing the texture.
      * @return The head with a custom texture.
      */
-    public static ItemStack itemWithBase64(ItemStack item, String base64)
+    public static ItemStack itemWithBase64(@NonNull ItemStack item, @NonNull String base64)
     {
-        checkNotNull(item, ErrorMessages.NULL.expect("item"));
-        checkNotNull(base64, ErrorMessages.NULL.expect("base64"));
-
         if (!(item.getItemMeta() instanceof SkullMeta))
         {
             return null;
@@ -192,11 +182,8 @@ public class SkullBuilder
      * @deprecated names don't make for good identifiers.
      */
     @Deprecated
-    public static void blockWithName(Block block, String name)
+    public static void blockWithName(@NonNull Block block, @NonNull String name)
     {
-        checkNotNull(block, ErrorMessages.NULL.expect("block"));
-        notNull(name, "name");
-
         Skull state = (Skull) block.getState();
         state.setOwner(name);
         state.update(false, false);
@@ -208,7 +195,7 @@ public class SkullBuilder
      * @param block The block to set.
      * @param id    The player to set it to.
      */
-    public static void blockWithUuid(Block block, UUID id)
+    public static void blockWithUuid(@NonNull Block block, @NonNull UUID id)
     {
         checkNotNull(block, ErrorMessages.NULL.expect("block"));
         checkNotNull(id, ErrorMessages.NULL.expect("id"));
@@ -225,11 +212,8 @@ public class SkullBuilder
      * @param block The block to set.
      * @param url   The mojang URL to set it to use.
      */
-    public static void blockWithUrl(Block block, String url)
+    public static void blockWithUrl(@NonNull Block block, @NonNull String url)
     {
-        checkNotNull(block, ErrorMessages.NULL.expect("block"));
-        checkNotNull(url, ErrorMessages.NULL.expect("url"));
-
         blockWithBase64(block, urlToBase64(url));
     }
 
@@ -239,18 +223,15 @@ public class SkullBuilder
      * @param block  The block to set.
      * @param base64 The base64 to set it to use.
      */
-    public static void blockWithBase64(Block block, String base64)
+    public static void blockWithBase64(@NonNull Block block, @NonNull String base64)
     {
-        checkNotNull(block, ErrorMessages.NULL.expect("block"));
-        checkNotNull(base64, ErrorMessages.NULL.expect("base64"));
-
         setToSkull(block);
         Skull state = (Skull) block.getState();
         mutateBlockState(state, base64);
         state.update(false, false);
     }
 
-    private static void setToSkull(Block block)
+    private static void setToSkull(@NonNull Block block)
     {
         checkLegacy();
 
@@ -267,14 +248,7 @@ public class SkullBuilder
         }
     }
 
-    private static void notNull(Object o, String name)
-    {
-        if (o == null) {
-            throw new NullPointerException(name + " should not be null!");
-        }
-    }
-
-    private static String urlToBase64(String url)
+    private static String urlToBase64(@NonNull String url)
     {
         URI uri;
 
@@ -292,7 +266,7 @@ public class SkullBuilder
         return Base64.getEncoder().encodeToString(toEncode.getBytes());
     }
 
-    private static GameProfile makeProfile(String b64)
+    private static GameProfile makeProfile(@NonNull String b64)
     {
         // random uuid based on the b64 string
         UUID id = new UUID(
@@ -304,7 +278,7 @@ public class SkullBuilder
         return profile;
     }
 
-    private static void mutateBlockState(Skull block, String b64)
+    private static void mutateBlockState(@NonNull Skull block, @NonNull String b64)
     {
         try
         {
@@ -321,7 +295,7 @@ public class SkullBuilder
         }
     }
 
-    private static void mutateItemMeta(SkullMeta meta, String b64)
+    private static void mutateItemMeta(@NonNull SkullMeta meta, @NonNull String b64)
     {
         try
         {

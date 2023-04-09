@@ -1,5 +1,6 @@
 package xyz.sorridi.stone.builders.expression;
 
+import lombok.NonNull;
 import xyz.sorridi.stone.immutable.ErrorMessages;
 
 import java.util.Stack;
@@ -22,9 +23,8 @@ public class ExpressionBuilder
      * Creates a new ExpressionBuilder instance.
      * @param raw The raw expression to be evaluated.
      */
-    public ExpressionBuilder(String raw)
+    public ExpressionBuilder(@NonNull String raw)
     {
-        checkNotNull(raw, ErrorMessages.NULL.get());
         this.raw        = raw;
         this.operations = new Stack<>();
         this.values     = new Stack<>();

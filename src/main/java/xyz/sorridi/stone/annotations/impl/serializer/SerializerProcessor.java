@@ -35,7 +35,7 @@ public class SerializerProcessor implements IProcessor
     {
         logger.info("Processing serializers...");
 
-        ResourceGatherer.forEachAnnotationInTypes(RegisterSerializer.class, (annotation, found) ->
+        ResourceGatherer.forEachAnnotation(RegisterSerializer.class, (annotation, found) ->
         {
             val foundClass = (Class<?>) found;
 

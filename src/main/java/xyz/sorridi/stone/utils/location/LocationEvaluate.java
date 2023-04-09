@@ -1,5 +1,6 @@
 package xyz.sorridi.stone.utils.location;
 
+import lombok.NonNull;
 import org.bukkit.Location;
 import org.bukkit.World;
 import xyz.sorridi.stone.immutable.ErrorMessages;
@@ -13,17 +14,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class LocationEvaluate
 {
+
     /**
      * Checks if two locations are equal in terms of X, Y, Z (ignoring yaw and pitch).
      * @param location  Location to compare.
      * @param toCompare Location to compare.
      * @return If the locations are the same (true) or not (false).
      */
-    public static boolean isEqual(Location location, Location toCompare)
+    public static boolean isEqual(@NonNull Location location, @NonNull Location toCompare)
     {
-        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
-        checkNotNull(toCompare, ErrorMessages.NULL.expect(Location.class));
-
         World world     = location.getWorld();
         World _world    = toCompare.getWorld();
 
@@ -44,10 +43,8 @@ public class LocationEvaluate
      * @param yawPitch  If the yaw and pitch should be the same as the original location (true) or not (false).
      * @return The middle of the location.
      */
-    public static Location getMiddleLocation(Location location, boolean yawPitch)
+    public static Location getMiddleLocation(@NonNull Location location, boolean yawPitch)
     {
-        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
-
         World world = location.getWorld();
 
         double x    = (int) location.getX() + .5;

@@ -1,5 +1,6 @@
 package xyz.sorridi.stone.utils.constructor;
 
+import lombok.NonNull;
 import xyz.sorridi.stone.immutable.ErrorMessages;
 
 import java.util.Optional;
@@ -35,9 +36,8 @@ public class ConstructorCaller
      * @return The created object.
      * @param <T> The type of the class.
      */
-    public static <T> Optional<T> call(Class<T> clazz, int index, Object... args)
+    public static <T> Optional<T> call(@NonNull Class<T> clazz, int index, Object... args)
     {
-        checkNotNull(clazz, ErrorMessages.NULL.get());
         checkArgument(index >= 0, ErrorMessages.NEGATIVE.get());
 
         Optional<T> instance = Optional.empty();

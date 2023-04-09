@@ -1,11 +1,14 @@
 package xyz.sorridi.stone.utils.string;
 
+import javassist.scopedpool.SoftValueHashMap;
+import lombok.NonNull;
 import org.bukkit.ChatColor;
 import xyz.sorridi.stone.immutable.ErrorMessages;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -17,6 +20,9 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class StringConverter
 {
+    private static final WeakHashMap<Integer, String> ROMAN_CACHE = new WeakHashMap<>();
+    private static final WeakHashMap<String, String> CAMELCASE_CACHE = new WeakHashMap<>();
+    private static final WeakHashMap<String, String> PROPERCASE_CACHE = new WeakHashMap<>();
 
     /**
      * Converts a long to a human-readable format.
@@ -183,6 +189,11 @@ public class StringConverter
      */
     public static String toCamelCase(String string)
     {
+        if (CAMELCASE_CACHE.containsKey(string))
+        {
+            return CAMELCASE_CACHE.get(string);
+        }
+
         String[] split      = string.split("_");
         StringBuilder camel = new StringBuilder();
 
@@ -190,6 +201,8 @@ public class StringConverter
         {
             camel.append(toProperCase(part));
         }
+
+        CAMELCASE_CACHE.put(string, camel.toString());
 
         return camel.toString();
     }
@@ -201,7 +214,16 @@ public class StringConverter
      */
     public static String toProperCase(String string)
     {
-        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+        if (PROPERCASE_CACHE.containsKey(string))
+        {
+            return PROPERCASE_CACHE.get(string);
+        }
+
+        String result = string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+
+        PROPERCASE_CACHE.put(string, result);
+
+        return result;
     }
 
     /**
@@ -228,13 +250,14 @@ public class StringConverter
      * @param timeFormat The format to use.
      * @return The converted time.
      */
-    public static String convertTime(String timeFormat, long time)
+    public static String convertTime(@NonNull String timeFormat, long time)
     {
         Date date       = new Date(time);
         Format format   = new SimpleDateFormat(timeFormat);
 
         return format.format(date);
     }
+
 
     /**
      * Converts a number into Roman numerals.
@@ -243,6 +266,11 @@ public class StringConverter
      */
     public static String toRoman(int input)
     {
+        if (ROMAN_CACHE.containsKey(input))
+        {
+            return ROMAN_CACHE.get(input);
+        }
+
         StringBuilder temp = new StringBuilder();
 
         while (input >= 1000)
@@ -310,6 +338,8 @@ public class StringConverter
             temp.append("I");
             input -= 1;
         }
+
+        ROMAN_CACHE.put(input, temp.toString());
 
         return temp.toString();
     }

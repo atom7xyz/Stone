@@ -1,5 +1,6 @@
 package xyz.sorridi.stone.utils;
 
+import lombok.NonNull;
 import me.lucko.helper.text3.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -21,7 +22,7 @@ public class Reply
      * @param messages Messages to send.
      * @return If the player is online.
      */
-    public static boolean to(Player player, String... messages)
+    public static boolean to(@NonNull Player player, String... messages)
     {
         if (player.isOnline())
         {
@@ -41,7 +42,7 @@ public class Reply
      * @return If the player is online.
      * @param <T> The collection type.
      */
-    public static <T extends Collection<String>> boolean to(Player player, T collection)
+    public static <T extends Collection<String>> boolean to(@NonNull Player player, @NonNull T collection)
     {
         return to(player, collection.toArray(new String[0]));
     }
@@ -76,7 +77,7 @@ public class Reply
      * @param player Player to exclude.
      * @param messages Messages to send.
      */
-    public static void toAllExcept(Player player, String... messages)
+    public static void toAllExcept(@NonNull Player player, String... messages)
     {
         for (Player p : Bukkit.getOnlinePlayers())
         {
@@ -96,7 +97,7 @@ public class Reply
      * @param collection Messages to send.
      * @param <T> The collection type.
      */
-    public static <T extends Collection<String>> void toAllExcept(Player player, T collection)
+    public static <T extends Collection<String>> void toAllExcept(@NonNull Player player, T collection)
     {
         toAllExcept(player, collection.toArray(new String[0]));
     }
@@ -106,7 +107,7 @@ public class Reply
      * @param toExclude Players to exclude.
      * @param messages Messages to send.
      */
-    public static <T extends Collection<Player>> void toAllExcept(T toExclude, String... messages)
+    public static <T extends Collection<Player>> void toAllExcept(@NonNull T toExclude, String... messages)
     {
         HashSet<Player> excluded = new HashSet<>(toExclude);
 
@@ -130,7 +131,7 @@ public class Reply
      * @param collection Messages to send.
      * @param <T> The collection type.
      */
-    public static <P extends Collection<Player>, T extends Collection<String>> void toAllExcept(P toExclude, T collection)
+    public static <P extends Collection<Player>, T extends Collection<String>> void toAllExcept(@NonNull P toExclude, T collection)
     {
         toAllExcept(toExclude, collection.toArray(new String[0]));
     }

@@ -1,5 +1,6 @@
 package xyz.sorridi.stone.utils.location;
 
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,6 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class LocationConverter
 {
+
     /**
      * Formats objects to a string like x:y:z.
      * @param object The objects to format.
@@ -42,10 +44,8 @@ public class LocationConverter
      * @param location The location to extract from.
      * @return The extracted string.
      */
-    public static String extractString(Location location, boolean precise, boolean yawPitch)
+    public static String extractString(@NonNull Location location, boolean precise, boolean yawPitch)
     {
-        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
-
         double x = location.getX();
         double y = location.getY();
         double z = location.getZ();
@@ -68,10 +68,8 @@ public class LocationConverter
      * @param location The location to convert from.
      * @return The location converted.
      */
-    public static String getStringFromLocation(Location location)
+    public static String getStringFromLocation(@NonNull Location location)
     {
-        checkNotNull(location, ErrorMessages.NULL.expect(Location.class));
-
         String worldName = location.getWorld().getName();
 
         double x = location.getX();
@@ -90,10 +88,8 @@ public class LocationConverter
      * @param yawPitch If yaw and pitch should be included.
      * @return The converted Location.
      */
-    public static Location getLocationFromString(String stringLocation, boolean yawPitch)
+    public static Location getLocationFromString(@NonNull String stringLocation, boolean yawPitch)
     {
-        checkNotNull(stringLocation, ErrorMessages.NULL.expect(String.class));
-
         String[] parts = stringLocation.split(":");
 
         World world = Bukkit.getServer().getWorld(parts[0]);
