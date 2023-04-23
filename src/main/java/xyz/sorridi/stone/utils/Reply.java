@@ -40,7 +40,7 @@ public class Reply
      * @param player Player to send the message to.
      * @param collection Messages to send.
      * @return If the player is online.
-     * @param <T> The collection type.
+     * @param <C> The collection type.
      */
     public static <C extends Collection<String>> boolean to(@NonNull Player player, @NonNull C collection)
     {
@@ -106,6 +106,7 @@ public class Reply
      * Sends messages to every online player except the specified ones.
      * @param toExclude Players to exclude.
      * @param messages Messages to send.
+     * @param <T> The collection type.
      */
     public static <T extends Collection<Player>> void toAllExcept(@NonNull T toExclude, String... messages)
     {
@@ -129,9 +130,11 @@ public class Reply
      * Sends messages to every online player except the specified ones.
      * @param toExclude Players to exclude.
      * @param collection Messages to send.
-     * @param <T> The collection type.
+     * @param <P> The collection type.
+     * @param <C> The collection type.
      */
-    public static <P extends Collection<Player>, C extends Collection<String>> void toAllExcept(@NonNull P toExclude, @NonNull C collection)
+    public static <P extends Collection<Player>, C extends Collection<String>>
+    void toAllExcept(@NonNull P toExclude, @NonNull C collection)
     {
         toAllExcept(toExclude, collection.toArray(new String[0]));
     }
@@ -157,7 +160,8 @@ public class Reply
      * @param <P> The collection type.
      * @param <C> The collection type.
      */
-    public static <P extends Collection<Player>, C extends Collection<String>> void toAll(@NonNull P players, C collection)
+    public static <P extends Collection<Player>, C extends Collection<String>>
+    void toAll(@NonNull P players, C collection)
     {
         toAll(players, collection.toArray(new String[0]));
     }
@@ -170,7 +174,8 @@ public class Reply
      * @param <P> The collection type.
      * @param <T> The collection type.
      */
-    public static <P extends Collection<Player>, T extends Collection<Player>> void toAllExcept(@NonNull T players, @NonNull P exclude, String... messages)
+    public static <P extends Collection<Player>, T extends Collection<Player>>
+    void toAllExcept(@NonNull T players, @NonNull P exclude, String... messages)
     {
         for (Player p : players)
         {
@@ -190,7 +195,8 @@ public class Reply
      * @param <T> The collection type.
      * @param <C> The collection type.
      */
-    public static <P extends Collection<Player>, T extends Collection<Player>, C extends Collection<String>> void toAllExcept(@NonNull T players, @NonNull P exclude, @NonNull C collection)
+    public static <P extends Collection<Player>, T extends Collection<Player>, C extends Collection<String>>
+    void toAllExcept(@NonNull T players, @NonNull P exclude, @NonNull C collection)
     {
         toAllExcept(players, exclude, collection.toArray(new String[0]));
     }
