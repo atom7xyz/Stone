@@ -140,7 +140,7 @@ public class Reply
     }
 
     /**
-     * Sends messages to every player in the specified collection.
+     * Sends messages to every player in the collection.
      * @param players Players to send the message to.
      * @param messages Messages to send.
      * @param <P> The collection type.
@@ -154,7 +154,7 @@ public class Reply
     }
 
     /**
-     * Sends messages to every player in the specified collection.
+     * Sends messages to every player in the collection.
      * @param players Players to send the message to.
      * @param collection Messages to send.
      * @param <P> The collection type.
@@ -167,7 +167,7 @@ public class Reply
     }
 
     /**
-     * Sends messages to every player in the specified collection except the specified ones.
+     * Sends messages to every player in the collection except the specified ones.
      * @param players Players to send the message to.
      * @param exclude Players to exclude.
      * @param messages Messages to send.
@@ -187,7 +187,7 @@ public class Reply
     }
 
     /**
-     * Sends messages to every player in the specified collection except the specified ones.
+     * Sends messages to every player in the collection except the specified ones.
      * @param players Players to send the message to.
      * @param exclude Players to exclude.
      * @param collection Messages to send.
@@ -197,6 +197,37 @@ public class Reply
      */
     public static <P extends Collection<Player>, T extends Collection<Player>, C extends Collection<String>>
     void toAllExcept(@NonNull T players, @NonNull P exclude, @NonNull C collection)
+    {
+        toAllExcept(players, exclude, collection.toArray(new String[0]));
+    }
+
+    /**
+     * Sends messages to every player in the collection except the specified one.
+     * @param players Players to send the message to.
+     * @param exclude Player to exclude.
+     * @param messages Messages to send.
+     * @param <T> The collection type.
+     */
+    public static <T extends Collection<Player>>
+    void toAllExcept(@NonNull T players, @NonNull Player exclude, String... messages)
+    {
+        for (Player p : players)
+        {
+            if (p != exclude)
+            {
+                to(p, messages);
+            }
+        }
+    }
+
+    /**
+     * Sends messages to every player in the collection except the specified one.
+     * @param players Players to send the message to.
+     * @param exclude Player to exclude.
+     * @param collection Messages to send.
+     */
+    public static <T extends Collection<Player>, C extends Collection<String>>
+    void toAllExcept(@NonNull T players, @NonNull Player exclude, @NonNull C collection)
     {
         toAllExcept(players, exclude, collection.toArray(new String[0]));
     }
