@@ -17,11 +17,25 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class Replace
 {
 
+    /**
+     * Replaces the target with the object in the string.
+     * @param what The string to replace.
+     * @param target The target to replace.
+     * @param with The object to replace with.
+     * @return The replaced string.
+     */
     public static <T> String of(@NonNull String what, @NonNull String target, @NonNull T with)
     {
         return what.replace(target, with.toString());
     }
 
+    /**
+     * Replaces the target with the object in the string.
+     * @param what The string to replace.
+     * @param target The target to replace.
+     * @param with The object to replace with.
+     * @return The replaced string.
+     */
     @SafeVarargs
     public static <T> String of(@NonNull String what, @NonNull String[] target, @NonNull T... with)
     {
@@ -35,11 +49,25 @@ public class Replace
         return what;
     }
 
+    /**
+     * Replaces the target with the object in the array of strings.
+     * @param what The array of strings to replace.
+     * @param target The target to replace.
+     * @param with The object to replace with.
+     * @return The replaced array of strings.
+     */
     public static <T> String[] of(@NonNull String[] what, @NonNull String target, @NonNull T with)
     {
         return Arrays.stream(what).map(s -> s.replace(target, with.toString())).toArray(String[]::new);
     }
 
+    /**
+     * Replaces the array of targets with the object(s) in the array of strings.
+     * @param what The array of strings to replace.
+     * @param target The array of targets to replace.
+     * @param with The array of objects to replace with.
+     * @return The replaced array of strings.
+     */
     @SafeVarargs
     public static <T> String[] of(@NonNull String[] what, @NonNull String[] target, @NonNull T... with)
     {
@@ -56,12 +84,26 @@ public class Replace
         return what;
     }
 
+    /**
+     * Replaces the target with the object in the collection of strings.
+     * @param what The collection of strings to replace.
+     * @param target The target to replace.
+     * @param with The object to replace with.
+     * @return The replaced collection of strings.
+     */
     @SuppressWarnings("unchecked")
     public static <W extends Collection<String>, T> W of(@NonNull W what, @NonNull String target, @NonNull T with)
     {
         return (W) what.stream().map(s -> s.replace(target, with.toString())).collect(Collectors.toList());
     }
 
+    /**
+     * Replaces the array of targets with the object(s) in the collection of strings.
+     * @param what The collection of strings to replace.
+     * @param target The array of targets to replace.
+     * @param with The array of objects to replace with.
+     * @return The replaced collection of strings.
+     */
     @SuppressWarnings("unchecked")
     public static <W extends Collection<String>, T> W of(@NonNull W what, @NonNull String[] target, @NonNull T... with)
     {

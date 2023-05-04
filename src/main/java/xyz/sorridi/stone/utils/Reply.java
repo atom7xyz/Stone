@@ -28,7 +28,10 @@ public class Reply
         {
             for (String message : messages)
             {
-                player.sendMessage(Text.colorize(message));
+                if (!message.isEmpty())
+                {
+                    player.sendMessage(Text.colorize(message));
+                }
             }
         }
 
@@ -55,10 +58,7 @@ public class Reply
     {
         for (Player p : Bukkit.getOnlinePlayers())
         {
-            for (String message : messages)
-            {
-                p.sendMessage(Text.colorize(message));
-            }
+            to(p, messages);
         }
     }
 
@@ -81,12 +81,9 @@ public class Reply
     {
         for (Player p : Bukkit.getOnlinePlayers())
         {
-            if (p != player)
+            if (!p.equals(player))
             {
-                for (String message : messages)
-                {
-                    player.sendMessage(Text.colorize(message));
-                }
+                to(p, messages);
             }
         }
     }
@@ -114,14 +111,9 @@ public class Reply
 
         for (Player p : Bukkit.getOnlinePlayers())
         {
-            if (excluded.contains(p))
+            if (!excluded.contains(p))
             {
-                continue;
-            }
-
-            for (String message : messages)
-            {
-                p.sendMessage(Text.colorize(message));
+                to(p, messages);
             }
         }
     }
@@ -213,7 +205,7 @@ public class Reply
     {
         for (Player p : players)
         {
-            if (p != exclude)
+            if (!p.equals(exclude))
             {
                 to(p, messages);
             }
