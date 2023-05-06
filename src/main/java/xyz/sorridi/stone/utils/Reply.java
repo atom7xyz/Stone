@@ -73,6 +73,33 @@ public class Reply
     }
 
     /**
+     * Sends messages to every player in the collection.
+     * @param players Players to send the message to.
+     * @param messages Messages to send.
+     * @param <P> The collection type.
+     */
+    public static <P extends Collection<Player>> void toAll(@NonNull P players, String... messages)
+    {
+        for (Player p : players)
+        {
+           to(p, messages);
+        }
+    }
+
+    /**
+     * Sends messages to every player in the collection.
+     * @param players Players to send the message to.
+     * @param collection Messages to send.
+     * @param <P> The collection type.
+     * @param <C> The collection type.
+     */
+    public static <P extends Collection<Player>, C extends Collection<String>>
+    void toAll(@NonNull P players, C collection)
+    {
+        toAll(players, collection.toArray(new String[0]));
+    }
+
+    /**
      * Sends messages to every online player except the specified one.
      * @param player Player to exclude.
      * @param messages Messages to send.
@@ -129,33 +156,6 @@ public class Reply
     void toAllExcept(@NonNull P toExclude, @NonNull C collection)
     {
         toAllExcept(toExclude, collection.toArray(new String[0]));
-    }
-
-    /**
-     * Sends messages to every player in the collection.
-     * @param players Players to send the message to.
-     * @param messages Messages to send.
-     * @param <P> The collection type.
-     */
-    public static <P extends Collection<Player>> void toAll(@NonNull P players, String... messages)
-    {
-        for (Player p : players)
-        {
-           to(p, messages);
-        }
-    }
-
-    /**
-     * Sends messages to every player in the collection.
-     * @param players Players to send the message to.
-     * @param collection Messages to send.
-     * @param <P> The collection type.
-     * @param <C> The collection type.
-     */
-    public static <P extends Collection<Player>, C extends Collection<String>>
-    void toAll(@NonNull P players, C collection)
-    {
-        toAll(players, collection.toArray(new String[0]));
     }
 
     /**
@@ -223,5 +223,79 @@ public class Reply
     {
         toAllExcept(players, exclude, collection.toArray(new String[0]));
     }
+
+    /**
+     * Sends messages to every player with the specified permission.
+     * @param permission Permission to check.
+     * @param messages Messages to send.
+     */
+    public static void toAllWithPerm(@NonNull String permission, String... messages)
+    {
+        for (Player p : Bukkit.getOnlinePlayers())
+        {
+            if (p.hasPermission(permission))
+            {
+                to(p, messages);
+            }
+        }
+    }
+
+    /**
+     * Sends messages to every player with the specified permission.
+     * @param permission Permission to check.
+     * @param collection Messages to send.
+     */
+    public static <C extends Collection<String>> void toAllWithPerm(@NonNull String permission, @NonNull C collection)
+    {
+        toAllWithPerm(permission, collection.toArray(new String[0]));
+    }
+
+    /**
+     * Sends messages to every player with the specified permission except the specified one.
+     * @param permission Permission to check.
+     * @param exclude Player to exclude.
+     * @param messages Messages to send.
+     */
+    public static void toAllWithPermExcept(@NonNull String permission, @NonNull Player exclude, String... messages)
+    {
+        for (Player p : Bukkit.getOnlinePlayers())
+        {
+            if (p.hasPermission(permission) && !p.equals(exclude))
+            {
+                to(p, messages);
+            }
+        }
+    }
+
+    /**
+     * Sends messages to every player with the specified permission except the specified ones.
+     * @param permission Permission to check.
+     * @param exclude Players to exclude.
+     * @param messages Messages to send.
+     */
+    public static <T extends Collection<Player>>
+    void toAllWithPermExcept(@NonNull String permission, @NonNull T exclude, String... messages)
+    {
+        for (Player p : Bukkit.getOnlinePlayers())
+        {
+            if (p.hasPermission(permission) && !exclude.contains(p))
+            {
+                to(p, messages);
+            }
+        }
+    }
+
+    /**
+     * Sends messages to every player with the specified permission except the specified ones.
+     * @param permission Permission to check.
+     * @param exclude Players to exclude.
+     * @param collection Messages to send.
+     */
+    public static <T extends Collection<Player>, C extends Collection<String>>
+    void toAllWithPermExcept(@NonNull String permission, @NonNull T exclude, @NonNull C collection)
+    {
+        toAllWithPermExcept(permission, exclude, collection.toArray(new String[0]));
+    }
+
 
 }

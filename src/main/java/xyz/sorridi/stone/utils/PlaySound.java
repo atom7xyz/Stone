@@ -79,8 +79,8 @@ public class PlaySound
                             int pitch,
                             @NonNull Location location
     ) {
-        checkArgument(volume > 0, ErrorMessages.NEGATIVE.expect("volume"));
-        checkArgument(pitch > 0, ErrorMessages.NEGATIVE.expect("pitch"));
+        checkArgument(volume >= 0, ErrorMessages.NEGATIVE.expect("volume"));
+        checkArgument(pitch >= 0, ErrorMessages.NEGATIVE.expect("pitch"));
 
         player.playSound(location, sound, volume, pitch);
     }
