@@ -43,7 +43,6 @@ public class Reply
      * @param player Player to send the message to.
      * @param collection Messages to send.
      * @return If the player is online.
-     * @param <C> The collection type.
      */
     public static <C extends Collection<String>> boolean to(@NonNull Player player, @NonNull C collection)
     {
@@ -56,16 +55,12 @@ public class Reply
      */
     public static void toAll(String... messages)
     {
-        for (Player p : Bukkit.getOnlinePlayers())
-        {
-            to(p, messages);
-        }
+        toAll(Bukkit.getOnlinePlayers(), messages);
     }
 
     /**
      * Sends messages to every online player.
      * @param collection Messages to send.
-     * @param <P> The collection type.
      */
     public static <P extends Collection<String>> void toAll(@NonNull P collection)
     {
@@ -76,9 +71,8 @@ public class Reply
      * Sends messages to every player in the collection.
      * @param players Players to send the message to.
      * @param messages Messages to send.
-     * @param <P> The collection type.
      */
-    public static <P extends Collection<Player>> void toAll(@NonNull P players, String... messages)
+    public static <P extends Collection<? extends Player>> void toAll(@NonNull P players, String... messages)
     {
         for (Player p : players)
         {
@@ -90,8 +84,6 @@ public class Reply
      * Sends messages to every player in the collection.
      * @param players Players to send the message to.
      * @param collection Messages to send.
-     * @param <P> The collection type.
-     * @param <C> The collection type.
      */
     public static <P extends Collection<Player>, C extends Collection<String>>
     void toAll(@NonNull P players, C collection)
@@ -119,7 +111,6 @@ public class Reply
      * Sends messages to every online player except the specified one.
      * @param player Player to exclude.
      * @param collection Messages to send.
-     * @param <T> The collection type.
      */
     public static <T extends Collection<String>> void toAllExcept(@NonNull Player player, @NonNull T collection)
     {
@@ -163,11 +154,9 @@ public class Reply
      * @param players Players to send the message to.
      * @param exclude Players to exclude.
      * @param messages Messages to send.
-     * @param <P> The collection type.
-     * @param <T> The collection type.
      */
-    public static <P extends Collection<Player>, T extends Collection<Player>>
-    void toAllExcept(@NonNull T players, @NonNull P exclude, String... messages)
+    public static <P extends Collection<Player>>
+    void toAllExcept(@NonNull P players, @NonNull P exclude, String... messages)
     {
         for (Player p : players)
         {
@@ -183,12 +172,9 @@ public class Reply
      * @param players Players to send the message to.
      * @param exclude Players to exclude.
      * @param collection Messages to send.
-     * @param <P> The collection type.
-     * @param <T> The collection type.
-     * @param <C> The collection type.
      */
-    public static <P extends Collection<Player>, T extends Collection<Player>, C extends Collection<String>>
-    void toAllExcept(@NonNull T players, @NonNull P exclude, @NonNull C collection)
+    public static <P extends Collection<Player>, C extends Collection<String>>
+    void toAllExcept(@NonNull P players, @NonNull P exclude, @NonNull C collection)
     {
         toAllExcept(players, exclude, collection.toArray(new String[0]));
     }
@@ -198,7 +184,6 @@ public class Reply
      * @param players Players to send the message to.
      * @param exclude Player to exclude.
      * @param messages Messages to send.
-     * @param <T> The collection type.
      */
     public static <T extends Collection<Player>>
     void toAllExcept(@NonNull T players, @NonNull Player exclude, String... messages)

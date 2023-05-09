@@ -1,6 +1,7 @@
 package xyz.sorridi.stone;
 
 import lombok.SneakyThrows;
+import me.lucko.helper.Commands;
 import me.lucko.helper.internal.HelperImplementationPlugin;
 import me.lucko.helper.maven.MavenLibrary;
 import me.lucko.helper.maven.Repository;
@@ -9,6 +10,7 @@ import me.lucko.helper.plugin.ap.Plugin;
 import me.lucko.helper.plugin.ap.PluginDependency;
 import org.bukkit.plugin.PluginLoadOrder;
 import xyz.sorridi.stone.annotations.impl.serializer.SerializerProcessor;
+import xyz.sorridi.stone.commands.StoneCommand;
 
 @MavenLibrary(groupId = "commons-codec", artifactId = "commons-codec", version = "1.15")
 @MavenLibrary(groupId = "com.google.guava", artifactId = "guava", version = "31.1-jre")
@@ -61,6 +63,11 @@ public final class Stone extends ExtendedJavaPlugin
     public void enable()
     {
         new SerializerProcessor(this).process();
+
+        Commands.create()
+                .description("Stone command.")
+                .handler(new StoneCommand(this))
+                .registerAndBind(this, "stone");
     }
 
     @Override
