@@ -7,7 +7,6 @@ import xyz.sorridi.stone.immutable.ErrorMessages;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.WeakHashMap;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 

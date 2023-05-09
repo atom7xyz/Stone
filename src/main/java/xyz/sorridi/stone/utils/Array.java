@@ -2,6 +2,10 @@ package xyz.sorridi.stone.utils;
 
 import lombok.NonNull;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Array utilities.
  * @author Sorridi
@@ -20,6 +24,17 @@ public class Array
     public static <T> T[] of(@NonNull T... elements)
     {
         return elements;
+    }
+
+    /**
+     * Creates an array from the given list.
+     * @param list The list to put in the array.
+     * @param clazz The class of the array.
+     * @return The created array.
+     */
+    public static <T, L extends Collection<T>> T[] of(L list, Class<T[]> clazz)
+    {
+        return clazz.cast(Arrays.copyOf(list.toArray(), list.size(), clazz));
     }
 
 }

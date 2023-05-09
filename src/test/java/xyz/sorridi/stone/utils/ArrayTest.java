@@ -2,6 +2,8 @@ package xyz.sorridi.stone.utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class ArrayTest
@@ -19,6 +21,11 @@ class ArrayTest
         Integer[] d = Array.of(1, 2, 3, 4, 5);
 
         assertArrayEquals(c, d);
+
+        List<Integer> e = List.of(1, 2, 3, 4, 5);
+        Integer[] f = Array.of(e, Integer[].class);
+
+        assertArrayEquals(c, f);
     }
 
 }
