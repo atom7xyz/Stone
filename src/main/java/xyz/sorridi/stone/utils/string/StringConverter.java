@@ -1,6 +1,7 @@
 package xyz.sorridi.stone.utils.string;
 
 import lombok.NonNull;
+import lombok.val;
 import org.bukkit.ChatColor;
 import xyz.sorridi.stone.immutable.ErrorMessages;
 
@@ -19,9 +20,22 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class StringConverter
 {
-    private static final WeakHashMap<Integer, String> ROMAN_CACHE = new WeakHashMap<>();
-    private static final WeakHashMap<String, String> CAMELCASE_CACHE = new WeakHashMap<>();
-    private static final WeakHashMap<String, String> PROPERCASE_CACHE = new WeakHashMap<>();
+    public static final
+            WeakHashMap<String[],
+            WeakHashMap<String[],
+            WeakHashMap<Long, String>>> MILLS_TO_HUMAN_CACHE;
+
+    public static final WeakHashMap<Integer, String> ROMAN_CACHE;
+    public static final WeakHashMap<String, String> CAMELCASE_CACHE;
+    public static final WeakHashMap<String, String> PROPERCASE_CACHE;
+
+    static
+    {
+        MILLS_TO_HUMAN_CACHE = new WeakHashMap<>();
+        ROMAN_CACHE = new WeakHashMap<>();
+        CAMELCASE_CACHE = new WeakHashMap<>();
+        PROPERCASE_CACHE = new WeakHashMap<>();
+    }
 
     /**
      * Converts a long to a human-readable format.
@@ -35,6 +49,21 @@ public class StringConverter
         checkArgument(plurals.length == 5, ErrorMessages.INVALID_ARRAY_LENGTH.expect(5));
         checkArgument(singulars.length == 5, ErrorMessages.INVALID_ARRAY_LENGTH.expect(5));
 
+        if (MILLS_TO_HUMAN_CACHE.containsKey(plurals))
+        {
+            val _what = MILLS_TO_HUMAN_CACHE.get(plurals);
+
+            if (_what.containsKey(singulars))
+            {
+                val _target = _what.get(singulars);
+
+                if (_target.containsKey(time))
+                {
+                    return _target.get(time);
+                }
+            }
+        }
+
         long _days      = TimeUnit.MILLISECONDS.toDays(time);
         long _hours     = TimeUnit.MILLISECONDS.toHours(time);
         long _minutes   = TimeUnit.MILLISECONDS.toMinutes(time);
@@ -46,6 +75,7 @@ public class StringConverter
         long millis     = time - TimeUnit.SECONDS.toMillis(_seconds);
 
         StringBuilder builder = new StringBuilder();
+        String result;
 
         boolean pending = false;
 
@@ -142,7 +172,14 @@ public class StringConverter
             }
         }
 
-        return builder.toString();
+        result = builder.toString();
+
+        MILLS_TO_HUMAN_CACHE
+                .computeIfAbsent(plurals, k -> new WeakHashMap<>())
+                .computeIfAbsent(singulars, k -> new WeakHashMap<>())
+                .putIfAbsent(time, result);
+
+        return result;
     }
 
     /**
@@ -195,15 +232,18 @@ public class StringConverter
 
         String[] split      = string.split("_");
         StringBuilder camel = new StringBuilder();
+        String result;
 
         for (String part : split)
         {
             camel.append(toProperCase(part));
         }
 
-        CAMELCASE_CACHE.put(string, camel.toString());
+        result = camel.toString();
 
-        return camel.toString();
+        CAMELCASE_CACHE.put(string, result);
+
+        return result;
     }
 
     /**
@@ -271,6 +311,7 @@ public class StringConverter
         }
 
         StringBuilder temp = new StringBuilder();
+        String result;
 
         while (input >= 1000)
         {
@@ -338,9 +379,11 @@ public class StringConverter
             input -= 1;
         }
 
-        ROMAN_CACHE.put(input, temp.toString());
+        result = temp.toString();
 
-        return temp.toString();
+        ROMAN_CACHE.put(input, result);
+
+        return result;
     }
 
 }

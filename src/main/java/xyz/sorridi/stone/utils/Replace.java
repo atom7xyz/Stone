@@ -17,32 +17,32 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class Replace
 {
-    private static final
+    public static final
             WeakHashMap<String,
             WeakHashMap<String,
             WeakHashMap<Object, String>>> SINGLE_RES_CACHE;
 
-    private static final
+    public static final
             WeakHashMap<String,
             WeakHashMap<String[],
             WeakHashMap<Object[], String>>> MULTI_RES_CACHE;
 
-    private static final
+    public static final
             WeakHashMap<String[],
             WeakHashMap<String,
             WeakHashMap<Object, String[]>>> MULTI_CACHE_ARR_1;
 
-    private static final
+    public static final
             WeakHashMap<String[],
             WeakHashMap<String[],
             WeakHashMap<Object, String[]>>> MULTI_CACHE_ARR_2;
 
-    private static final
+    public static final
             WeakHashMap<Collection<String>,
             WeakHashMap<String,
             WeakHashMap<Object, Collection<String>>>> MULTI_CACHE_COLL_1;
 
-    private static final
+    public static final
             WeakHashMap<Collection<String>,
             WeakHashMap<String[],
             WeakHashMap<Object[], Collection<String>>>> MULTI_CACHE_COLL_2;
