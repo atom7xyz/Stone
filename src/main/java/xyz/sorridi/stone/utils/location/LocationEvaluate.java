@@ -35,6 +35,28 @@ public class LocationEvaluate
     }
 
     /**
+     * Checks if two locations are similar in terms of X, Y, Z (ignoring yaw and pitch).
+     * @param location  Location to compare.
+     * @param toCompare Location to compare.
+     * @return If the locations are similar (true) or not (false).
+     */
+    public static boolean isSimilar(@NonNull Location location, @NonNull Location toCompare)
+    {
+        World world     = location.getWorld();
+        World _world    = toCompare.getWorld();
+
+        int x = (int) location.getX();
+        int y = (int) location.getY();
+        int z = (int) location.getZ();
+
+        int _x = (int) toCompare.getX();
+        int _y = (int) toCompare.getY();
+        int _z = (int) toCompare.getZ();
+
+        return (world == _world) && (x == _x) && (y == _y) && (z == _z);
+    }
+
+    /**
      * Gets the middle of a location.
      * @param location  The location to get the middle from.
      * @param yawPitch  If the yaw and pitch should be the same as the original location (true) or not (false).

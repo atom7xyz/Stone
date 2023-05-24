@@ -28,4 +28,15 @@ class LocationEvaluateTest
         assertEquals(location.add(.5, 0, .5), middle);
     }
 
+    @Test
+    void isSimilar()
+    {
+        Location location   = new Location(null, 1.4, 2.7, 3.0001);
+        Location location2  = new Location(null, 1.5, 2.3, 3.1);
+        Location location3  = new Location(null, 1, 2, 4);
+
+        assertTrue(LocationEvaluate.isSimilar(location, location2));
+        assertFalse(LocationEvaluate.isSimilar(location, location3));
+    }
+
 }
