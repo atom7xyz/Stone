@@ -157,21 +157,21 @@ public class LocationEvaluate
             staticTarget.setZ((int) staticTarget.getZ());
         }
 
-        if (IS_NEAR_CACHE.containsKey(location))
+        if (IS_NEAR_CACHE.containsKey(staticTarget))
         {
-            val _map = IS_NEAR_CACHE.get(location);
+            val _map = IS_NEAR_CACHE.get(staticTarget);
 
-            if (_map.containsKey(staticTarget))
+            if (_map.containsKey(location))
             {
-                return _map.get(staticTarget);
+                return _map.get(location);
             }
         }
 
         boolean result = location.distance(staticTarget) <= radius;
 
         IS_NEAR_CACHE
-                .computeIfAbsent(location, k -> new WeakHashMap<>())
-                .putIfAbsent(staticTarget, result);
+                .computeIfAbsent(staticTarget, k -> new WeakHashMap<>())
+                .putIfAbsent(location, result);
 
         return result;
     }
