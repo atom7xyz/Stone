@@ -39,4 +39,13 @@ class LocationEvaluateTest
         assertFalse(LocationEvaluate.isSimilar(location, location3));
     }
 
+    @Test
+    void getMiddleLocationFull()
+    {
+        Location location   = new Location(null, 10, 10, 10);
+        Location middle     = LocationEvaluate.getMiddleLocationFull(location, false);
+
+        assertEquals(location.add(.5, .5, .5), middle);
+    }
+
 }
