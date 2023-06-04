@@ -4,7 +4,7 @@ import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import xyz.sorridi.stone.utils.Array;
+import xyz.sorridi.stone.utils.data.Array;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

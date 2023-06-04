@@ -6,6 +6,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import xyz.sorridi.stone.immutable.ErrorMessages;
+import xyz.sorridi.stone.utils.data.Array;
+import xyz.sorridi.stone.utils.Replace;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,9 +47,7 @@ public class Versioning
      */
     private String getFormattedAuthors()
     {
-        return String.valueOf(rawAuthors)
-                .replace("[", "")
-                .replace("]", "");
+        return Replace.of(rawAuthors, Array.of("[", "]"), "", "").toString();
     }
 
     /**

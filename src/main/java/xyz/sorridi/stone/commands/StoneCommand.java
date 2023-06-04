@@ -5,13 +5,13 @@ import me.lucko.helper.command.functional.FunctionalCommandHandler;
 import me.lucko.helper.plugin.ExtendedJavaPlugin;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
-import xyz.sorridi.stone.utils.Array;
+import xyz.sorridi.stone.utils.data.Array;
 import xyz.sorridi.stone.utils.Replace;
 import xyz.sorridi.stone.utils.description.Versioning;
 
 public class StoneCommand implements FunctionalCommandHandler<CommandSender>
 {
-    private static String[] VERSION_MESSAGE = Array.of(
+    private static final String[] VERSION_MESSAGE = Array.of(
             "&8&m-----------------------",
             "&8▎ &cv{ver} &7&o({hash})",
             "&8▎ &7autore: &c{authors}",

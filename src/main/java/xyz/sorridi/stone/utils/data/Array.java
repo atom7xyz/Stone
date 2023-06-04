@@ -1,4 +1,4 @@
-package xyz.sorridi.stone.utils;
+package xyz.sorridi.stone.utils.data;
 
 import lombok.NonNull;
 

@@ -1,18 +1,23 @@
 package xyz.sorridi.stone.annotations;
 
 import lombok.SneakyThrows;
+import lombok.val;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import xyz.sorridi.stone.immutable.ErrorMessages;
-import xyz.sorridi.stone.utils.Array;
+import xyz.sorridi.stone.utils.data.Array;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Class used to gather resources.
@@ -77,6 +82,98 @@ public class ResourceGatherer
     public static URL getPath(Class<?> clazz)
     {
         return clazz.getProtectionDomain().getCodeSource().getLocation();
+    }
+
+    /**
+     * Returns the methods of a given class.
+     * @param clazz The class.
+     * @return The methods.
+     */
+    public static List<Method> getMethods(Class<?> clazz)
+    {
+        return List.of(clazz.getDeclaredMethods());
+    }
+
+    /**
+     * Returns the methods of a given object.
+     * @param object The object.
+     * @return The methods.
+     */
+    public static List<Method> getMethods(Object object)
+    {
+        return getMethods(object.getClass());
+    }
+
+    /**
+     * Returns the stream of methods of a given class.
+     * @param clazz The class.
+     * @return The methods.
+     */
+    public static Stream<Method> streamMethods(Class<?> clazz)
+    {
+        return getMethods(clazz).stream();
+    }
+
+    /**
+     * Returns the stream of methods of a given object.
+     * @param object The object.
+     * @return The methods.
+     */
+    public static Stream<Method> streamMethods(Object object)
+    {
+        return getMethods(object).stream();
+    }
+
+    /**
+     * Executes a given action for each method of a given class.
+     * @param clazz The class.
+     * @param consumer The action.
+     */
+    public static void forEachMethod(Class<?> clazz, Consumer<Method> consumer)
+    {
+        getMethods(clazz).forEach(consumer);
+    }
+
+    /**
+     * Executes a given action for each method of a given object.
+     * @param object The object.
+     * @param consumer The action.
+     */
+    public static void forEachMethod(Object object, Consumer<Method> consumer)
+    {
+        getMethods(object).forEach(consumer);
+    }
+
+    /**
+     * Executes a given action for each method of a given class.
+     * @param clazz The class.
+     * @param consumer The action.
+     */
+    @SafeVarargs
+    public static void forEachMethod(Class<?> clazz, Consumer<Method> consumer, Predicate<Method> ...predicates)
+    {
+        streamMethods(clazz).filter(method ->
+        {
+            for (val predicate : predicates)
+            {
+                if (!predicate.test(method))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }).forEach(consumer);
+    }
+
+    /**
+     * Executes a given action for each method of a given object.
+     * @param object The object.
+     * @param consumer The action.
+     */
+    @SafeVarargs
+    public static void forEachMethod(Object object, Consumer<Method> consumer, Predicate<Method> ...predicates)
+    {
+        forEachMethod(object.getClass(), consumer, predicates);
     }
 
 }

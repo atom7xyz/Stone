@@ -44,6 +44,13 @@ import xyz.sorridi.stone.commands.StoneCommand;
         repo = @Repository(url = "https://repo.mikigal.pl/releases")
 )
 
+@MavenLibrary(
+        groupId = "fr.mrmicky",
+        artifactId = "FastParticles",
+        version = "2.0.0",
+        repo = @Repository(url = "https://www.jitpack.io")
+)
+
 @Plugin(
         name = "Stone",
         version = "1.0-SNAPSHOT",

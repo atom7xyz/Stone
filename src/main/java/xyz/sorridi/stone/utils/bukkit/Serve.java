@@ -1,4 +1,4 @@
-package xyz.sorridi.stone.utils;
+package xyz.sorridi.stone.utils.bukkit;
 
 import lombok.val;
 import me.lucko.helper.Services;

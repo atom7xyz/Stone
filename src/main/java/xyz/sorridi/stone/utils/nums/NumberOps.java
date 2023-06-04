@@ -1,6 +1,6 @@
 package xyz.sorridi.stone.utils.nums;
 
-import xyz.sorridi.stone.utils.Array;
+import xyz.sorridi.stone.utils.data.Array;
 
 /**
  * Number utilities.
