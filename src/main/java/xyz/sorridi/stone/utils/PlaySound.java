@@ -26,7 +26,7 @@ public class PlaySound
      */
     public static void play(@NonNull Player player, @NonNull Sound sound)
     {
-        play(player, sound, 1, 0, player.getLocation());
+        play(player, sound, 1, 1, player.getLocation());
     }
 
     /**
@@ -37,7 +37,7 @@ public class PlaySound
      */
     public static void play(@NonNull Player player, @NonNull Sound sound, int volume)
     {
-        play(player, sound, volume, 0, player.getLocation());
+        play(player, sound, volume, 1, player.getLocation());
     }
 
     /**
@@ -62,7 +62,7 @@ public class PlaySound
                             @NonNull Sound sound,
                             @NonNull Location location
     ) {
-        play(player, sound, 1, 0, location);
+        play(player, sound, 1, 1, location);
     }
 
     /**
@@ -93,7 +93,7 @@ public class PlaySound
      */
     public static void playNearby(@NonNull Entity entity, @NonNull Sound sound, int range)
     {
-        playNearby(entity, sound, 1, 0, range);
+        playNearby(entity, sound, 1, 1, range);
     }
 
     /**
@@ -118,7 +118,7 @@ public class PlaySound
      */
     public static void playNearby(@NonNull Entity entity, @NonNull Sound sound, int range, @NonNull Location location)
     {
-        playNearby(entity, sound, 1, 0, range, location);
+        playNearby(entity, sound, 1, 1, range, location);
     }
 
     /**

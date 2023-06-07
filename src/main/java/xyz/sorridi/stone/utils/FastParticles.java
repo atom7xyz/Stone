@@ -34,7 +34,7 @@ public class FastParticles
      * @param material The material to get the particle data.
      * @return The particle data.
      */
-    public static ParticleData getParticleData(Material material)
+    public static ParticleData getParticleData(@NonNull Material material)
     {
         ParticleData particleData;
 
@@ -65,7 +65,7 @@ public class FastParticles
      * @param data The data to get the particle data.
      * @return The particle data.
      */
-    public static ParticleData getParticleData(Material material, byte data)
+    public static ParticleData getParticleData(@NonNull Material material, byte data)
     {
         ParticleData particleData;
 
@@ -93,7 +93,7 @@ public class FastParticles
      * @param particle The particle to get the particle type.
      * @return The particle type.
      */
-    public static ParticleType of(Particle particle)
+    public static ParticleType of(@NonNull Particle particle)
     {
         if (PARTICLE_TYPE_CACHE.containsKey(particle))
         {
