@@ -1,7 +1,7 @@
 package xyz.sorridi.stone.utils.constructor;
 
 import lombok.NonNull;
-import xyz.sorridi.stone.immutable.ErrorMessages;
+import xyz.sorridi.stone.immutable.Err;
 
 import java.util.Optional;
 
@@ -9,6 +9,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Constructor caller utilities.
+ *
  * @author Sorridi
  * @since 1.0
  */
@@ -17,10 +18,11 @@ public class ConstructorCaller
 
     /**
      * Calls a constructor with the given parameters.
+     *
      * @param clazz The class to call.
-     * @param args The arguments to pass.
+     * @param args  The arguments to pass.
+     * @param <T>   The type of the class.
      * @return The created object.
-     * @param <T> The type of the class.
      */
     public static <T> Optional<T> call(Class<T> clazz, Object... args)
     {
@@ -29,15 +31,16 @@ public class ConstructorCaller
 
     /**
      * Calls a constructor with the given parameters.
+     *
      * @param clazz The class to call.
      * @param index The index of the constructor to call.
-     * @param args The arguments to pass.
+     * @param args  The arguments to pass.
+     * @param <T>   The type of the class.
      * @return The created object.
-     * @param <T> The type of the class.
      */
     public static <T> Optional<T> call(@NonNull Class<T> clazz, int index, Object... args)
     {
-        checkArgument(index >= 0, ErrorMessages.NEGATIVE.get());
+        checkArgument(index >= 0, Err.NEGATIVE.expect("index"));
 
         Optional<T> instance = Optional.empty();
 

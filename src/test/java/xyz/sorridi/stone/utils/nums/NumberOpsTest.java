@@ -21,11 +21,11 @@ class NumberOpsTest
     void shorten()
     {
         assertEquals("100.0", NumberOps.shorten(100));
-        assertEquals("1.0k", NumberOps.shorten(1000));
-        assertEquals("1.0M", NumberOps.shorten(1000000));
-        assertEquals("1.0G", NumberOps.shorten(1000000000));
+        assertEquals("1.0k", NumberOps.shorten(1_000));
+        assertEquals("1.0M", NumberOps.shorten(1_000_000));
+        assertEquals("1.0B", NumberOps.shorten(1_000_000_000));
 
-        assertEquals("2.4k", NumberOps.shorten(2449));
-        assertEquals("2.5k", NumberOps.shorten(2450));
+        assertEquals("2.4k", NumberOps.shorten(2_449));
+        assertEquals("2.5k", NumberOps.shorten(2_450));
     }
 }

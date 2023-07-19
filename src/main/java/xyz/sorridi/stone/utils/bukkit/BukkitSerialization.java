@@ -16,6 +16,7 @@ import java.io.IOException;
 /**
  * A class to serialize and deserialize inventories.
  * Original source <a href="https://gist.github.com/graywolf336/8153678">here.</a>
+ *
  * @author graywolf336
  * @since 1.0
  */
@@ -25,14 +26,15 @@ public class BukkitSerialization
     /**
      * Converts the player inventory to a String array of Base64 strings.
      * First string is the content and second string is the armor.
+     *
      * @param playerInventory to turn into an array of strings.
      * @return Array of strings: [ main content, armor content ]
      */
     public static String[] playerInventoryToBase64(PlayerInventory playerInventory) throws IllegalStateException
     {
         //get the main content part, this doesn't return the armor
-        String content  = toBase64(playerInventory);
-        String armor    = itemStackArrayToBase64(playerInventory.getArmorContents());
+        String content = toBase64(playerInventory);
+        String armor = itemStackArrayToBase64(playerInventory.getArmorContents());
 
         return Array.of(content, armor);
     }
@@ -40,6 +42,7 @@ public class BukkitSerialization
     /**
      * A method to serialize an {@link ItemStack} array to Base64 String.
      * Based off of {@link #toBase64(Inventory)}.
+     *
      * @param items to turn into a Base64 String.
      * @return Base64 string of the items.
      */
@@ -47,7 +50,7 @@ public class BukkitSerialization
     {
         try
         {
-            ByteArrayOutputStream outputStream  = new ByteArrayOutputStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
 
             // Write the size of the inventory
@@ -74,6 +77,7 @@ public class BukkitSerialization
      * Special thanks to Comphenix in the Bukkit forums or also known
      * as aadnk on GitHub.
      * <a href="https://gist.github.com/aadnk/8138186">Original Source</a>
+     *
      * @param inventory to serialize
      * @return Base64 string of the provided inventory
      */
@@ -81,7 +85,7 @@ public class BukkitSerialization
     {
         try
         {
-            ByteArrayOutputStream outputStream  = new ByteArrayOutputStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
 
             // Write the size of the inventory
@@ -108,6 +112,7 @@ public class BukkitSerialization
      * Special thanks to Comphenix in the Bukkit forums or also known
      * as aadnk on GitHub.
      * <a href="https://gist.github.com/aadnk/8138186">Original Source</a>
+     *
      * @param data Base64 string of data containing an inventory.
      * @return Inventory created from the Base64 string.
      */
@@ -137,6 +142,7 @@ public class BukkitSerialization
     /**
      * Gets an array of ItemStacks from Base64 string.
      * Base off of {@link #fromBase64(String)}.
+     *
      * @param data Base64 string to convert to ItemStack array.
      * @return ItemStack array created from the Base64 string.
      */

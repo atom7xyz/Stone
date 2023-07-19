@@ -2,84 +2,75 @@ package xyz.sorridi.stone.builders;
 
 import lombok.Getter;
 import lombok.NonNull;
+import xyz.sorridi.stone.immutable.Err;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 @Getter
-public class UseCoolDown<T>
+public class UseCoolDown<T> extends HashMap<T, Long>
 {
-    private final HashMap<T, Long> coolDowns;
-    private final long time;
+    private final long usableEvery;
 
     /**
-     * @param time Time between each use.
-     * @param timeUnit Time unit.
+     * @param usableEvery Time between each use.
+     * @param timeUnit    Time unit.
      */
-    public UseCoolDown(long time, TimeUnit timeUnit)
+    public UseCoolDown(long usableEvery, TimeUnit timeUnit)
     {
-        coolDowns = new HashMap<>();
-        this.time = timeUnit.toMillis(time);
+        checkArgument(usableEvery >= 0, Err.NEGATIVE.expect("usableEvery"));
+
+        this.usableEvery = timeUnit.toMillis(usableEvery);
     }
 
     /**
      * Puts a target in the cool down.
+     *
      * @param target Target to be put in the cool down.
      */
-    public void putIfAbsent(@NonNull T target)
+    public void create(@NonNull T target)
     {
-        coolDowns.putIfAbsent(target, 0L);
+        this.putIfAbsent(target, 0L);
     }
 
     /**
-     * Renews the cool down for a target.
+     * Refreshes the cool down for a target.
+     *
      * @param target The target.
      */
-    public void renew(@NonNull T target)
+    public void refresh(@NonNull T target)
     {
-        coolDowns.replace(target, System.currentTimeMillis());
-    }
-
-    /**
-     * Removes a target from the cool down.
-     * @param target Target to be removed.
-     */
-    public void remove(@NonNull T target)
-    {
-        coolDowns.remove(target);
-    }
-
-    /**
-     * Clears cool downs.
-     */
-    public void clear()
-    {
-        coolDowns.clear();
+        this.replace(target, System.currentTimeMillis());
     }
 
     /**
      * Checks the time difference between the current time and the players' last cool down entry.
+     *
      * @param target Target to check.
      * @return The time difference.
      */
     public long timeDiff(@NonNull T target)
     {
-        return System.currentTimeMillis() - coolDowns.get(target);
+        return System.currentTimeMillis() - this.get(target);
     }
 
     /**
      * Retrieves the cool down left for a target.
+     *
      * @param target Target to check.
      * @return Time left in milliseconds.
      */
     public long usableIn(@NonNull T target)
     {
-        return time - timeDiff(target);
+        return usableEvery - timeDiff(target);
     }
 
     /**
      * Retrieves the cool down left for a target.
-     * @param target Target to check.
+     *
+     * @param target   Target to check.
      * @param timeUnit Time unit to convert to.
      * @return Time left in the specified time unit.
      */
@@ -90,12 +81,13 @@ public class UseCoolDown<T>
 
     /**
      * Checks if the cool down has expired.
+     *
      * @param target Target to check.
      * @return If the cool down has expired.
      */
     public boolean isUsable(@NonNull T target)
     {
-        return timeDiff(target) >= time;
+        return timeDiff(target) >= usableEvery;
     }
 
 }

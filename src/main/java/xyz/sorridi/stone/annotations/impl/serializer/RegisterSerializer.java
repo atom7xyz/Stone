@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation used to register custom serializers.
+ *
  * @author Sorridi
  * @since 1.0
  */
@@ -21,6 +22,7 @@ public @interface RegisterSerializer
 {
     /**
      * The type of serializer.
+     *
      * @return The type of serializer.
      */
     @NonNull Class<?> of();

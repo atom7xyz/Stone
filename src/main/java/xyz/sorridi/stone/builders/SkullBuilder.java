@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import xyz.sorridi.stone.immutable.ErrorMessages;
+import xyz.sorridi.stone.immutable.Err;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -35,9 +35,9 @@ public class SkullBuilder
     private static boolean warningPosted;
 
     // some reflection stuff to be used when setting a skull's profile
-    private static Field    blockProfileField;
-    private static Method   metaSetProfileMethod;
-    private static Field    metaProfileField;
+    private static Field blockProfileField;
+    private static Method metaSetProfileMethod;
+    private static Field metaProfileField;
 
     /**
      * Creates a player skull, should work in both legacy and new Bukkit APIs.
@@ -197,8 +197,8 @@ public class SkullBuilder
      */
     public static void blockWithUuid(@NonNull Block block, @NonNull UUID id)
     {
-        checkNotNull(block, ErrorMessages.NULL.expect("block"));
-        checkNotNull(id, ErrorMessages.NULL.expect("id"));
+        checkNotNull(block, Err.NULL.expect("block"));
+        checkNotNull(id, Err.NULL.expect("id"));
 
         setToSkull(block);
         Skull state = (Skull) block.getState();
@@ -340,11 +340,14 @@ public class SkullBuilder
 
             if (!warningPosted)
             {
-                Bukkit.getLogger().warning("SKULLCREATOR API - Using the legacy bukkit API with 1.13+ bukkit versions is not supported!");
+                Bukkit.getLogger()
+                      .warning("SKULLCREATOR API - Legacy bukkit API with 1.13+ bukkit versions is not supported!");
                 warningPosted = true;
             }
         }
-        catch (NoSuchFieldException | IllegalArgumentException ignored) { }
+        catch (NoSuchFieldException | IllegalArgumentException ignored)
+        {
+        }
     }
 
 }

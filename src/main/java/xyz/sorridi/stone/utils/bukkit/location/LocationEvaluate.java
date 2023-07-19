@@ -2,38 +2,38 @@ package xyz.sorridi.stone.utils.bukkit.location;
 
 import com.google.common.base.Preconditions;
 import lombok.NonNull;
-import lombok.val;
 import org.bukkit.Location;
 import org.bukkit.World;
-
-import java.util.WeakHashMap;
+import xyz.sorridi.stone.data.structures.SoftMap;
+import xyz.sorridi.stone.immutable.Err;
+import xyz.sorridi.stone.utils.data.Array;
 
 /**
  * Evaluation of locations.
+ *
  * @author Sorridi
  * @since 1.0
  */
 public class LocationEvaluate
 {
-    private static final
-            WeakHashMap<Location,
-            WeakHashMap<Location, Boolean>> IS_NEAR_CACHE;
+    public static final SoftMap<Array.Wrapper, Boolean> IS_NEAR_CACHE;
 
     static
     {
-        IS_NEAR_CACHE = new WeakHashMap<>();
+        IS_NEAR_CACHE = new SoftMap<>();
     }
 
     /**
      * Checks if two locations are equal in terms of X, Y, Z (ignoring yaw and pitch).
+     *
      * @param location  Location to compare.
      * @param toCompare Location to compare.
      * @return If the locations are the same.
      */
     public static boolean isEqual(@NonNull Location location, @NonNull Location toCompare)
     {
-        World world     = location.getWorld();
-        World _world    = toCompare.getWorld();
+        World world = location.getWorld();
+        World _world = toCompare.getWorld();
 
         double x = location.getX();
         double y = location.getY();
@@ -48,14 +48,15 @@ public class LocationEvaluate
 
     /**
      * Checks if two locations are similar in terms of X, Y, Z (ignoring yaw and pitch).
+     *
      * @param location  Location to compare.
      * @param toCompare Location to compare.
      * @return If the locations are similar.
      */
     public static boolean isSimilar(@NonNull Location location, @NonNull Location toCompare)
     {
-        World world     = location.getWorld();
-        World _world    = toCompare.getWorld();
+        World world = location.getWorld();
+        World _world = toCompare.getWorld();
 
         int x = (int) location.getX();
         int y = (int) location.getY();
@@ -70,19 +71,20 @@ public class LocationEvaluate
 
     /**
      * Gets the middle of a location.
-     * @param location  The location to get the middle from.
-     * @param yawPitch  If the yaw and pitch should be the same as the original location.
+     *
+     * @param location The location to get the middle from.
+     * @param yawPitch If the yaw and pitch should be the same as the original location.
      * @return The middle of the location.
      */
     public static Location getMiddleLocation(@NonNull Location location, boolean yawPitch)
     {
         World world = location.getWorld();
 
-        double x    = (int) location.getX() + .5;
-        double z    = (int) location.getZ() + .5;
-        double y    = location.getY();
+        double x = (int) location.getX() + .5;
+        double z = (int) location.getZ() + .5;
+        double y = location.getY();
 
-        float yaw   = yawPitch ? location.getYaw() : 0;
+        float yaw = yawPitch ? location.getYaw() : 0;
         float pitch = yawPitch ? location.getPitch() : 0;
 
         return new Location(world, x, y, z, yaw, pitch);
@@ -90,19 +92,20 @@ public class LocationEvaluate
 
     /**
      * Gets the middle of a location (Y coordinate too).
-     * @param location  The location to get the middle from.
-     * @param yawPitch  If the yaw and pitch should be the same as the original location.
+     *
+     * @param location The location to get the middle from.
+     * @param yawPitch If the yaw and pitch should be the same as the original location.
      * @return The middle of the location.
      */
     public static Location getMiddleLocationFull(@NonNull Location location, boolean yawPitch)
     {
         World world = location.getWorld();
 
-        double x    = (int) location.getX() + .5;
-        double z    = (int) location.getZ() + .5;
-        double y    = (int) location.getY() + .5;
+        double x = (int) location.getX() + .5;
+        double z = (int) location.getZ() + .5;
+        double y = (int) location.getY() + .5;
 
-        float yaw   = yawPitch ? location.getYaw() : 0;
+        float yaw = yawPitch ? location.getYaw() : 0;
         float pitch = yawPitch ? location.getPitch() : 0;
 
         return new Location(world, x, y, z, yaw, pitch);
@@ -110,9 +113,10 @@ public class LocationEvaluate
 
     /**
      * Checks if a location is near another location.
-     * @param location The location to check (dynamic preferred, for example the location of a player).
+     *
+     * @param location     The location to check (dynamic preferred, for example the location of a player).
      * @param staticTarget The location to check (static preferred, for example the location of a block).
-     * @param radius The radius to check.
+     * @param radius       The radius to check.
      * @return If the location is near the target.
      */
     public static boolean isNear(@NonNull Location location, @NonNull Location staticTarget, int radius)
@@ -122,12 +126,13 @@ public class LocationEvaluate
 
     /**
      * Checks if a location is near another location.
-     * @param location The location to check (dynamic preferred, for example the location of a player).
-     * @param staticTarget The location to check (static preferred, for example the location of a block).
-     * @param radius The radius to check.
-     * @param exact If the location should be exact.
+     *
+     * @param location       The location to check (dynamic preferred, for example the location of a player).
+     * @param staticTarget   The location to check (static preferred, for example the location of a block).
+     * @param radius         The radius to check.
+     * @param exact          If the location should be exact.
      * @param shouldBeMiddle If the location should be the middle of the block (Y excluded).
-     * @param middleFull If the location should be the middle of the block (Y included).
+     * @param middleFull     If the location should be the middle of the block (Y included).
      * @return If the location is near the target.
      */
     public static boolean isNear(@NonNull Location location,
@@ -135,9 +140,9 @@ public class LocationEvaluate
                                  int radius,
                                  boolean exact,
                                  boolean shouldBeMiddle,
-                                 boolean middleFull
-    ) {
-        Preconditions.checkArgument(radius > 0, "Radius must be greater than 0.");
+                                 boolean middleFull)
+    {
+        Preconditions.checkArgument(radius > 0, Err.MUST_BE_POSITIVE.expect("radius"));
 
         if (shouldBeMiddle)
         {
@@ -156,7 +161,7 @@ public class LocationEvaluate
             location.setY((int) location.getY());
             location.setZ((int) location.getZ());
         }
-        
+
         if (!exact)
         {
             staticTarget.setX((int) staticTarget.getX());
@@ -164,21 +169,16 @@ public class LocationEvaluate
             staticTarget.setZ((int) staticTarget.getZ());
         }
 
-        if (IS_NEAR_CACHE.containsKey(staticTarget))
-        {
-            val _map = IS_NEAR_CACHE.get(staticTarget);
+        var key = new Array.Wrapper(location, staticTarget);
+        var cached = IS_NEAR_CACHE.get(key);
 
-            if (_map.containsKey(location))
-            {
-                return _map.get(location);
-            }
+        if (cached != null)
+        {
+            return cached;
         }
 
         boolean result = location.distance(staticTarget) <= radius;
-
-        IS_NEAR_CACHE
-                .computeIfAbsent(staticTarget, k -> new WeakHashMap<>())
-                .putIfAbsent(location, result);
+        IS_NEAR_CACHE.put(key, result);
 
         return result;
     }

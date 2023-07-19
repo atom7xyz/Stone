@@ -1,6 +1,6 @@
 package xyz.sorridi.stone.utils.string;
 
-import xyz.sorridi.stone.immutable.ErrorMessages;
+import xyz.sorridi.stone.immutable.Err;
 
 import java.text.DecimalFormat;
 
@@ -8,20 +8,22 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * String formatting utilities.
+ *
  * @author Sorridi
  * @since 1.0
  */
 public class StringFormatter
 {
-    private static final DecimalFormat SINGLE_DIGIT_FORMAT  = new DecimalFormat("0.0");
-    private static final DecimalFormat DOUBLE_DIGIT_FORMAT  = new DecimalFormat("0.00");
-    private static final DecimalFormat TRIPLE_DIGIT_FORMAT  = new DecimalFormat("0.000");
-    private static final DecimalFormat QUAD_DIGIT_FORMAT    = new DecimalFormat("0.0000");
-    private static final DecimalFormat QUINT_DIGIT_FORMAT   = new DecimalFormat("0.00000");
+    private static final DecimalFormat SINGLE_DIGIT_FORMAT = new DecimalFormat("0.0");
+    private static final DecimalFormat DOUBLE_DIGIT_FORMAT = new DecimalFormat("0.00");
+    private static final DecimalFormat TRIPLE_DIGIT_FORMAT = new DecimalFormat("0.000");
+    private static final DecimalFormat QUAD_DIGIT_FORMAT = new DecimalFormat("0.0000");
+    private static final DecimalFormat QUINT_DIGIT_FORMAT = new DecimalFormat("0.00000");
 
     /**
      * Formats a double to a single digit.
-     * @param value The value to format.
+     *
+     * @param value    The value to format.
      * @param decimals The number of decimals.
      * @return The formatted value.
      */
@@ -29,24 +31,25 @@ public class StringFormatter
     {
         return switch (decimals)
         {
-            case 1  -> formatSingle(value);
-            case 2  -> formatDouble(value);
-            case 3  -> formatTriple(value);
-            case 4  -> formatQuadruple(value);
-            case 5  -> formatQuintuple(value);
+            case 1 -> formatSingle(value);
+            case 2 -> formatDouble(value);
+            case 3 -> formatTriple(value);
+            case 4 -> formatQuadruple(value);
+            case 5 -> formatQuintuple(value);
             default -> formatCustom(value, decimals);
         };
     }
 
     private static String formatCustom(double value, int decimals)
     {
-        checkArgument(decimals > 0, ErrorMessages.ZERO.get());
+        checkArgument(decimals > 0, Err.ZERO.get());
 
         return new DecimalFormat("0." + "0".repeat(decimals)).format(value);
     }
 
     /**
      * Formats a double to a single digit.
+     *
      * @param value The value to format.
      * @return The formatted value.
      */
@@ -57,6 +60,7 @@ public class StringFormatter
 
     /**
      * Formats a double to a double digit.
+     *
      * @param value The value to format.
      * @return The formatted value.
      */
@@ -67,6 +71,7 @@ public class StringFormatter
 
     /**
      * Formats a double to a triple digit.
+     *
      * @param value The value to format.
      * @return The formatted value.
      */
@@ -77,6 +82,7 @@ public class StringFormatter
 
     /**
      * Formats a double to a quadruple digit.
+     *
      * @param value The value to format.
      * @return The formatted value.
      */
@@ -87,6 +93,7 @@ public class StringFormatter
 
     /**
      * Formats a double to a quintuple digit.
+     *
      * @param value The value to format.
      * @return The formatted value.
      */

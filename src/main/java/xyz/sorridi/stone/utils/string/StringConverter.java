@@ -1,78 +1,71 @@
 package xyz.sorridi.stone.utils.string;
 
 import lombok.NonNull;
-import lombok.val;
 import org.bukkit.ChatColor;
-import xyz.sorridi.stone.immutable.ErrorMessages;
+import xyz.sorridi.stone.data.structures.SoftMap;
+import xyz.sorridi.stone.immutable.Err;
+import xyz.sorridi.stone.utils.data.Array;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * String conversion utilities.
+ *
  * @author Sorridi
  * @since 1.0
  */
 public class StringConverter
 {
-    public static final
-            WeakHashMap<String[],
-            WeakHashMap<String[],
-            WeakHashMap<Long, String>>> MILLS_TO_HUMAN_CACHE;
+    public static final SoftMap<Array.Wrapper, String> MILLS_TO_HUMAN_CACHE;
+    public static final SoftMap<String, String> CAMELCASE_CACHE;
+    public static final SoftMap<String, String> PROPERCASE_CACHE;
+    public static final SoftMap<Integer, String> ROMAN_CACHE;
 
-    public static final WeakHashMap<Integer, String> ROMAN_CACHE;
-    public static final WeakHashMap<String, String> CAMELCASE_CACHE;
-    public static final WeakHashMap<String, String> PROPERCASE_CACHE;
+    private static final String DEFAULT_DATE_FORMAT = "HH:mm:ss dd/MM/yy";
 
     static
     {
-        MILLS_TO_HUMAN_CACHE = new WeakHashMap<>();
-        ROMAN_CACHE = new WeakHashMap<>();
-        CAMELCASE_CACHE = new WeakHashMap<>();
-        PROPERCASE_CACHE = new WeakHashMap<>();
+        MILLS_TO_HUMAN_CACHE = new SoftMap<>();
+        ROMAN_CACHE = new SoftMap<>();
+        CAMELCASE_CACHE = new SoftMap<>();
+        PROPERCASE_CACHE = new SoftMap<>();
     }
 
     /**
      * Converts a long to a human-readable format.
-     * @param plurals The plurals of the time units.
+     *
+     * @param plurals   The plurals of the time units.
      * @param singulars The singulars of the time units.
-     * @param time The time to convert.
+     * @param time      The time to convert.
      * @return The converted time.
      */
-    public static String fromMillisToHuman(String[] plurals, String[] singulars, long time)
+    public static String fromMillisToHuman(@NonNull String[] plurals, @NonNull String[] singulars, long time)
     {
-        checkArgument(plurals.length == 5, ErrorMessages.INVALID_ARRAY_LENGTH.expect(5));
-        checkArgument(singulars.length == 5, ErrorMessages.INVALID_ARRAY_LENGTH.expect(5));
+        checkArgument(plurals.length == 5, Err.INVALID_ARRAY_LENGTH.expect(5));
+        checkArgument(singulars.length == 5, Err.INVALID_ARRAY_LENGTH.expect(5));
 
-        if (MILLS_TO_HUMAN_CACHE.containsKey(plurals))
+        var key = new Array.Wrapper(time, plurals, singulars);
+        var val = MILLS_TO_HUMAN_CACHE.get(key);
+
+        if (val != null)
         {
-            val _what = MILLS_TO_HUMAN_CACHE.get(plurals);
-
-            if (_what.containsKey(singulars))
-            {
-                val _target = _what.get(singulars);
-
-                if (_target.containsKey(time))
-                {
-                    return _target.get(time);
-                }
-            }
+            return val;
         }
 
-        long _days      = TimeUnit.MILLISECONDS.toDays(time);
-        long _hours     = TimeUnit.MILLISECONDS.toHours(time);
-        long _minutes   = TimeUnit.MILLISECONDS.toMinutes(time);
-        long _seconds   = TimeUnit.MILLISECONDS.toSeconds(time);
+        long _days = TimeUnit.MILLISECONDS.toDays(time);
+        long _hours = TimeUnit.MILLISECONDS.toHours(time);
+        long _minutes = TimeUnit.MILLISECONDS.toMinutes(time);
+        long _seconds = TimeUnit.MILLISECONDS.toSeconds(time);
 
-        long hours      = _hours - TimeUnit.DAYS.toHours(_days);
-        long minutes    = _minutes - TimeUnit.HOURS.toMinutes(_hours);
-        long seconds    = _seconds - TimeUnit.MINUTES.toSeconds(_minutes);
-        long millis     = time - TimeUnit.SECONDS.toMillis(_seconds);
+        long hours = _hours - TimeUnit.DAYS.toHours(_days);
+        long minutes = _minutes - TimeUnit.HOURS.toMinutes(_hours);
+        long seconds = _seconds - TimeUnit.MINUTES.toSeconds(_minutes);
+        long millis = time - TimeUnit.SECONDS.toMillis(_seconds);
 
         StringBuilder builder = new StringBuilder();
         String result;
@@ -174,32 +167,31 @@ public class StringConverter
 
         result = builder.toString();
 
-        MILLS_TO_HUMAN_CACHE
-                .computeIfAbsent(plurals, k -> new WeakHashMap<>())
-                .computeIfAbsent(singulars, k -> new WeakHashMap<>())
-                .putIfAbsent(time, result);
+        MILLS_TO_HUMAN_CACHE.put(key, result);
 
         return result;
     }
 
     /**
      * Converts minutes to HH:mm format.
+     *
      * @param minutes The minutes to convert.
      * @return The converted minutes.
      */
     public static String fromMinutesToHHmm(int minutes)
     {
-        checkArgument(minutes > 0, ErrorMessages.ZERO.get());
+        checkArgument(minutes > 0, Err.ZERO.get());
 
-        long hours          = TimeUnit.MINUTES.toHours(minutes);
+        long hours = TimeUnit.MINUTES.toHours(minutes);
         long hoursAsMinutes = TimeUnit.HOURS.toMinutes(hours);
-        long remainMinutes  = minutes - hoursAsMinutes;
+        long remainMinutes = minutes - hoursAsMinutes;
 
         return String.format("%02dh %02dm", hours, remainMinutes);
     }
 
     /**
      * Strips the color from a string.
+     *
      * @param string The string to strip.
      * @return The stripped string.
      */
@@ -210,6 +202,7 @@ public class StringConverter
 
     /**
      * Extracts a number from a string.
+     *
      * @param string The string to extract from.
      * @return The extracted number.
      */
@@ -220,17 +213,20 @@ public class StringConverter
 
     /**
      * Converts a sneak-case String to a camel-case String.
+     *
      * @param string The string to convert.
      * @return The converted string.
      */
-    public static String toCamelCase(String string)
+    public static String fromSneakToCamel(String string)
     {
-        if (CAMELCASE_CACHE.containsKey(string))
+        var cached = CAMELCASE_CACHE.get(string);
+
+        if (cached != null)
         {
-            return CAMELCASE_CACHE.get(string);
+            return cached;
         }
 
-        String[] split      = string.split("_");
+        String[] split = string.split("_");
         StringBuilder camel = new StringBuilder();
         String result;
 
@@ -240,26 +236,27 @@ public class StringConverter
         }
 
         result = camel.toString();
-
         CAMELCASE_CACHE.put(string, result);
 
         return result;
     }
 
     /**
-     * Sets the first letter of a string to uppercase.
+     * Sets the first letter of a string to uppercase, the rest to lowercase.
+     *
      * @param string The string to convert.
      * @return The converted string.
      */
     public static String toProperCase(String string)
     {
-        if (PROPERCASE_CACHE.containsKey(string))
+        var cached = PROPERCASE_CACHE.get(string);
+
+        if (cached != null)
         {
-            return PROPERCASE_CACHE.get(string);
+            return cached;
         }
 
         String result = string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
-
         PROPERCASE_CACHE.put(string, result);
 
         return result;
@@ -267,47 +264,52 @@ public class StringConverter
 
     /**
      * Converts the current time into a String, using HH:mm:ss dd/MM/yy format.
+     *
      * @return The converted time.
      */
     public static String convertCurrentTime()
     {
-        return convertTime("HH:mm:ss dd/MM/yy", System.currentTimeMillis());
+        return convertTime(DEFAULT_DATE_FORMAT, System.currentTimeMillis());
     }
 
     /**
      * Converts the given time into a String, using HH:mm:ss dd/MM/yy format.
+     *
      * @param time The time to convert.
      * @return The converted time.
      */
     public static String convertTime(long time)
     {
-        return convertTime("HH:mm:ss dd/MM/yy", time);
+        return convertTime(DEFAULT_DATE_FORMAT, time);
     }
 
     /**
      * Converts the given time into a String, using the specified format.
+     *
      * @param timeFormat The format to use.
      * @return The converted time.
      */
     public static String convertTime(@NonNull String timeFormat, long time)
     {
-        Date date       = new Date(time);
-        Format format   = new SimpleDateFormat(timeFormat);
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat(timeFormat);
 
         return format.format(date);
     }
 
-
     /**
      * Converts a number into Roman numerals.
+     *
      * @param input The number to convert.
      * @return The converted number.
      */
     public static String toRoman(int input)
     {
-        if (ROMAN_CACHE.containsKey(input))
+        var cached = ROMAN_CACHE.get(input);
+
+        if (cached != null)
         {
-            return ROMAN_CACHE.get(input);
+            return cached;
         }
 
         StringBuilder temp = new StringBuilder();
@@ -380,7 +382,6 @@ public class StringConverter
         }
 
         result = temp.toString();
-
         ROMAN_CACHE.put(input, result);
 
         return result;

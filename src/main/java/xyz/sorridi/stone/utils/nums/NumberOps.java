@@ -4,15 +4,17 @@ import xyz.sorridi.stone.utils.data.Array;
 
 /**
  * Number utilities.
- * @since 1.0
+ *
  * @author Sorridi
+ * @since 1.0
  */
 public class NumberOps
 {
-    public static final String[] SUFFIXES = Array.of("", "k", "M", "G", "T", "P", "E", "Z", "Y");
+    public static final String[] SUFFIXES = Array.of("", "k", "M", "B", "Q", "Qu", "Sx", "Sp", "O");
 
     /**
      * Safely divides two numbers.
+     *
      * @param x The dividend.
      * @param y The divisor.
      * @return The result of the division.
@@ -31,6 +33,7 @@ public class NumberOps
 
     /**
      * Shortens a number.
+     *
      * @param x The number to shorten.
      * @return The shortened number.
      */

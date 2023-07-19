@@ -9,7 +9,7 @@ class StringFormatterTest
 {
 
     @ParameterizedTest
-    @ValueSource(doubles = { 1.5556, 2.0001, 30.060400115 })
+    @ValueSource(doubles = {1.5556, 2.0001, 30.060400115})
     void format(double value)
     {
         String six = StringFormatter.format(value, 6);
@@ -29,7 +29,7 @@ class StringFormatterTest
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = { 1.5556, 2.0001, 30.060400115 })
+    @ValueSource(doubles = {1.5556, 2.0001, 30.060400115})
     void formatSingle(double value)
     {
         String formatted = StringFormatter.formatSingle(value);
@@ -49,12 +49,12 @@ class StringFormatterTest
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = { 1.5556, 2.0001, 30.060400115 })
+    @ValueSource(doubles = {1.5556, 2.0001, 30.060400115})
     void formatDouble(double value)
     {
         String formatted = StringFormatter.formatDouble(value);
 
-        
+
         if (value == 1.5556)
         {
             assertEquals("1.56", formatted);
@@ -70,7 +70,7 @@ class StringFormatterTest
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = { 1.5556, 2.0001, 30.060400115 })
+    @ValueSource(doubles = {1.5556, 2.0001, 30.060400115})
     void formatTriple(double value)
     {
         String formatted = StringFormatter.formatTriple(value);
@@ -90,7 +90,7 @@ class StringFormatterTest
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = { 1.5556, 2.0001, 30.060400115 })
+    @ValueSource(doubles = {1.5556, 2.0001, 30.060400115})
     void formatQuadruple(double value)
     {
         String formatted = StringFormatter.formatQuadruple(value);
@@ -110,7 +110,7 @@ class StringFormatterTest
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = { 1.5556, 2.0001, 30.060400115 })
+    @ValueSource(doubles = {1.5556, 2.0001, 30.060400115})
     void formatQuintuple(double value)
     {
         String formatted = StringFormatter.formatQuintuple(value);

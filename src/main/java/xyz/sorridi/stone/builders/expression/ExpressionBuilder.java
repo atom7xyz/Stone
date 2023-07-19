@@ -6,6 +6,7 @@ import java.util.Stack;
 
 /**
  * Implementation of the Djikstra's two stack algorithm for evaluating arithmetic expressions.
+ *
  * @author Sorridi
  * @since 1.0
  */
@@ -18,17 +19,19 @@ public class ExpressionBuilder
 
     /**
      * Creates a new ExpressionBuilder instance.
+     *
      * @param raw The raw expression to be evaluated.
      */
     public ExpressionBuilder(@NonNull String raw)
     {
-        this.raw        = raw;
+        this.raw = raw;
         this.operations = new Stack<>();
-        this.values     = new Stack<>();
+        this.values = new Stack<>();
     }
 
     /**
      * Evaluates the expression.
+     *
      * @return The result of the expression.
      */
     public double getResult()
@@ -73,20 +76,20 @@ public class ExpressionBuilder
      */
     private void evalValues()
     {
-        String op   = operations.pop();
-        double val  = values.pop();
+        String op = operations.pop();
+        double value = values.pop();
 
         switch (op)
         {
-            case "+"    -> val += values.pop();
-            case "-"    -> val -= values.pop();
-            case "*"    -> val *= values.pop();
-            case "/"    -> val /= values.pop();
-            case "pow2" -> val = Math.pow(val, 2);
-            case "sqrt" -> val = Math.sqrt(val);
+            case "+" -> value += values.pop();
+            case "-" -> value -= values.pop();
+            case "*" -> value *= values.pop();
+            case "/" -> value /= values.pop();
+            case "pow2" -> value = Math.pow(value, 2);
+            case "sqrt" -> value = Math.sqrt(value);
         }
 
-        values.push(val);
+        values.push(value);
     }
 
 }
