@@ -166,7 +166,6 @@ public class StringConverter
         }
 
         result = builder.toString();
-
         MILLS_TO_HUMAN_CACHE.put(key, result);
 
         return result;

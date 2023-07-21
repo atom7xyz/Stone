@@ -1,5 +1,7 @@
 package xyz.sorridi.stone.data.base;
 
+import xyz.sorridi.stone.data.base.op.DataAction;
+import xyz.sorridi.stone.data.base.op.DataResult;
 import xyz.sorridi.stone.threading.Pipeline;
 
 import java.sql.Connection;
@@ -20,32 +22,47 @@ public class DataWorker
     private final DataOrigin origin;
     private final Pipeline pipeline;
 
+    private final boolean startupWorker;
+
     public DataWorker(DataOrigin origin)
     {
-        this(origin, 1, 1);
+        this(origin, 1, 1, false);
+    }
+
+    public DataWorker(DataOrigin origin, boolean startupWorker)
+    {
+        this(origin, 1, 1, startupWorker);
     }
 
     public DataWorker(DataOrigin origin, int writeThreads, int readThreads)
     {
+        this(origin, writeThreads, readThreads, false);
+    }
+
+    public DataWorker(DataOrigin origin, int writeThreads, int readThreads, boolean startupWorker)
+    {
         this.origin = origin;
+        this.startupWorker = startupWorker;
         pipeline = new Pipeline("data_worker-" + id.getAndIncrement(), readThreads, writeThreads);
     }
 
     /**
-     * Submits a data action to the pipeline.
+     * Submits a data action to the pipeline and returns a result.
      *
      * @param action The action to submit.
      * @param type   The pipeline type.
      * @param <T>    The type of the result.
      * @return The future result.
      */
-    public <T> CompletableFuture<Optional<T>> submit(DataAction<T> action, Pipeline.Types type)
+    public <T> CompletableFuture<Optional<T>> submit(DataResult<T> action, Pipeline.Types type)
     {
         CompletableFuture<Optional<T>> future = new CompletableFuture<>();
 
         CompletableFuture
                 .runAsync(() ->
                           {
+                              waitIfNotReady();
+
                               try (Connection connection = origin.getConnection())
                               {
                                   T result = action.run(connection, origin);
@@ -61,11 +78,56 @@ public class DataWorker
     }
 
     /**
+     * Submits a data action to the pipeline with no type.
+     *
+     * @param action The action to submit.
+     * @param type   The pipeline type.
+     * @return The future result.
+     */
+    public CompletableFuture<Void> submit(DataAction action, Pipeline.Types type)
+    {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        future.thenRunAsync(() ->
+                            {
+                                waitIfNotReady();
+
+                                try (Connection connection = origin.getConnection())
+                                {
+                                    action.run(connection, origin);
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }, pipeline.get(type));
+
+        return future;
+    }
+
+    /**
      * Shuts down the pipeline.
      */
     public void shutdown()
     {
         pipeline.shutdown();
+    }
+
+    /**
+     * Waits until the origin is ready.
+     */
+    private void waitIfNotReady()
+    {
+        while (!startupWorker && !origin.isReady())
+        {
+            try
+            {
+                Thread.sleep(1);
+            }
+            catch (InterruptedException ignored)
+            {
+            }
+        }
     }
 
 }

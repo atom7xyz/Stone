@@ -11,7 +11,6 @@ import me.lucko.helper.plugin.ap.PluginDependency;
 import org.bukkit.plugin.PluginLoadOrder;
 import xyz.sorridi.stone.annotations.impl.serializer.SerializerProcessor;
 import xyz.sorridi.stone.commands.StoneCommand;
-import xyz.sorridi.stone.data.base.DataOrigin;
 
 /* Data structures */
 @MavenLibrary(groupId = "commons-codec", artifactId = "commons-codec", version = "1.15")
@@ -67,8 +66,6 @@ public final class Stone extends ExtendedJavaPlugin
                 .description("Stone command.")
                 .handler(new StoneCommand(this))
                 .registerAndBind(this, "stone");
-
-        DataOrigin dataOrigin = new DataOrigin();
     }
 
     @Override

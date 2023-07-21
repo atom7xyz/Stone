@@ -1,6 +1,7 @@
-package xyz.sorridi.stone.data.base;
+package xyz.sorridi.stone.data.base.op;
 
 import org.jetbrains.annotations.NotNull;
+import xyz.sorridi.stone.data.base.DataOrigin;
 
 import java.sql.Connection;
 
@@ -11,7 +12,7 @@ import java.sql.Connection;
  * @author Sorridi
  * @since 1.0
  */
-public interface DataAction<T>
+public interface DataResult<T>
 {
     T run(@NotNull Connection connection, @NotNull DataOrigin origin);
 }

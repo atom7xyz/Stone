@@ -135,6 +135,7 @@ public class SoftCleaner
 
     /**
      * Gets the number of {@link SoftMap} instances.
+     *
      * @return The number of {@link SoftMap} instances.
      */
     public static int getNumInstances()
