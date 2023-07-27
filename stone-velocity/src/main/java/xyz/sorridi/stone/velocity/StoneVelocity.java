@@ -20,6 +20,11 @@ import java.util.logging.Logger;
 @Getter
 public class StoneVelocity
 {
+    static
+    {
+        System.setProperty("org.jooq.no-tips", "true");
+    }
+
     private final ProxyServer server;
     private final Logger logger;
 

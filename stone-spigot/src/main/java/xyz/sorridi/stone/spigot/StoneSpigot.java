@@ -21,6 +21,10 @@ import xyz.sorridi.stone.spigot.commands.StoneCommand;
 @HelperImplementationPlugin
 public final class StoneSpigot extends ExtendedJavaPlugin
 {
+    static
+    {
+        System.setProperty("org.jooq.no-tips", "true");
+    }
 
     @Override
     @SneakyThrows

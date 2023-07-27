@@ -24,7 +24,7 @@ public class DataOrigin
     private HikariDataSource dataSource;
     private HikariConfig config;
 
-    private AtomicBoolean ready;
+    private final AtomicBoolean ready = new AtomicBoolean(false);
 
     private String host, port, username, password, url, driver, database;
     private Map<String, String> properties;

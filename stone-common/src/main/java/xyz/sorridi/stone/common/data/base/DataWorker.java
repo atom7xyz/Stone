@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class DataWorker
 {
-    private static AtomicInteger id = new AtomicInteger(0);
+    private static final AtomicInteger ID = new AtomicInteger(0);
 
     private final DataOrigin origin;
     private final Pipeline pipeline;
@@ -43,7 +43,7 @@ public class DataWorker
     {
         this.origin = origin;
         this.startupWorker = startupWorker;
-        pipeline = new Pipeline("data_worker-" + id.getAndIncrement(), readThreads, writeThreads);
+        pipeline = new Pipeline("data_worker-" + ID.getAndIncrement(), readThreads, writeThreads);
     }
 
     /**
@@ -88,17 +88,19 @@ public class DataWorker
     {
         CompletableFuture<Void> future = new CompletableFuture<>();
 
-        future.thenRunAsync(() ->
+        CompletableFuture.runAsync(() ->
                             {
                                 waitIfNotReady();
 
                                 try (Connection connection = origin.getConnection())
                                 {
                                     action.run(connection, origin);
+                                    future.complete(null);
                                 }
                                 catch (Exception e)
                                 {
                                     e.printStackTrace();
+                                    future.completeExceptionally(e);
                                 }
                             }, pipeline.get(type));
 
@@ -122,7 +124,7 @@ public class DataWorker
         {
             try
             {
-                Thread.sleep(1);
+                Thread.sleep(10);
             }
             catch (InterruptedException ignored)
             {
