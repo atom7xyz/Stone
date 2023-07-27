@@ -64,6 +64,17 @@ public class Pool implements Executor
         executor.execute(command);
     }
 
+    @Override
+    public String toString()
+    {
+        return "Pool{" +
+                "executor=" + executor +
+                ", threadFactory=" + threadFactory +
+                ", poolName='" + poolName + '\'' +
+                ", numThreads=" + numThreads +
+                '}';
+    }
+
     /**
      * Shuts down the pool.
      */

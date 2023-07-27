@@ -162,8 +162,8 @@ public class DataOrigin
     {
         config = new HikariConfig();
 
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+        config.setUsername(username);
+        config.setPassword(password);
 
         config.setDriverClassName(driver);
         config.setJdbcUrl("jdbc:" + url + "://" + host + ":" + port + "/");

@@ -5,8 +5,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.sorridi.stone.common.utils.Replace;
-import xyz.sorridi.stone.common.utils.data.Array;
 import xyz.sorridi.stone.common.utils.VersionVerbose;
+import xyz.sorridi.stone.common.utils.data.Array;
 
 import java.util.List;
 

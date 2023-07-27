@@ -1,8 +1,8 @@
 package xyz.sorridi.stone.common.data.base;
 
+import xyz.sorridi.stone.common.data.base.op.DataAction;
 import xyz.sorridi.stone.common.data.base.op.DataResult;
 import xyz.sorridi.stone.common.threading.Pipeline;
-import xyz.sorridi.stone.common.data.base.op.DataAction;
 
 import java.sql.Connection;
 import java.util.Optional;

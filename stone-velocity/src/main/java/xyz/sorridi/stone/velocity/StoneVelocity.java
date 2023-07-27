@@ -13,7 +13,8 @@ import java.util.logging.Logger;
 
 @Plugin(id = "stone-velocity",
         name = "StoneVelocity",
-        version = "1.0",
+        description = "Yet another velocity plugin library.",
+        version = "1.0-SNAPSHOT",
         authors = {"Sorridi"})
 
 @Getter

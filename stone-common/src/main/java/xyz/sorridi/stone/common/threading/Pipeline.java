@@ -42,6 +42,16 @@ public class Pipeline
         shutdown = true;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Pipeline{" +
+                "readPool=" + readPool +
+                ", writePool=" + writePool +
+                ", shutdown=" + shutdown +
+                '}';
+    }
+
     public enum Types
     {
         READ,
