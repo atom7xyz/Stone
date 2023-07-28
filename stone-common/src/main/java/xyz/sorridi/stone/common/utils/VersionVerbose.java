@@ -16,14 +16,22 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Getter
 public abstract class VersionVerbose<P, D>
 {
-    private static final String[] TO_REPLACE_ARRAY = Array.of("[", "]");
+    protected static final String[] TO_REPLACE_ARRAY = Array.of("[", "]");
+    protected static final String UNKNOWN = "unknown";
 
-    protected String hash;
-    protected P plugin;
+    protected final P plugin;
+    protected final String hash;
 
     public VersionVerbose(P plugin)
     {
         this.plugin = plugin;
+        this.hash = calculateHash(8);
+    }
+
+    public VersionVerbose(P plugin, int length)
+    {
+        this.plugin = plugin;
+        this.hash = calculateHash(length);
     }
 
     @NotNull
@@ -77,16 +85,6 @@ public abstract class VersionVerbose<P, D>
         }
 
         return fileHash;
-    }
-
-    public String getHash()
-    {
-        if (hash == null)
-        {
-            hash = calculateHash(6);
-        }
-
-        return hash;
     }
 
 }

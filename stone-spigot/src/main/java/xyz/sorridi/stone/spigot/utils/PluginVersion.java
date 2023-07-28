@@ -6,16 +6,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.sorridi.stone.common.utils.Replace;
 import xyz.sorridi.stone.common.utils.VersionVerbose;
-import xyz.sorridi.stone.common.utils.data.Array;
 
 import java.util.List;
 
 public final class PluginVersion extends VersionVerbose<Plugin, PluginDescriptionFile>
 {
-
     public PluginVersion(Plugin plugin)
     {
         super(plugin);
+    }
+
+    public PluginVersion(Plugin plugin, int length)
+    {
+        super(plugin, length);
     }
 
     @Override
@@ -45,7 +48,7 @@ public final class PluginVersion extends VersionVerbose<Plugin, PluginDescriptio
     @Override
     public @Nullable String getAuthors()
     {
-        return Replace.of(getDescriptionFile().getAuthors(), Array.of("[", "]"), "").toString();
+        return Replace.of(getDescriptionFile().getAuthors(), TO_REPLACE_ARRAY, "").toString();
     }
 
     @Override

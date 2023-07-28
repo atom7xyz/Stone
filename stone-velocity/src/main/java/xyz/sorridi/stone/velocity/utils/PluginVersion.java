@@ -7,16 +7,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.sorridi.stone.common.utils.Replace;
 import xyz.sorridi.stone.common.utils.VersionVerbose;
-import xyz.sorridi.stone.common.utils.data.Array;
 
 import java.util.List;
 
 public final class PluginVersion extends VersionVerbose<PluginContainer, PluginDescription>
 {
-
     public PluginVersion(PluginContainer plugin)
     {
         super(plugin);
+    }
+
+    public PluginVersion(PluginContainer plugin, int length)
+    {
+        super(plugin, length);
     }
 
     @Override
@@ -28,31 +31,35 @@ public final class PluginVersion extends VersionVerbose<PluginContainer, PluginD
     @Override
     public @NotNull String getName()
     {
-        return String.valueOf(getDescriptionFile().getName());
+        return getDescriptionFile().getName()
+                                   .orElse(UNKNOWN);
     }
 
     @Override
     public @NotNull String getVersion()
     {
-        return String.valueOf(getDescriptionFile().getVersion());
+        return getDescriptionFile().getVersion()
+                                   .orElse(UNKNOWN);
     }
 
     @Override
     public @Nullable String getSite()
     {
-        return String.valueOf(getDescriptionFile().getUrl());
+        return getDescriptionFile().getUrl()
+                                   .orElse(null);
     }
 
     @Override
     public @Nullable String getAuthors()
     {
-        return Replace.of(getDescriptionFile().getAuthors(), Array.of("[", "]"), "").toString();
+        return Replace.of(getDescriptionFile().getAuthors(), TO_REPLACE_ARRAY, "").toString();
     }
 
     @Override
     public @Nullable String getDescription()
     {
-        return null;
+        return getDescriptionFile().getDescription()
+                                   .orElse(null);
     }
 
     @Override
@@ -64,10 +71,16 @@ public final class PluginVersion extends VersionVerbose<PluginContainer, PluginD
     @Override
     public @Nullable List<String> getDepends()
     {
-        return getDescriptionFile().getDependencies()
-                                   .stream()
-                                   .map(PluginDependency::getId)
-                                   .toList();
+        var dependencies = getDescriptionFile().getDependencies();
+
+        if (dependencies.isEmpty())
+        {
+            return null;
+        }
+
+        return dependencies.stream()
+                           .map(PluginDependency::getId)
+                           .toList();
     }
 
     @Override
