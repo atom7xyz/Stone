@@ -23,6 +23,7 @@ public class StoneVelocity
     static
     {
         System.setProperty("org.jooq.no-tips", "true");
+        System.setProperty("org.jooq.no-logo", "true");
     }
 
     private final ProxyServer server;

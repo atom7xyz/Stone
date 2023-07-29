@@ -24,6 +24,7 @@ public final class StoneSpigot extends ExtendedJavaPlugin
     static
     {
         System.setProperty("org.jooq.no-tips", "true");
+        System.setProperty("org.jooq.no-logo", "true");
     }
 
     @Override
