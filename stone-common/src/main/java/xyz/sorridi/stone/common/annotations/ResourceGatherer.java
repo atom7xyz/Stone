@@ -26,12 +26,10 @@ import java.util.stream.Stream;
  */
 public class ResourceGatherer
 {
-    private static final Scanners[] SCANNERS = Array.of(
-            Scanners.TypesAnnotated,
-            Scanners.SubTypes,
-            Scanners.MethodsAnnotated,
-            Scanners.FieldsAnnotated
-    );
+    private static final Scanners[] SCANNERS = Array.of(Scanners.TypesAnnotated,
+                                                        Scanners.SubTypes,
+                                                        Scanners.MethodsAnnotated,
+                                                        Scanners.FieldsAnnotated);
 
     /**
      * Executes a given action for each annotation found.

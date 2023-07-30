@@ -11,21 +11,28 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Cool downs for a target.
- * @param <T> Target type.
  *
+ * @param <T> Target type.
  * @author Sorridi
  * @since 1.0
  */
 @Getter
 public class UseCoolDown<T> extends HashMap<T, Long>
 {
-    private final long usableEvery;
+    private long usableEvery;
+
+    public UseCoolDown(long usableEvery, TimeUnit timeUnit)
+    {
+        setUsableEvery(usableEvery, timeUnit);
+    }
 
     /**
+     * Sets the time between each use.
+     *
      * @param usableEvery Time between each use.
      * @param timeUnit    Time unit.
      */
-    public UseCoolDown(long usableEvery, TimeUnit timeUnit)
+    public void setUsableEvery(long usableEvery, TimeUnit timeUnit)
     {
         checkArgument(usableEvery >= 0, Err.NEGATIVE.expect("usableEvery"));
 
