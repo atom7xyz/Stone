@@ -10,6 +10,12 @@ import xyz.sorridi.stone.common.utils.VersionVerbose;
 
 import java.util.List;
 
+/**
+ * A {@link VersionVerbose} implementation for Velocity plugins.
+ *
+ * @author Sorridi
+ * @since 1.0
+ */
 public final class PluginVersion extends VersionVerbose<PluginContainer, PluginDescription>
 {
     public PluginVersion(PluginContainer plugin)

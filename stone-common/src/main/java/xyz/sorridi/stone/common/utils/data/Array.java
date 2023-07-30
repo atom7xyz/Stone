@@ -62,6 +62,9 @@ public class Array
         return list == null || list.isEmpty();
     }
 
+    /**
+     * Wrapper for any type of Object.
+     */
     public static class Wrapper
     {
         private Object array;
@@ -71,11 +74,20 @@ public class Array
             this.array = array;
         }
 
+        /**
+         * Gets the array.
+         * @return The array.
+         */
         public Object get()
         {
             return array;
         }
 
+        /**
+         * Sets the array.
+         * @param array The array to set.
+         * @return The wrapper.
+         */
         public Wrapper set(Object array)
         {
             this.array = array;

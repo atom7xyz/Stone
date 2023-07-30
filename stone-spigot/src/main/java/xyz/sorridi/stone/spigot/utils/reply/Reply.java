@@ -4,6 +4,12 @@ import org.bukkit.entity.Player;
 
 import java.util.Collection;
 
+/**
+ * Reply implementation for Spigot.
+ *
+ * @author Sorridi
+ * @since 1.0
+ */
 public class Reply
 {
     private static final ReplyImpl IMPL = new ReplyImpl();
@@ -54,7 +60,8 @@ public class Reply
         IMPL.toExcept(players, exclude, messages);
     }
 
-    public static <P extends Collection<Player>, C extends Collection<String>> void toExcept(P players, P exclude,
+    public static <P extends Collection<Player>, C extends Collection<String>> void toExcept(P players,
+                                                                                             P exclude,
                                                                                              C collection)
     {
         IMPL.toExcept(players, exclude, collection);
@@ -65,7 +72,8 @@ public class Reply
         IMPL.toExcept(players, exclude, messages);
     }
 
-    public static <P extends Collection<Player>, C extends Collection<String>> void toExcept(P players, Player exclude,
+    public static <P extends Collection<Player>, C extends Collection<String>> void toExcept(P players,
+                                                                                             Player exclude,
                                                                                              C collection)
     {
         IMPL.toExcept(players, exclude, collection);

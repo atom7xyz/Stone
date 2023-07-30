@@ -3,7 +3,7 @@ package xyz.sorridi.stone.velocity.utils.reply;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.NonNull;
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import xyz.sorridi.stone.common.utils.IReply;
 import xyz.sorridi.stone.common.utils.data.Array;
 import xyz.sorridi.stone.velocity.StoneVelocity;
@@ -18,30 +18,28 @@ import java.util.HashSet;
  * @author Sorridi
  * @since 1.0
  */
-public class ReplyImpl implements IReply<Player>
+public class ReplyImpl implements IReply<Player, TextComponent>
 {
-    private final StoneVelocity plugin;
     private final ProxyServer server;
 
     public ReplyImpl(StoneVelocity plugin)
     {
-        this.plugin = plugin;
         this.server = plugin.getServer();
     }
 
     @Override
-    public boolean to(Player player, String... messages)
+    public boolean to(Player player, TextComponent... messages)
     {
         if (player == null || Array.isEmpty(messages))
         {
             return false;
         }
 
-        for (String message : messages)
+        for (TextComponent message : messages)
         {
-            if (!message.isEmpty())
+            if (!message.content().isEmpty())
             {
-                player.sendMessage(Component.text(message));
+                player.sendMessage(message);
             }
         }
 
@@ -49,7 +47,7 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <C extends Collection<String>> boolean to(Player player, C collection)
+    public <C extends Collection<TextComponent>> boolean to(Player player, C collection)
     {
         if (player == null || Array.isEmpty(collection))
         {
@@ -57,26 +55,26 @@ public class ReplyImpl implements IReply<Player>
         }
 
         collection.stream()
-                  .filter(message -> !message.isEmpty())
+                  .filter(message -> !message.content().isEmpty())
                   .forEach(message -> to(player, message));
 
         return true;
     }
 
     @Override
-    public void toAll(String... messages)
+    public void toAll(TextComponent... messages)
     {
         to(server.getAllPlayers(), messages);
     }
 
     @Override
-    public <P extends Collection<String>> void toAll(P collection)
+    public <P extends Collection<TextComponent>> void toAll(P collection)
     {
         to(server.getAllPlayers(), collection);
     }
 
     @Override
-    public void toAllExcept(@NonNull Player exclude, String... messages)
+    public void toAllExcept(@NonNull Player exclude, TextComponent... messages)
     {
         if (Array.isEmpty(messages))
         {
@@ -89,7 +87,7 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <C extends Collection<String>> void toAllExcept(@NonNull Player toExclude, C collection)
+    public <C extends Collection<TextComponent>> void toAllExcept(@NonNull Player toExclude, C collection)
     {
         if (Array.isEmpty(collection))
         {
@@ -102,7 +100,7 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <P extends Collection<Player>> void toAllExcept(@NonNull P toExclude, String... messages)
+    public <P extends Collection<Player>> void toAllExcept(@NonNull P toExclude, TextComponent... messages)
     {
         if (Array.isEmpty(messages))
         {
@@ -117,8 +115,8 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <P extends Collection<Player>, C extends Collection<String>> void toAllExceptMulti(@NonNull P toExclude,
-                                                                                              C collection)
+    public <P extends Collection<Player>, C extends Collection<TextComponent>> void toAllExceptMulti(@NonNull P toExclude,
+                                                                                                     C collection)
     {
         if (Array.isEmpty(collection))
         {
@@ -133,7 +131,7 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <P extends Collection<Player>> void toExcept(P players, @NonNull P exclude, String... messages)
+    public <P extends Collection<Player>> void toExcept(P players, @NonNull P exclude, TextComponent... messages)
     {
         if (Array.isEmpty(messages))
         {
@@ -146,9 +144,9 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <P extends Collection<Player>, C extends Collection<String>> void toExcept(P players,
-                                                                                      @NonNull P exclude,
-                                                                                      C collection)
+    public <P extends Collection<Player>, C extends Collection<TextComponent>> void toExcept(P players,
+                                                                                             @NonNull P exclude,
+                                                                                             C collection)
     {
         if (Array.isEmpty(collection))
         {
@@ -161,7 +159,7 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <P extends Collection<Player>> void toExcept(P players, @NonNull Player exclude, String... messages)
+    public <P extends Collection<Player>> void toExcept(P players, @NonNull Player exclude, TextComponent... messages)
     {
         if (Array.isEmpty(messages))
         {
@@ -174,9 +172,9 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <P extends Collection<Player>, C extends Collection<String>> void toExcept(P players,
-                                                                                      @NonNull Player exclude,
-                                                                                      C collection)
+    public <P extends Collection<Player>, C extends Collection<TextComponent>> void toExcept(P players,
+                                                                                             @NonNull Player exclude,
+                                                                                             C collection)
     {
         if (Array.isEmpty(collection))
         {
@@ -189,7 +187,7 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public void toAllWithPerm(@NonNull String permission, String... messages)
+    public void toAllWithPerm(@NonNull String permission, TextComponent... messages)
     {
         if (Array.isEmpty(messages))
         {
@@ -202,7 +200,7 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <C extends Collection<String>> void toAllWithPerm(@NonNull String permission, C collection)
+    public <C extends Collection<TextComponent>> void toAllWithPerm(@NonNull String permission, C collection)
     {
         if (Array.isEmpty(collection))
         {
@@ -215,7 +213,7 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public void toAllWithPermExcept(@NonNull String permission, @NonNull Player exclude, String... messages)
+    public void toAllWithPermExcept(@NonNull String permission, @NonNull Player exclude, TextComponent... messages)
     {
         if (Array.isEmpty(messages))
         {
@@ -230,7 +228,7 @@ public class ReplyImpl implements IReply<Player>
     @Override
     public <P extends Collection<Player>> void toAllWithPermExcept(@NonNull String permission,
                                                                    @NonNull P exclude,
-                                                                   String... messages)
+                                                                   TextComponent... messages)
     {
         if (Array.isEmpty(messages))
         {
@@ -243,9 +241,9 @@ public class ReplyImpl implements IReply<Player>
     }
 
     @Override
-    public <P extends Collection<Player>, C extends Collection<String>> void toAllWithPermExcept(@NonNull String permission,
-                                                                                                 @NonNull P exclude,
-                                                                                                 C collection)
+    public <P extends Collection<Player>, C extends Collection<TextComponent>> void toAllWithPermExcept(@NonNull String permission,
+                                                                                                        @NonNull P exclude,
+                                                                                                        C collection)
     {
         if (Array.isEmpty(collection))
         {

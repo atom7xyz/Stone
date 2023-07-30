@@ -4,7 +4,15 @@ import lombok.NonNull;
 
 import java.util.Collection;
 
-public interface IReply<T>
+/**
+ * Interface for sending messages to players.
+ *
+ * @param <T> The player type.
+ * @param <R> The reply type.
+ * @author Sorridi
+ * @since 1.0
+ */
+public interface IReply<T, R>
 {
 
     /**
@@ -14,7 +22,7 @@ public interface IReply<T>
      * @param messages Messages to send.
      * @return If the player is online.
      */
-    boolean to(T player, String... messages);
+    boolean to(T player, R... messages);
 
     /**
      * Sends messages to a player.
@@ -23,7 +31,7 @@ public interface IReply<T>
      * @param collection Messages to send.
      * @return If the player is online.
      */
-    <C extends Collection<String>> boolean to(T player, C collection);
+    <C extends Collection<R>> boolean to(T player, C collection);
 
     /**
      * Sends messages to a collection of players.
@@ -32,7 +40,7 @@ public interface IReply<T>
      * @param messages The messages to send.
      * @param <P>      The collection type.
      */
-    default <P extends Collection<? extends T>> void to(P players, String... messages)
+    default <P extends Collection<? extends T>> void to(P players, R... messages)
     {
         players.forEach(player -> to(player, messages));
     }
@@ -45,7 +53,7 @@ public interface IReply<T>
      * @param <P>        The collection type.
      * @param <C>        The messages collection type.
      */
-    default <P extends Collection<? extends T>, C extends Collection<String>> void to(P players, C collection)
+    default <P extends Collection<? extends T>, C extends Collection<R>> void to(P players, C collection)
     {
         players.forEach(player -> to(player, collection));
     }
@@ -55,14 +63,14 @@ public interface IReply<T>
      *
      * @param messages Messages to send.
      */
-    void toAll(String... messages);
+    void toAll(R... messages);
 
     /**
      * Sends messages to every online player.
      *
      * @param collection Messages to send.
      */
-    <P extends Collection<String>> void toAll(P collection);
+    <P extends Collection<R>> void toAll(P collection);
 
     /**
      * Sends messages to every online player except the specified one.
@@ -70,7 +78,7 @@ public interface IReply<T>
      * @param exclude  Player to exclude.
      * @param messages Messages to send.
      */
-    void toAllExcept(@NonNull T exclude, String... messages);
+    void toAllExcept(@NonNull T exclude, R... messages);
 
     /**
      * Sends messages to every online player except the specified one.
@@ -78,7 +86,7 @@ public interface IReply<T>
      * @param toExclude  Player to exclude.
      * @param collection Messages to send.
      */
-    <C extends Collection<String>> void toAllExcept(@NonNull T toExclude, C collection);
+    <C extends Collection<R>> void toAllExcept(@NonNull T toExclude, C collection);
 
     /**
      * Sends messages to every online player except the specified ones.
@@ -87,7 +95,7 @@ public interface IReply<T>
      * @param messages  Messages to send.
      * @param <P>       The collection type.
      */
-    <P extends Collection<T>> void toAllExcept(@NonNull P toExclude, String... messages);
+    <P extends Collection<T>> void toAllExcept(@NonNull P toExclude, R... messages);
 
     /**
      * Sends messages to every online player except the specified ones.
@@ -97,8 +105,8 @@ public interface IReply<T>
      * @param <P>        The collection type.
      * @param <C>        The collection type.
      */
-    <P extends Collection<T>, C extends Collection<String>> void toAllExceptMulti(@NonNull P toExclude,
-                                                                                  C collection);
+    <P extends Collection<T>, C extends Collection<R>> void toAllExceptMulti(@NonNull P toExclude,
+                                                                             C collection);
 
     /**
      * Sends messages to every player in the collection except the specified ones.
@@ -107,7 +115,7 @@ public interface IReply<T>
      * @param exclude  Players to exclude.
      * @param messages Messages to send.
      */
-    <P extends Collection<T>> void toExcept(P players, @NonNull P exclude, String... messages);
+    <P extends Collection<T>> void toExcept(P players, @NonNull P exclude, R... messages);
 
     /**
      * Sends messages to every player in the collection except the specified ones.
@@ -116,9 +124,9 @@ public interface IReply<T>
      * @param exclude    Players to exclude.
      * @param collection Messages to send.
      */
-    <P extends Collection<T>, C extends Collection<String>> void toExcept(P players,
-                                                                          @NonNull P exclude,
-                                                                          C collection);
+    <P extends Collection<T>, C extends Collection<R>> void toExcept(P players,
+                                                                     @NonNull P exclude,
+                                                                     C collection);
 
     /**
      * Sends messages to every player in the collection except the specified one.
@@ -127,7 +135,7 @@ public interface IReply<T>
      * @param exclude  Player to exclude.
      * @param messages Messages to send.
      */
-    <P extends Collection<T>> void toExcept(P players, @NonNull T exclude, String... messages);
+    <P extends Collection<T>> void toExcept(P players, @NonNull T exclude, R... messages);
 
     /**
      * Sends messages to every player in the collection except the specified one.
@@ -136,9 +144,9 @@ public interface IReply<T>
      * @param exclude    Player to exclude.
      * @param collection Messages to send.
      */
-    <P extends Collection<T>, C extends Collection<String>> void toExcept(P players,
-                                                                          @NonNull T exclude,
-                                                                          C collection);
+    <P extends Collection<T>, C extends Collection<R>> void toExcept(P players,
+                                                                     @NonNull T exclude,
+                                                                     C collection);
 
     /**
      * Sends messages to every player with the specified permission.
@@ -146,7 +154,7 @@ public interface IReply<T>
      * @param permission Permission to check.
      * @param messages   Messages to send.
      */
-    void toAllWithPerm(@NonNull String permission, String... messages);
+    void toAllWithPerm(@NonNull String permission, R... messages);
 
     /**
      * Sends messages to every player with the specified permission.
@@ -154,7 +162,7 @@ public interface IReply<T>
      * @param permission Permission to check.
      * @param collection Messages to send.
      */
-    <C extends Collection<String>> void toAllWithPerm(@NonNull String permission, C collection);
+    <C extends Collection<R>> void toAllWithPerm(@NonNull String permission, C collection);
 
     /**
      * Sends messages to every player with the specified permission except the specified one.
@@ -163,7 +171,7 @@ public interface IReply<T>
      * @param exclude    Player to exclude.
      * @param messages   Messages to send.
      */
-    void toAllWithPermExcept(@NonNull String permission, @NonNull T exclude, String... messages);
+    void toAllWithPermExcept(@NonNull String permission, @NonNull T exclude, R... messages);
 
     /**
      * Sends messages to every player with the specified permission except the specified ones.
@@ -174,7 +182,7 @@ public interface IReply<T>
      */
     <P extends Collection<T>> void toAllWithPermExcept(@NonNull String permission,
                                                        @NonNull P exclude,
-                                                       String... messages);
+                                                       R... messages);
 
     /**
      * Sends messages to every player with the specified permission except the specified ones.
@@ -183,8 +191,8 @@ public interface IReply<T>
      * @param exclude    Players to exclude.
      * @param collection Messages to send.
      */
-    <P extends Collection<T>, C extends Collection<String>> void toAllWithPermExcept(@NonNull String permission,
-                                                                                     @NonNull P exclude,
-                                                                                     C collection);
+    <P extends Collection<T>, C extends Collection<R>> void toAllWithPermExcept(@NonNull String permission,
+                                                                                @NonNull P exclude,
+                                                                                C collection);
 
 }

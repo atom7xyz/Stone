@@ -11,12 +11,12 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * Messaging utilities.
+ * {@link Reply} implementation for Spigot.
  *
  * @author Sorridi
  * @since 1.0
  */
-public class ReplyImpl implements IReply<Player>
+public class ReplyImpl implements IReply<Player, String>
 {
 
     @Override

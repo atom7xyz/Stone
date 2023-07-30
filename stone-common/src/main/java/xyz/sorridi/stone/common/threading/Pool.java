@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * A fixed & named thread pool.
  *
- * @version 1.0
+ * @author Sorridi
  * @since 1.0
  */
 @Getter

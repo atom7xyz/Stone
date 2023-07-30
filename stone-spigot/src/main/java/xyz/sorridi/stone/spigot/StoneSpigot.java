@@ -6,9 +6,14 @@ import me.lucko.helper.internal.HelperImplementationPlugin;
 import me.lucko.helper.plugin.ExtendedJavaPlugin;
 import me.lucko.helper.plugin.ap.Plugin;
 import me.lucko.helper.plugin.ap.PluginDependency;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.bukkit.plugin.PluginLoadOrder;
 import xyz.sorridi.stone.spigot.annotations.serializer.SerializerProcessor;
 import xyz.sorridi.stone.spigot.commands.StoneCommand;
+
+import java.util.logging.Logger;
 
 @Plugin(name = "Stone",
         version = "1.0-SNAPSHOT",
@@ -25,6 +30,9 @@ public final class StoneSpigot extends ExtendedJavaPlugin
     {
         System.setProperty("org.jooq.no-tips", "true");
         System.setProperty("org.jooq.no-logo", "true");
+
+        Logger hikariLogger = (Logger) LogManager.getLogger("com.zaxxer.hikari");
+        Configurator.setLevel(hikariLogger.getName(), Level.ERROR);
     }
 
     @Override

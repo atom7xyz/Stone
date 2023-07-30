@@ -1,10 +1,17 @@
 package xyz.sorridi.stone.velocity.utils.reply;
 
 import com.velocitypowered.api.proxy.Player;
+import net.kyori.adventure.text.TextComponent;
 import xyz.sorridi.stone.velocity.StoneVelocity;
 
 import java.util.Collection;
 
+/**
+ * {@link xyz.sorridi.stone.common.utils.IReply} implementation for Velocity.
+ *
+ * @author Sorridi
+ * @since 1.0
+ */
 public class Reply
 {
     private static ReplyImpl IMPL;
@@ -14,94 +21,96 @@ public class Reply
         IMPL = new ReplyImpl(server);
     }
 
-    public static boolean to(Player player, String... messages)
+    public static boolean to(Player player, TextComponent... messages)
     {
         return IMPL.to(player, messages);
     }
 
-    public static <C extends Collection<String>> boolean to(Player player, C collection)
+    public static <C extends Collection<TextComponent>> boolean to(Player player, C collection)
     {
         return IMPL.to(player, collection);
     }
 
-    public static void toAll(String... messages)
+    public static void toAll(TextComponent... messages)
     {
         IMPL.toAll(messages);
     }
 
-    public static <P extends Collection<String>> void toAll(P collection)
+    public static <P extends Collection<TextComponent>> void toAll(P collection)
     {
         IMPL.toAll(collection);
     }
 
-    public static void toAllExcept(Player exclude, String... messages)
+    public static void toAllExcept(Player exclude, TextComponent... messages)
     {
         IMPL.toAllExcept(exclude, messages);
     }
 
-    public static <C extends Collection<String>> void toAllExcept(Player toExclude, C collection)
+    public static <C extends Collection<TextComponent>> void toAllExcept(Player toExclude, C collection)
     {
         IMPL.toAllExcept(toExclude, collection);
     }
 
-    public static <P extends Collection<Player>> void toAllExcept(P toExclude, String... messages)
+    public static <P extends Collection<Player>> void toAllExcept(P toExclude, TextComponent... messages)
     {
         IMPL.toAllExcept(toExclude, messages);
     }
 
-    public static <P extends Collection<Player>, C extends Collection<String>> void toAllExceptMulti(P toExclude,
-                                                                                                     C collection)
+    public static <P extends Collection<Player>, C extends Collection<TextComponent>> void toAllExceptMulti(P toExclude,
+                                                                                                            C collection)
     {
         IMPL.toAllExceptMulti(toExclude, collection);
     }
 
-    public static <P extends Collection<Player>> void toExcept(P players, P exclude, String... messages)
+    public static <P extends Collection<Player>> void toExcept(P players, P exclude, TextComponent... messages)
     {
         IMPL.toExcept(players, exclude, messages);
     }
 
-    public static <P extends Collection<Player>, C extends Collection<String>> void toExcept(P players, P exclude,
-                                                                                             C collection)
+    public static <P extends Collection<Player>, C extends Collection<TextComponent>> void toExcept(P players,
+                                                                                                    P exclude,
+                                                                                                    C collection)
     {
         IMPL.toExcept(players, exclude, collection);
     }
 
-    public static <P extends Collection<Player>> void toExcept(P players, Player exclude, String... messages)
+    public static <P extends Collection<Player>> void toExcept(P players, Player exclude, TextComponent... messages)
     {
         IMPL.toExcept(players, exclude, messages);
     }
 
-    public static <P extends Collection<Player>, C extends Collection<String>> void toExcept(P players, Player exclude,
-                                                                                             C collection)
+    public static <P extends Collection<Player>, C extends Collection<TextComponent>> void toExcept(P players,
+                                                                                                    Player exclude,
+                                                                                                    C collection)
     {
         IMPL.toExcept(players, exclude, collection);
     }
 
-    public static void toAllWithPerm(String permission, String... messages)
+    public static void toAllWithPerm(String permission, TextComponent... messages)
     {
         IMPL.toAllWithPerm(permission, messages);
     }
 
-    public static <C extends Collection<String>> void toAllWithPerm(String permission, C collection)
+    public static <C extends Collection<TextComponent>> void toAllWithPerm(String permission, C collection)
     {
         IMPL.toAllWithPerm(permission, collection);
     }
 
-    public static void toAllWithPermExcept(String permission, Player exclude, String... messages)
+    public static void toAllWithPermExcept(String permission, Player exclude, TextComponent... messages)
     {
         IMPL.toAllWithPermExcept(permission, exclude, messages);
     }
 
     public static <P extends Collection<Player>> void toAllWithPermExcept(String permission,
                                                                           P exclude,
-                                                                          String... messages)
+                                                                          TextComponent... messages)
     {
         IMPL.toAllWithPermExcept(permission, exclude, messages);
     }
 
-    public static <P extends Collection<Player>, C extends Collection<String>> void toAllWithPermExcept(String permission,
-                                                                                                        P exclude,
-                                                                                                        C collection)
+    public static <P extends Collection<Player>, C extends Collection<TextComponent>> void toAllWithPermExcept(String permission,
+                                                                                                               P exclude,
+                                                                                                               C collection)
     {
         IMPL.toAllWithPermExcept(permission, exclude, collection);
     }

@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 /**
- * A ConcurrentHashMap with a single value.
+ * A {@link ConcurrentHashMap} with a single value.
  *
  * @param <K> The key and the value of the Map.
  * @author Sorridi

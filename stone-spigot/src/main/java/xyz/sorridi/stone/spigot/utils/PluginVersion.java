@@ -9,6 +9,12 @@ import xyz.sorridi.stone.common.utils.VersionVerbose;
 
 import java.util.List;
 
+/**
+ * A {@link VersionVerbose} implementation for Spigot.
+ *
+ * @author Sorridi
+ * @since 1.0
+ */
 public final class PluginVersion extends VersionVerbose<Plugin, PluginDescriptionFile>
 {
     public PluginVersion(Plugin plugin)
@@ -60,19 +66,22 @@ public final class PluginVersion extends VersionVerbose<Plugin, PluginDescriptio
     @Override
     public @Nullable List<String> getRawAuthors()
     {
-        return getDescriptionFile().getAuthors();
+        var authors = getDescriptionFile().getAuthors();
+        return authors.isEmpty() ? null : authors;
     }
 
     @Override
     public @Nullable List<String> getDepends()
     {
-        return getDescriptionFile().getDepend();
+        var depends = getDescriptionFile().getDepend();
+        return depends.isEmpty() ? null : depends;
     }
 
     @Override
     public @Nullable List<String> getSoftDepends()
     {
-        return getDescriptionFile().getSoftDepend();
+        var depends = getDescriptionFile().getSoftDepend();
+        return depends.isEmpty() ? null : depends;
     }
 
 }

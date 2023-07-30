@@ -6,6 +6,9 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.Configurator;
 import xyz.sorridi.stone.velocity.utils.Players;
 import xyz.sorridi.stone.velocity.utils.reply.Reply;
 
@@ -24,6 +27,9 @@ public class StoneVelocity
     {
         System.setProperty("org.jooq.no-tips", "true");
         System.setProperty("org.jooq.no-logo", "true");
+
+        var hikariLogger = (org.apache.logging.log4j.core.Logger) LogManager.getLogger("com.zaxxer.hikari");
+        Configurator.setLevel(hikariLogger.getName(), Level.ERROR);
     }
 
     private final ProxyServer server;

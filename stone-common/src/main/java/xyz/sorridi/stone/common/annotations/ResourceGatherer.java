@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
- * Class used to gather resources.
+ * Class used to gather resources via Reflection.
  *
  * @author Sorridi
  * @since 1.0

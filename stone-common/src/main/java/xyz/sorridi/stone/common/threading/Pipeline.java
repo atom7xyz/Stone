@@ -5,6 +5,13 @@ import lombok.NonNull;
 
 import java.util.concurrent.ExecutorService;
 
+/**
+ * Pipeline for executing tasks.
+ * It gives a way to separate tasks in two canals using {@link Types}.
+ *
+ * @author Sorridi
+ * @since 1.0
+ */
 @Getter
 public class Pipeline
 {
@@ -52,6 +59,13 @@ public class Pipeline
                 '}';
     }
 
+    /**
+     * Types of operation a pipeline has.
+     * <br>
+     * <br>
+     * {@link Types#READ}: Used for reading data from a source.
+     * {@link Types#WRITE}: Used for writing data to a source.
+     */
     public enum Types
     {
         READ,

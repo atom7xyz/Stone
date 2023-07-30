@@ -9,6 +9,13 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * Cool downs for a target.
+ * @param <T> Target type.
+ *
+ * @author Sorridi
+ * @since 1.0
+ */
 @Getter
 public class UseCoolDown<T> extends HashMap<T, Long>
 {
