@@ -20,6 +20,11 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class UseCoolDown<T> extends HashMap<T, Long>
 {
     private long usableEvery;
+    
+    public UseCoolDown()
+    {
+        this(0, TimeUnit.MILLISECONDS);
+    }
 
     public UseCoolDown(long usableEvery, TimeUnit timeUnit)
     {
