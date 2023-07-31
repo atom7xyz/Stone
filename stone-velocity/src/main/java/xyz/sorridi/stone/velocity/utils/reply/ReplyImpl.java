@@ -81,7 +81,7 @@ public class ReplyImpl implements IReply<Player, TextComponent>
             return;
         }
 
-        Players.stream()
+        Players.streamAll()
                .filter(p -> !p.equals(exclude))
                .forEach(p -> to(p, messages));
     }
@@ -94,7 +94,7 @@ public class ReplyImpl implements IReply<Player, TextComponent>
             return;
         }
 
-        Players.stream()
+        Players.streamAll()
                .filter(p -> !p.equals(toExclude))
                .forEach(p -> to(p, collection));
     }
@@ -109,7 +109,7 @@ public class ReplyImpl implements IReply<Player, TextComponent>
 
         HashSet<Player> excluded = new HashSet<>(toExclude);
 
-        Players.stream()
+        Players.streamAll()
                .filter(p -> !excluded.contains(p))
                .forEach(p -> to(p, messages));
     }
@@ -125,7 +125,7 @@ public class ReplyImpl implements IReply<Player, TextComponent>
 
         HashSet<Player> excluded = new HashSet<>(toExclude);
 
-        Players.stream()
+        Players.streamAll()
                .filter(p -> !excluded.contains(p))
                .forEach(p -> to(p, collection));
     }
@@ -194,8 +194,7 @@ public class ReplyImpl implements IReply<Player, TextComponent>
             return;
         }
 
-        Players.stream()
-               .filter(p -> p.hasPermission(permission))
+        Players.streamAllWithPerm(permission)
                .forEach(p -> to(p, messages));
     }
 
@@ -207,8 +206,7 @@ public class ReplyImpl implements IReply<Player, TextComponent>
             return;
         }
 
-        Players.stream()
-               .filter(p -> p.hasPermission(permission))
+        Players.streamAllWithPerm(permission)
                .forEach(p -> to(p, collection));
     }
 
@@ -220,8 +218,8 @@ public class ReplyImpl implements IReply<Player, TextComponent>
             return;
         }
 
-        Players.stream()
-               .filter(p -> p.hasPermission(permission) && !p.equals(exclude))
+        Players.streamAllWithPerm(permission)
+               .filter(p -> !p.equals(exclude))
                .forEach(p -> to(p, messages));
     }
 
@@ -235,8 +233,8 @@ public class ReplyImpl implements IReply<Player, TextComponent>
             return;
         }
 
-        Players.stream()
-               .filter(p -> p.hasPermission(permission) && !exclude.contains(p))
+        Players.streamAllWithPerm(permission)
+               .filter(p -> !exclude.contains(p))
                .forEach(p -> to(p, messages));
     }
 
@@ -250,8 +248,8 @@ public class ReplyImpl implements IReply<Player, TextComponent>
             return;
         }
 
-        Players.stream()
-               .filter(p -> p.hasPermission(permission) && !exclude.contains(p))
+        Players.streamAllWithPerm(permission)
+               .filter(p -> !exclude.contains(p))
                .forEach(p -> to(p, collection));
     }
 

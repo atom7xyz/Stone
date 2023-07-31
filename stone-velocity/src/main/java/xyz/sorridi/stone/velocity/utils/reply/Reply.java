@@ -2,12 +2,13 @@ package xyz.sorridi.stone.velocity.utils.reply;
 
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.TextComponent;
+import xyz.sorridi.stone.common.utils.IReply;
 import xyz.sorridi.stone.velocity.StoneVelocity;
 
 import java.util.Collection;
 
 /**
- * {@link xyz.sorridi.stone.common.utils.IReply} implementation for Velocity.
+ * {@link IReply} implementation for Velocity.
  *
  * @author Sorridi
  * @since 1.0

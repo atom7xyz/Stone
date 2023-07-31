@@ -120,6 +120,11 @@ public class SoftCleaner
         SoftCleaner.logging = logging;
     }
 
+    /**
+     * Sets the logger and activates logging.
+     *
+     * @param logger The logger.
+     */
     public static void setLogger(Logger logger)
     {
         SoftCleaner.logging = true;
