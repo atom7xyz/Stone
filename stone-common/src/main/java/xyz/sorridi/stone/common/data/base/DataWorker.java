@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A worker for data actions.
+ * A worker for database actions.
  *
  * @author Sorridi
  * @since 1.0
@@ -43,7 +43,7 @@ public class DataWorker
     {
         this.origin = origin;
         this.startupWorker = startupWorker;
-        pipeline = new Pipeline("data_worker-" + ID.getAndIncrement(), readThreads, writeThreads);
+        this.pipeline = new Pipeline("data-" + ID.getAndIncrement(), readThreads, writeThreads);
     }
 
     /**
@@ -61,7 +61,7 @@ public class DataWorker
         CompletableFuture
                 .runAsync(() ->
                           {
-                              waitIfNotReady();
+                              waitUntilReady();
 
                               try (Connection connection = origin.getConnection())
                               {
@@ -90,7 +90,7 @@ public class DataWorker
 
         CompletableFuture.runAsync(() ->
                             {
-                                waitIfNotReady();
+                                waitUntilReady();
 
                                 try (Connection connection = origin.getConnection())
                                 {
@@ -118,17 +118,11 @@ public class DataWorker
     /**
      * Waits until the origin is ready.
      */
-    private void waitIfNotReady()
+    private void waitUntilReady()
     {
-        while (!startupWorker && !origin.isReady())
+        if (!startupWorker && !origin.isReady())
         {
-            try
-            {
-                Thread.sleep(10);
-            }
-            catch (InterruptedException ignored)
-            {
-            }
+            origin.waitUntilReady();
         }
     }
 

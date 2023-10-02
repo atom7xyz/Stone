@@ -6,12 +6,14 @@ import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
+import xyz.sorridi.stone.common.data.IOrigin;
 import xyz.sorridi.stone.common.threading.Pipeline;
+import xyz.sorridi.stone.common.utils.discord.StoneLogger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 
 /**
  * Represents a connection to a database.
@@ -19,65 +21,62 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Sorridi
  * @since 1.0
  */
-public class DataOrigin
+public class DataOrigin implements IOrigin<DataOrigin>
 {
     private HikariDataSource dataSource;
     private HikariConfig config;
+    private StoneLogger logger;
 
-    private final AtomicBoolean ready = new AtomicBoolean(false);
-
-    private String host, port, username, password, url, driver, database;
-    private Map<String, String> properties;
-    private boolean useDefaults;
+    private String host, port, username, password;
     private int poolSize;
 
-    public DataOrigin() {}
+    private String url, driver, database;
+    private Map<String, String> properties;
+    private boolean useDefaults;
 
-    /**
-     * Sets the host of the origin.
-     *
-     * @param host The host.
-     * @return The data origin.
-     */
+    public DataOrigin()
+    {
+    }
+
+    @Override
     public DataOrigin setHost(@NonNull String host)
     {
         this.host = host;
         return this;
     }
 
-    /**
-     * Sets the port of the origin.
-     *
-     * @param port The port.
-     * @return The data origin.
-     */
+    @Override
     public DataOrigin setPort(@NonNull String port)
     {
         this.port = port;
         return this;
     }
 
-    /**
-     * Sets the username of the origin.
-     *
-     * @param username The username.
-     * @return The data origin.
-     */
-    public DataOrigin setUsername(@NonNull String username)
+    @Override
+    public DataOrigin setUsername(@Nullable String username)
     {
         this.username = username;
         return this;
     }
 
-    /**
-     * Sets the password of the origin.
-     *
-     * @param password The password.
-     * @return The data origin.
-     */
+    @Override
     public DataOrigin setPassword(@Nullable String password)
     {
         this.password = password;
+        return this;
+    }
+
+    @Override
+    public DataOrigin setPoolSize(int poolSize)
+    {
+        this.poolSize = poolSize;
+        return this;
+    }
+
+    @Override
+    public DataOrigin setLogger(@NonNull Logger logger)
+    {
+        this.logger = new StoneLogger(logger);
         return this;
     }
 
@@ -130,18 +129,6 @@ public class DataOrigin
     }
 
     /**
-     * Sets the pool size.
-     *
-     * @param poolSize The pool size.
-     * @return The data origin.
-     */
-    public DataOrigin setPoolSize(int poolSize)
-    {
-        this.poolSize = poolSize;
-        return this;
-    }
-
-    /**
      * Sets the database and updates the data source.
      *
      * @param database The database.
@@ -153,13 +140,11 @@ public class DataOrigin
         return this;
     }
 
-    /**
-     * Sets up the data source.
-     *
-     * @return The data origin.
-     */
-    public DataOrigin setup()
+    @Override
+    public void setup()
     {
+        setReady(false);
+
         config = new HikariConfig();
 
         config.setUsername(username);
@@ -203,19 +188,22 @@ public class DataOrigin
               .thenRun(() ->
                        {
                            close(dataSource);
+                           worker.shutdown();
 
                            setDatabase(database);
                            config.setJdbcUrl("jdbc:" + url + "://" + host + ":" + port + "/" + database);
 
                            dataSource = new HikariDataSource(config);
-                           ready.set(true);
-
-                           worker.shutdown();
+                           setReady(true);
                        });
-
-        return this;
     }
 
+    @Override
+    public void shutdown()
+    {
+        dataSource.close();
+    }
+    
     /**
      * Gets a connection from the data source.
      *
@@ -228,35 +216,6 @@ public class DataOrigin
     }
 
     /**
-     * Closes the specified connections.
-     *
-     * @param connections The connections to close.
-     * @param <C>         The type of the connections.
-     */
-    public <C extends AutoCloseable> void close(C... connections)
-    {
-        for (C connection : connections)
-        {
-            try
-            {
-                connection.close();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Shuts down the data source.
-     */
-    public void shutdown()
-    {
-        dataSource.close();
-    }
-
-    /**
      * Gets whether the data source is ready.
      *
      * @return Whether the data source is ready.
@@ -264,6 +223,12 @@ public class DataOrigin
     public boolean isReady()
     {
         return ready.get();
+    }
+
+    public void waitUntilReady()
+    {
+        acquire();
+        release();
     }
 
 }

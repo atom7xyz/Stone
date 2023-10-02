@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Getter
 public class Pool implements Executor
 {
-    private static final AtomicInteger genericPoolNumber = new AtomicInteger();
+    private static final AtomicInteger ID = new AtomicInteger(0);
 
     private final ExecutorService executor;
     private final ThreadFactory threadFactory;
@@ -35,7 +35,15 @@ public class Pool implements Executor
      */
     public Pool()
     {
-        this("generic-pool-" + genericPoolNumber.getAndIncrement(), Runtime.getRuntime().availableProcessors());
+        this(Runtime.getRuntime().availableProcessors());
+    }
+
+    /**
+     * Creates a new generic pool with the given number of threads.
+     */
+    public Pool(int numThreads)
+    {
+        this("generic-" + ID.getAndIncrement(), numThreads);
     }
 
     /**
@@ -54,7 +62,7 @@ public class Pool implements Executor
 
         this.numThreads = numThreads;
         this.poolName = poolName;
-        this.threadFactory = new ThreadFactoryBuilder().setNameFormat(poolName + "-#%d").build();
+        this.threadFactory = new ThreadFactoryBuilder().setNameFormat(poolName + " (#%d)").build();
         this.executor = Executors.newFixedThreadPool(numThreads, threadFactory);
     }
 
