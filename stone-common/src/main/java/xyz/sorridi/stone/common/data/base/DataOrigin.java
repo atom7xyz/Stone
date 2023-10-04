@@ -2,6 +2,7 @@ package xyz.sorridi.stone.common.data.base;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
@@ -25,7 +26,6 @@ public class DataOrigin implements IOrigin<DataOrigin>
 {
     private HikariDataSource dataSource;
     private HikariConfig config;
-    private StoneLogger logger;
 
     private String host, port, username, password;
     private int poolSize;
@@ -33,6 +33,9 @@ public class DataOrigin implements IOrigin<DataOrigin>
     private String url, driver, database;
     private Map<String, String> properties;
     private boolean useDefaults;
+
+    @Getter
+    private StoneLogger logger;
 
     public DataOrigin()
     {
