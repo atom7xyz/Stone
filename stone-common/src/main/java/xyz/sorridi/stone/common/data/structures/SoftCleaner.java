@@ -30,7 +30,7 @@ public class SoftCleaner
         TO_REMOVE = new Stack<>();
         INSTANCES = new ConcurrentLinkedQueue<>();
 
-        schedule(Duration.ofMinutes(5));
+        schedule(Duration.ofMinutes(10));
     }
 
     /**
@@ -40,13 +40,12 @@ public class SoftCleaner
      */
     public static void schedule(Duration duration)
     {
-        if (TASK != null)
+        if (TASK == null)
         {
-            return;
+            TASK = Executors.newScheduledThreadPool(1);
         }
 
-        TASK = Executors.newScheduledThreadPool(1);
-        TASK.schedule(SoftCleaner::clean, duration.toSeconds(), TimeUnit.SECONDS);
+        TASK.scheduleAtFixedRate(SoftCleaner::clean, duration.toSeconds(), duration.toSeconds(), TimeUnit.SECONDS);
     }
 
     /**
@@ -92,9 +91,9 @@ public class SoftCleaner
                                   {
                                       int res = instance.clean();
 
-                                      if (logging)
+                                      if (logging && res != 0)
                                       {
-                                          info("Cleaned " + res + " from " + instance.getClass().getSimpleName());
+                                          info("Cleaned " + res + " entries from a SoftMap.");
                                       }
                                   }
                               }
@@ -104,7 +103,8 @@ public class SoftCleaner
 
         if (logging)
         {
-            info("Removed " + TO_REMOVE.size() + " instances");
+            info("Removed a total of " + TO_REMOVE.size() + " SoftMap instances.");
+            info(INSTANCES.size() + " SoftMap instances remaining.");
         }
 
         TO_REMOVE.clear();
@@ -129,6 +129,7 @@ public class SoftCleaner
     {
         SoftCleaner.logging = true;
         SoftCleaner.logger = logger;
+        info("Logger set!");
     }
 
     /**

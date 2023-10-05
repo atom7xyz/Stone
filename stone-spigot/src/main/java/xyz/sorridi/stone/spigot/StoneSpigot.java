@@ -10,10 +10,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.bukkit.plugin.PluginLoadOrder;
+import xyz.sorridi.stone.common.data.structures.SoftCleaner;
 import xyz.sorridi.stone.spigot.annotations.serializer.SerializerProcessor;
 import xyz.sorridi.stone.spigot.commands.StoneCommand;
 
-@Plugin(name = "Stone",
+@Plugin(name = "stone-spigot",
         version = "1.0-SNAPSHOT",
         description = "Yet another spigot plugin library.",
         authors = "Sorridi",
@@ -37,6 +38,8 @@ public final class StoneSpigot extends ExtendedJavaPlugin
     @SneakyThrows
     public void enable()
     {
+        SoftCleaner.setLogger(getLogger());
+
         new SerializerProcessor(this).process();
 
         Commands.create()

@@ -9,6 +9,7 @@ import lombok.Getter;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.config.Configurator;
+import xyz.sorridi.stone.common.data.structures.SoftCleaner;
 import xyz.sorridi.stone.velocity.utils.Players;
 import xyz.sorridi.stone.velocity.utils.reply.Reply;
 
@@ -47,6 +48,7 @@ public class StoneVelocity
     {
         Players.setServer(this);
         Reply.setServer(this);
+        SoftCleaner.setLogger(logger);
     }
 
 }

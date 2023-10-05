@@ -14,13 +14,13 @@ import xyz.sorridi.stone.spigot.utils.location.LocationEvaluate;
 public class StoneCommand implements FunctionalCommandHandler<CommandSender>
 {
     private static final String[] VERSION_MESSAGE = Array.of("&8&m-----------------------",
-                                                             "&8▎ &cv{ver} &7&o({hash})",
+                                                             "&8▎ &7ver: &cv{ver} &7&o({hash})",
                                                              "&8▎ &7autore: &c{authors}",
                                                              "&8▎ &7sito: &c{site}",
                                                              "&8&m-----------------------");
 
     private static final String[] STATS_MESSAGE = Array.of("&8&m-----------------------",
-                                                           "&8▎ &c&STATISTICHE",
+                                                           "&8▎ &c&lSTATISTICHE",
                                                            "&8▎ &cSoftMaps qty: &7{softmaps}",
                                                            "&8▎ &cReplace cache size: &7{replace}",
                                                            "&8▎ &cLocation cache size: &7{location}",
@@ -53,7 +53,6 @@ public class StoneCommand implements FunctionalCommandHandler<CommandSender>
     public void handle(@NonNull CommandContext<CommandSender> c)
     {
         c.reply(verMessage);
-        c.reply(" ");
 
         var statsMessage = Replace.of(STATS_MESSAGE,
                                       STATS_TO_REPLACE,
