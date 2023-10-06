@@ -12,7 +12,7 @@ import org.apache.logging.log4j.core.config.Configurator;
 import org.bukkit.plugin.PluginLoadOrder;
 import xyz.sorridi.stone.common.data.structures.SoftCleaner;
 import xyz.sorridi.stone.spigot.annotations.serializer.SerializerProcessor;
-import xyz.sorridi.stone.spigot.commands.StoneCommand;
+import xyz.sorridi.stone.spigot.commands.StoneCommandImpl;
 
 @Plugin(name = "stone-spigot",
         version = "1.0-SNAPSHOT",
@@ -44,7 +44,7 @@ public final class StoneSpigot extends ExtendedJavaPlugin
 
         Commands.create()
                 .description("Stone command.")
-                .handler(new StoneCommand(this))
+                .handler(new StoneCommandImpl(this))
                 .registerAndBind(this, "stone");
     }
 

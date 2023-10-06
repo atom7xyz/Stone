@@ -183,4 +183,15 @@ public class LocationEvaluate
         return result;
     }
 
+    /**
+     * Gets the rough size of the cache.
+     *
+     * @return The rough size of the cache.
+     */
+    public static int getCacheSize()
+    {
+        return IS_NEAR_CACHE.size();
+    }
+
+
 }

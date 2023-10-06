@@ -58,7 +58,7 @@ public final class PluginVersion extends VersionVerbose<PluginContainer, PluginD
     @Override
     public @Nullable String getAuthors()
     {
-        return Replace.of(getDescriptionFile().getAuthors(), TO_REPLACE_ARRAY, "").toString();
+        return Replace.of(getDescriptionFile().getAuthors().toString(), TO_REPLACE_ARRAY, "", "");
     }
 
     @Override
