@@ -155,7 +155,7 @@ public class PlaySound
      * Gets the players within a certain radius of an entity.
      *
      * @param entity Entity to get the players around.
-     * @param range  Range to get the players in.
+     * @param radius Radius to get the players in.
      * @return Stream of players within the range.
      */
     private static Stream<Player> toPlayers(Entity entity, int radius)

@@ -21,19 +21,38 @@ public class StoneCommandImpl extends StoneCommand implements SimpleCommand, Sto
     public void execute(Invocation invocation)
     {
         var source = invocation.source();
+        var args = invocation.arguments();
 
-        source.sendMessage(Translate.colors(verMessage));
-
-        if (!source.hasPermission(STONE_STATS))
+        switch (args.length)
         {
-            return;
+            case 0 ->
+            {
+                source.sendMessage(Translate.colors(verMessage));
+
+                if (!source.hasPermission(STONE_STATS))
+                {
+                    break;
+                }
+
+                updateStats(SoftCleaner.getNumInstances(),
+                            Replace.getCacheSize(),
+                            -1);
+
+                source.sendMessage(Translate.colors(statsMessage));
+            }
+            case 1 ->
+            {
+                if (!source.hasPermission(STONE_CLEAN))
+                {
+                    break;
+                }
+
+                if (args[0].equalsIgnoreCase("clean"))
+                {
+                    source.sendMessage(Translate.colors(SoftCleaner.clean()));
+                }
+            }
         }
-
-        updateStats(SoftCleaner.getNumInstances(),
-                    Replace.getCacheSize(),
-                    -1);
-
-        source.sendMessage(Translate.colors(statsMessage));
     }
 
 }

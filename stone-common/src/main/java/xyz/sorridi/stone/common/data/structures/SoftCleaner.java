@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 /**
@@ -71,43 +72,42 @@ public class SoftCleaner
     /**
      * Cleans all the {@link SoftMap} instances.
      */
-    public static void clean()
+    public static String clean()
     {
+        AtomicInteger count = new AtomicInteger();
+
         INSTANCES.forEach(s ->
                           {
-                              if (s == null)
+                              var instance = s.get();
+
+                              if (instance == null)
                               {
                                   TO_REMOVE.add(s);
                               }
                               else
                               {
-                                  var instance = s.get();
+                                  int res = instance.clean();
 
-                                  if (instance == null)
+                                  if (instance.size() == 0)
                                   {
                                       TO_REMOVE.add(s);
                                   }
-                                  else
-                                  {
-                                      int res = instance.clean();
 
-                                      if (logging && res != 0)
-                                      {
-                                          info("Cleaned " + res + " entries from a SoftMap.");
-                                      }
-                                  }
+                                  count.addAndGet(res);
                               }
                           });
 
+        String message = "C/R/L: " + count.get() + "/" + INSTANCES.size() + "/" + TO_REMOVE.size();
+
         TO_REMOVE.forEach(SoftCleaner::remove);
+        TO_REMOVE.clear();
 
         if (logging)
         {
-            info("Removed a total of " + TO_REMOVE.size() + " SoftMap instances.");
-            info(INSTANCES.size() + " SoftMap instances remaining.");
+            info(message);
         }
 
-        TO_REMOVE.clear();
+        return message;
     }
 
     /**

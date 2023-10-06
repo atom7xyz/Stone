@@ -10,7 +10,6 @@ import xyz.sorridi.stone.common.data.structures.SoftCleaner;
 import xyz.sorridi.stone.common.immutable.StonePerms;
 import xyz.sorridi.stone.common.utils.Replace;
 import xyz.sorridi.stone.spigot.utils.PluginVersion;
-import xyz.sorridi.stone.spigot.utils.location.LocationEvaluate;
 
 public class StoneCommandImpl extends StoneCommand implements FunctionalCommandHandler<CommandSender>, StonePerms
 {
@@ -23,18 +22,39 @@ public class StoneCommandImpl extends StoneCommand implements FunctionalCommandH
     @Override
     public void handle(@NonNull CommandContext<CommandSender> c)
     {
-        c.reply(verMessage);
+        var source = c.sender();
+        var args = c.args();
 
-        if (!c.sender().hasPermission(STONE_STATS))
+        switch (args.size())
         {
-            return;
+            case 0 ->
+            {
+                c.reply(verMessage);
+
+                if (!source.hasPermission(STONE_STATS))
+                {
+                    break;
+                }
+
+                updateStats(SoftCleaner.getNumInstances(),
+                            Replace.getCacheSize(),
+                            -1);
+
+                c.reply(statsMessage);
+            }
+            case 1 ->
+            {
+                if (!source.hasPermission(STONE_CLEAN))
+                {
+                    break;
+                }
+
+                if (args.get(0).equalsIgnoreCase("clean"))
+                {
+                    c.reply(SoftCleaner.clean());
+                }
+            }
         }
-
-        updateStats(SoftCleaner.getNumInstances(),
-                    Replace.getCacheSize(),
-                    LocationEvaluate.getCacheSize());
-
-        c.reply(statsMessage);
     }
 
 }
