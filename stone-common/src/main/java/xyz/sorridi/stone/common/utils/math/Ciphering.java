@@ -6,6 +6,12 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+/**
+ * Ciphering utils.
+ *
+ * @author Sorridi
+ * @since 1.0
+ */
 public class Ciphering
 {
     private final String algorithm;
@@ -18,6 +24,13 @@ public class Ciphering
         this.decryptCipher = Cipher.getInstance(padding);
     }
 
+    /**
+     * Encrypts the given input with the given secret key.
+     *
+     * @param input     The input to encrypt.
+     * @param secretKey The secret key to use.
+     * @return The encrypted input.
+     */
     public byte[] encrypt(byte[] input, String secretKey) throws InvalidKeyException, IllegalBlockSizeException,
                                                                  BadPaddingException
     {
@@ -26,6 +39,13 @@ public class Ciphering
         return encryptCipher.doFinal(input);
     }
 
+    /**
+     * Decrypts the given encrypted bytes with the given secret key.
+     *
+     * @param encryptedBytes The encrypted bytes to decrypt.
+     * @param secretKey      The secret key to use.
+     * @return The decrypted bytes.
+     */
     public byte[] decrypt(byte[] encryptedBytes, String secretKey) throws InvalidKeyException,
                                                                           IllegalBlockSizeException, BadPaddingException
     {
@@ -34,6 +54,13 @@ public class Ciphering
         return decryptCipher.doFinal(encryptedBytes);
     }
 
+    /**
+     * Encrypts the given input with the given secret key.
+     *
+     * @param input     The input to encrypt.
+     * @param secretKey The secret key to use.
+     * @return The encrypted input.
+     */
     public String encryptString(String input, String secretKey) throws IllegalBlockSizeException, BadPaddingException,
                                                                        InvalidKeyException
     {
@@ -41,6 +68,13 @@ public class Ciphering
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 
+    /**
+     * Decrypts the given encrypted text with the given secret key.
+     *
+     * @param encryptedText The encrypted text to decrypt.
+     * @param secretKey     The secret key to use.
+     * @return The decrypted text.
+     */
     public String decryptString(String encryptedText, String secretKey) throws IllegalBlockSizeException,
                                                                                BadPaddingException, InvalidKeyException
     {
@@ -49,6 +83,12 @@ public class Ciphering
         return new String(decryptedBytes);
     }
 
+    /**
+     * Generates a secret key from the given string.
+     *
+     * @param secretKey The secret key to use.
+     * @return The generated secret key.
+     */
     private SecretKey generateKey(String secretKey)
     {
         return new SecretKeySpec(secretKey.getBytes(), algorithm);

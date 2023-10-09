@@ -97,7 +97,7 @@ public class SoftCleaner
                               }
                           });
 
-        String message = "C/R/L: " + count.get() + "/" + INSTANCES.size() + "/" + TO_REMOVE.size();
+        var message = "Expired / Removed / Left: " + count.get() + " / " + TO_REMOVE.size() + " / " + INSTANCES.size();
 
         TO_REMOVE.forEach(SoftCleaner::remove);
         TO_REMOVE.clear();

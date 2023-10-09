@@ -6,6 +6,12 @@ import lombok.Setter;
 
 import java.util.logging.Logger;
 
+/**
+ * A simple logger that sends messages to a Discord channel.
+ *
+ * @author Sorridi
+ * @since 1.0
+ */
 @Getter
 @Setter
 public class StoneLogger
@@ -14,86 +20,161 @@ public class StoneLogger
     private final Logger logger;
 
     private boolean online;
-    private String hookURL, serverName;
+    private String hookURL, hookName;
 
     public StoneLogger(@NonNull Logger logger)
     {
         this.logger = logger;
         this.online = false;
-        this.serverName = "Unknown Server";
+        this.hookName = DEFAULT_HOOK_NAME;
     }
 
-    public void custom(@NonNull String message)
+    /**
+     * Creates a new StoneLogger with a default hook name.
+     * @param logger The logger to use.
+     * @param hookName The default hook name for this logger.
+     */
+    public StoneLogger(@NonNull Logger logger, @NonNull String hookName)
+    {
+        this(logger);
+        this.hookName = hookName;
+    }
+
+    /**
+     * Logs a message wit the default hookName.
+     *
+     * @param message The message to log.
+     */
+    public void message(@NonNull String message)
     {
         onlineSend(message);
     }
 
-    public void custom(@NonNull String username, @NonNull String message)
+    /**
+     * Logs a message with a hookName.
+     *
+     * @param hookName The hookName to log with.
+     * @param message  The message to log.
+     */
+    public void message(@NonNull String hookName, @NonNull String message)
     {
-        onlineSend(username, message);
+        onlineSend(hookName, message);
     }
 
-    public void info(@NonNull String username, @NonNull String message)
+    /**
+     * Logs a message as "[INFO]" with the given hook name.
+     *
+     * @param hookName The hookName to log with.
+     * @param message  The message to log.
+     */
+    public void info(@NonNull String hookName, @NonNull String message)
     {
-        onlineSend(username, "ℹ\uFE0F [INFO]: " + message);
+        onlineSend(hookName, "ℹ\uFE0F [INFO]: " + message);
         logger.info(message);
     }
 
+    /**
+     * Logs a message as "[INFO]" with the default hook name.
+     *
+     * @param message The message to log.
+     */
     public void info(@NonNull String message)
     {
-        info(DEFAULT_HOOK_NAME, message);
+        info(hookName, message);
     }
 
-    public void warn(@NonNull String username, @NonNull String message)
+    /**
+     * Logs a message as "[WARN]" with the given hook name.
+     *
+     * @param hookName The hookName to log with.
+     * @param message  The message to log.
+     */
+    public void warn(@NonNull String hookName, @NonNull String message)
     {
-        onlineSend(username, "⚠\uFE0F [WARN]: " + message);
+        onlineSend(hookName, "⚠\uFE0F [WARN]: " + message);
         logger.warning(message);
     }
 
+    /**
+     * Logs a message as "[WARN]" with the default hook name.
+     *
+     * @param message The message to log.
+     */
     public void warn(@NonNull String message)
     {
-        warn(DEFAULT_HOOK_NAME, message);
+        warn(hookName, message);
     }
 
-    public void error(@NonNull String username, @NonNull String message)
+    /**
+     * Logs a message as "[ERROR]" with the given hook name.
+     *
+     * @param hookName The hookName to log with.
+     * @param message  The message to log.
+     */
+    public void error(@NonNull String hookName, @NonNull String message)
     {
-        onlineSend(username, "⛔ [ERROR]: " + message);
+        onlineSend(hookName, "⛔ [ERROR]: " + message);
         logger.severe(message);
     }
 
+    /**
+     * Logs a message as "[ERROR]" with the default hook name.
+     *
+     * @param message The message to log.
+     */
     public void error(@NonNull String message)
     {
-        error(DEFAULT_HOOK_NAME, message);
+        error(hookName, message);
     }
 
-    public void exception(@NonNull String username, @NonNull Exception exception)
+    /**
+     * Logs a message as "[STACKTRACE]" with the given hook name.
+     *
+     * @param hookName  The hookName to log with.
+     * @param exception The exception to log.
+     */
+    public void exception(@NonNull String hookName, @NonNull Exception exception)
     {
-        onlineSend(username, "\uD83D\uDC1B [STACKTRACE]:\\n\\n " + formatStackTrace(exception));
+        onlineSend(hookName, "\uD83D\uDC1B [STACKTRACE]:\\n\\n " + formatStackTrace(exception));
         exception.printStackTrace();
     }
 
+    /**
+     * Logs a message as "[STACKTRACE]" with the default hook name.
+     *
+     * @param exception The exception to log.
+     */
     public void exception(@NonNull Exception exception)
     {
-        exception(DEFAULT_HOOK_NAME, exception);
+        exception(hookName, exception);
     }
 
+    /**
+     * Sends a message to the discord channel with the default hook name.
+     *
+     * @param message The message to send.
+     */
     private void onlineSend(@NonNull String message)
     {
-        onlineSend("StoneLogger-API", message);
+        onlineSend(hookName, message);
     }
 
-    private void onlineSend(@NonNull String username, @NonNull String message)
+    /**
+     * Sends a message to the discord channel.
+     *
+     * @param hookName The hook name to send with.
+     * @param message  The message to send.
+     */
+    private void onlineSend(@NonNull String hookName, @NonNull String message)
     {
-        if (!online)
+        if (!online || message.isEmpty())
         {
             return;
         }
 
         DiscordHook hook = new DiscordHook(hookURL);
-
-        hook.setUsername(username);
+        hook.setUsername(hookName);
         hook.setContent(message);
-
         hook.send();
     }
 

@@ -107,8 +107,7 @@ public class Array
                 return false;
             }
 
-            Wrapper that = (Wrapper) o;
-            return Objects.deepEquals(array, that.array);
+            return Objects.deepEquals(array, ((Wrapper) o).array);
         }
 
         @Override
