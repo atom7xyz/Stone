@@ -3,7 +3,7 @@ package xyz.sorridi.stone.common.annotations;
 /**
  * Interface used to process annotations.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public interface IProcessor

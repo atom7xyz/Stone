@@ -3,7 +3,7 @@ package xyz.sorridi.stone.common.immutable;
 /**
  * Error messages.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public enum Err
@@ -49,7 +49,7 @@ public enum Err
     /**
      * Returns the error message with the expect value.
      *
-     * @param arg The expected value.
+     * @param args The expected values.
      * @return The error message.
      */
     public String expect(Object... args)

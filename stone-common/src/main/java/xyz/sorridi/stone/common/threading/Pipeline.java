@@ -7,9 +7,12 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * Pipeline for executing tasks.
- * It gives a way to separate tasks in two canals using {@link Types}.
+ * <p>
+ * This class provides a way to separate tasks into two channels: read and write,
+ * using the {@link Types} enum. Each type has its own thread pool.
+ * </p>
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 @Getter
@@ -18,6 +21,13 @@ public class Pipeline
     private final Pool readPool, writePool;
     private boolean shutdown;
 
+    /**
+     * Creates a new pipeline with separate pools for read and write operations.
+     *
+     * @param name       The name of the pipeline.
+     * @param readThreads The number of threads for the read pool.
+     * @param writeThreads The number of threads for the write pool.
+     */
     public Pipeline(@NonNull String name, int readThreads, int writeThreads)
     {
         readPool = new Pool("read-" + name, readThreads);
@@ -40,7 +50,7 @@ public class Pipeline
     }
 
     /**
-     * Shuts down the pipeline.
+     * Shuts down both read and write pools, marking the pipeline as shutdown.
      */
     public void shutdown()
     {
@@ -49,6 +59,11 @@ public class Pipeline
         shutdown = true;
     }
 
+    /**
+     * Provides a string representation of the pipeline.
+     *
+     * @return A string representation of the pipeline.
+     */
     @Override
     public String toString()
     {
@@ -60,11 +75,12 @@ public class Pipeline
     }
 
     /**
-     * Types of operation a pipeline has.
+     * Types of operation a pipeline can have.
      * <br>
-     * <br>
-     * {@link Types#READ}: Used for reading data from a source.
-     * {@link Types#WRITE}: Used for writing data to a source.
+     * <ul>
+     * <li>{@link Types#READ}: Used for reading data from a source.</li>
+     * <li>{@link Types#WRITE}: Used for writing data to a source.</li>
+     * </ul>
      */
     public enum Types
     {

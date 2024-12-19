@@ -6,19 +6,19 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 /**
- * Conversion of locations.
+ * Utility class for location conversions.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class LocationConverter
 {
 
     /**
-     * Formats objects to a string like x:y:z.
+     * Concatenates objects into a string using the format x:y:z.
      *
-     * @param object The objects to format.
-     * @return The formatted objects.
+     * @param object The objects to concatenate.
+     * @return A string representation of the concatenated objects.
      */
     public static String concat(Object... object)
     {
@@ -39,10 +39,13 @@ public class LocationConverter
     }
 
     /**
-     * Extracts the X, Y, Z of a location in a String, using X:Y:Z format.
+     * Extracts the X, Y, and Z coordinates from a location as a string
+     * in the format X:Y:Z, with optional precision and yaw/pitch values.
      *
-     * @param location The location to extract from.
-     * @return The extracted string.
+     * @param location The location to extract coordinates from.
+     * @param precise  Whether to use precise decimal values.
+     * @param yawPitch Whether to include yaw and pitch in the output.
+     * @return A string containing the extracted coordinates.
      */
     public static String extractString(@NonNull Location location, boolean precise, boolean yawPitch)
     {
@@ -56,18 +59,19 @@ public class LocationConverter
             float pitch = location.getPitch();
 
             return precise ? concat(x, y, z, yaw, pitch)
-                           : concat((int) x, (int) y, (int) z, (int) yaw, (int) pitch);
+                    : concat((int) x, (int) y, (int) z, (int) yaw, (int) pitch);
         }
 
         return precise ? concat(x, y, z)
-                       : concat((int) x, (int) y, (int) z);
+                : concat((int) x, (int) y, (int) z);
     }
 
     /**
-     * Converts the Location into a String, using WORLD:X:Y:Z:YAW:PITCH format.
+     * Converts a Location object into a string using the format
+     * WORLD:X:Y:Z:YAW:PITCH.
      *
-     * @param location The location to convert from.
-     * @return The location converted.
+     * @param location The location to convert to a string.
+     * @return A string representation of the location.
      */
     public static String getStringFromLocation(@NonNull Location location)
     {
@@ -84,11 +88,12 @@ public class LocationConverter
     }
 
     /**
-     * Converts a String into a Location, using WORLD:X:Y:Z:YAW:PITCH format.
+     * Converts a string in the format WORLD:X:Y:Z:YAW:PITCH into a Location
+     * object. The yaw and pitch values are optional based on the yawPitch flag.
      *
-     * @param stringLocation The string to convert from.
-     * @param yawPitch       If yaw and pitch should be included.
-     * @return The converted Location.
+     * @param stringLocation The string representation of the location.
+     * @param yawPitch       Whether yaw and pitch values are included.
+     * @return A Location object parsed from the string.
      */
     public static Location getLocationFromString(@NonNull String stringLocation, boolean yawPitch)
     {

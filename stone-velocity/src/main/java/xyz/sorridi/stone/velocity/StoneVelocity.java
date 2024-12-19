@@ -22,8 +22,8 @@ import java.util.logging.Logger;
         name = "stone-velocity",
         description = "Yet another velocity plugin library.",
         version = "1.0-SNAPSHOT",
-        authors = {"Sorridi"},
-        url = "https://www.sorridi.xyz")
+        authors = {"atom7xyz"},
+        url = "https://www.atom7.xyz")
 
 @Getter
 public class StoneVelocity
@@ -61,7 +61,9 @@ public class StoneVelocity
         SoftCleaner.setLogger(logger);
 
         pluginManager.getPlugin("stone-velocity")
-                     .ifPresent(container -> commandManager.register("stonev", new StoneCommandImpl(container)));
+                     .ifPresent(container -> {
+                         commandManager.register("stonev", new StoneCommandImpl(container));
+                     });
     }
 
 }

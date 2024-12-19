@@ -5,194 +5,194 @@ import lombok.NonNull;
 import java.util.Collection;
 
 /**
- * Interface for sending messages to players.
+ * Interface for sending messages to players, with support for excluding certain players,
+ * sending messages to players with specific permissions, and working with collections of players or messages.
  *
- * @param <T> The player type.
- * @param <R> The reply type.
- * @author Sorridi
+ * @param <T> The type representing a player.
+ * @param <R> The type representing a message.
+ *
+ * @author atom7xyz
  * @since 1.0
  */
 public interface IReply<T, R>
 {
 
     /**
-     * Sends messages to a player.
+     * Sends one or more messages to a single player.
      *
-     * @param player   Player to send the message to.
-     * @param messages Messages to send.
-     * @return If the player is online.
+     * @param player   The player to send the messages to.
+     * @param messages The messages to send.
+     * @return True if the player is online, false otherwise.
      */
     boolean to(T player, R... messages);
 
     /**
-     * Sends messages to a player.
+     * Sends a collection of messages to a single player.
      *
-     * @param player     Player to send the message to.
-     * @param collection Messages to send.
-     * @return If the player is online.
+     * @param player     The player to send the messages to.
+     * @param collection The collection of messages to send.
+     * @return True if the player is online, false otherwise.
      */
     <C extends Collection<R>> boolean to(T player, C collection);
 
     /**
-     * Sends messages to a collection of players.
+     * Sends one or more messages to all players in a collection.
      *
-     * @param players  The players to send the messages to.
+     * @param players  The collection of players to send messages to.
      * @param messages The messages to send.
-     * @param <P>      The collection type.
+     * @param <P>      The type of the player collection.
      */
-    default <P extends Collection<? extends T>> void to(P players, R... messages)
-    {
+    default <P extends Collection<? extends T>> void to(P players, R... messages) {
         players.forEach(player -> to(player, messages));
     }
 
     /**
-     * Sends messages to a collection of players.
+     * Sends a collection of messages to all players in a collection.
      *
-     * @param players    The players to send the messages to.
-     * @param collection The messages to send.
-     * @param <P>        The collection type.
-     * @param <C>        The messages collection type.
+     * @param players    The collection of players to send messages to.
+     * @param collection The collection of messages to send.
+     * @param <P>        The type of the player collection.
+     * @param <C>        The type of the message collection.
      */
-    default <P extends Collection<? extends T>, C extends Collection<R>> void to(P players, C collection)
-    {
+    default <P extends Collection<? extends T>, C extends Collection<R>> void to(P players, C collection) {
         players.forEach(player -> to(player, collection));
     }
 
     /**
-     * Sends messages to every online player.
+     * Sends one or more messages to all online players.
      *
-     * @param messages Messages to send.
+     * @param messages The messages to send.
      */
     void toAll(R... messages);
 
     /**
-     * Sends messages to every online player.
+     * Sends a collection of messages to all online players.
      *
-     * @param collection Messages to send.
+     * @param collection The collection of messages to send.
      */
-    <P extends Collection<R>> void toAll(P collection);
+    <C extends Collection<R>> void toAll(C collection);
 
     /**
-     * Sends messages to every online player except the specified one.
+     * Sends one or more messages to all online players, excluding a specified player.
      *
-     * @param exclude  Player to exclude.
-     * @param messages Messages to send.
+     * @param exclude  The player to exclude from receiving the messages.
+     * @param messages The messages to send.
      */
     void toAllExcept(@NonNull T exclude, R... messages);
 
     /**
-     * Sends messages to every online player except the specified one.
+     * Sends a collection of messages to all online players, excluding a specified player.
      *
-     * @param toExclude  Player to exclude.
-     * @param collection Messages to send.
+     * @param toExclude  The player to exclude from receiving the messages.
+     * @param collection The collection of messages to send.
      */
     <C extends Collection<R>> void toAllExcept(@NonNull T toExclude, C collection);
 
     /**
-     * Sends messages to every online player except the specified ones.
+     * Sends one or more messages to all online players, excluding a collection of specified players.
      *
-     * @param toExclude Players to exclude.
-     * @param messages  Messages to send.
-     * @param <P>       The collection type.
+     * @param toExclude The collection of players to exclude.
+     * @param messages  The messages to send.
+     * @param <P>       The type of the player collection.
      */
     <P extends Collection<T>> void toAllExcept(@NonNull P toExclude, R... messages);
 
     /**
-     * Sends messages to every online player except the specified ones.
+     * Sends a collection of messages to all online players, excluding a collection of specified players.
      *
-     * @param toExclude  Players to exclude.
-     * @param collection Messages to send.
-     * @param <P>        The collection type.
-     * @param <C>        The collection type.
+     * @param toExclude  The collection of players to exclude.
+     * @param collection The collection of messages to send.
+     * @param <P>        The type of the player collection.
+     * @param <C>        The type of the message collection.
      */
-    <P extends Collection<T>, C extends Collection<R>> void toAllExceptMulti(@NonNull P toExclude,
-                                                                             C collection);
+    <P extends Collection<T>, C extends Collection<R>> void toAllExceptMulti(@NonNull P toExclude, C collection);
 
     /**
-     * Sends messages to every player in the collection except the specified ones.
+     * Sends one or more messages to a collection of players, excluding a specified player.
      *
-     * @param players  Players to send the message to.
-     * @param exclude  Players to exclude.
-     * @param messages Messages to send.
-     */
-    <P extends Collection<T>> void toExcept(P players, @NonNull P exclude, R... messages);
-
-    /**
-     * Sends messages to every player in the collection except the specified ones.
-     *
-     * @param players    Players to send the message to.
-     * @param exclude    Players to exclude.
-     * @param collection Messages to send.
-     */
-    <P extends Collection<T>, C extends Collection<R>> void toExcept(P players,
-                                                                     @NonNull P exclude,
-                                                                     C collection);
-
-    /**
-     * Sends messages to every player in the collection except the specified one.
-     *
-     * @param players  Players to send the message to.
-     * @param exclude  Player to exclude.
-     * @param messages Messages to send.
+     * @param players  The collection of players to send messages to.
+     * @param exclude  The player to exclude.
+     * @param messages The messages to send.
+     * @param <P>      The type of the player collection.
      */
     <P extends Collection<T>> void toExcept(P players, @NonNull T exclude, R... messages);
 
     /**
-     * Sends messages to every player in the collection except the specified one.
+     * Sends a collection of messages to a collection of players, excluding a specified player.
      *
-     * @param players    Players to send the message to.
-     * @param exclude    Player to exclude.
-     * @param collection Messages to send.
+     * @param players    The collection of players to send messages to.
+     * @param exclude    The player to exclude.
+     * @param collection The collection of messages to send.
+     * @param <P>        The type of the player collection.
+     * @param <C>        The type of the message collection.
      */
-    <P extends Collection<T>, C extends Collection<R>> void toExcept(P players,
-                                                                     @NonNull T exclude,
-                                                                     C collection);
+    <P extends Collection<T>, C extends Collection<R>> void toExcept(P players, @NonNull T exclude, C collection);
 
     /**
-     * Sends messages to every player with the specified permission.
+     * Sends one or more messages to a collection of players, excluding a collection of specified players.
      *
-     * @param permission Permission to check.
-     * @param messages   Messages to send.
+     * @param players  The collection of players to send messages to.
+     * @param exclude  The collection of players to exclude.
+     * @param messages The messages to send.
+     * @param <P>      The type of the player collection.
+     */
+    <P extends Collection<T>> void toExcept(P players, @NonNull P exclude, R... messages);
+
+    /**
+     * Sends a collection of messages to a collection of players, excluding a collection of specified players.
+     *
+     * @param players    The collection of players to send messages to.
+     * @param exclude    The collection of players to exclude.
+     * @param collection The collection of messages to send.
+     * @param <P>        The type of the player collection.
+     * @param <C>        The type of the message collection.
+     */
+    <P extends Collection<T>, C extends Collection<R>> void toExcept(P players, @NonNull P exclude, C collection);
+
+    /**
+     * Sends one or more messages to all players with a specific permission.
+     *
+     * @param permission The required permission.
+     * @param messages   The messages to send.
      */
     void toAllWithPerm(@NonNull String permission, R... messages);
 
     /**
-     * Sends messages to every player with the specified permission.
+     * Sends a collection of messages to all players with a specific permission.
      *
-     * @param permission Permission to check.
-     * @param collection Messages to send.
+     * @param permission The required permission.
+     * @param collection The collection of messages to send.
      */
     <C extends Collection<R>> void toAllWithPerm(@NonNull String permission, C collection);
 
     /**
-     * Sends messages to every player with the specified permission except the specified one.
+     * Sends one or more messages to all players with a specific permission, excluding a specified player.
      *
-     * @param permission Permission to check.
-     * @param exclude    Player to exclude.
-     * @param messages   Messages to send.
+     * @param permission The required permission.
+     * @param exclude    The player to exclude.
+     * @param messages   The messages to send.
      */
     void toAllWithPermExcept(@NonNull String permission, @NonNull T exclude, R... messages);
 
     /**
-     * Sends messages to every player with the specified permission except the specified ones.
+     * Sends one or more messages to all players with a specific permission, excluding a collection of specified players.
      *
-     * @param permission Permission to check.
-     * @param exclude    Players to exclude.
-     * @param messages   Messages to send.
+     * @param permission The required permission.
+     * @param exclude    The collection of players to exclude.
+     * @param messages   The messages to send.
+     * @param <P>        The type of the player collection.
      */
-    <P extends Collection<T>> void toAllWithPermExcept(@NonNull String permission,
-                                                       @NonNull P exclude,
-                                                       R... messages);
+    <P extends Collection<T>> void toAllWithPermExcept(@NonNull String permission, @NonNull P exclude, R... messages);
 
     /**
-     * Sends messages to every player with the specified permission except the specified ones.
+     * Sends a collection of messages to all players with a specific permission, excluding a collection of specified players.
      *
-     * @param permission Permission to check.
-     * @param exclude    Players to exclude.
-     * @param collection Messages to send.
+     * @param permission The required permission.
+     * @param exclude    The collection of players to exclude.
+     * @param collection The collection of messages to send.
+     * @param <P>        The type of the player collection.
+     * @param <C>        The type of the message collection.
      */
-    <P extends Collection<T>, C extends Collection<R>> void toAllWithPermExcept(@NonNull String permission,
-                                                                                @NonNull P exclude,
-                                                                                C collection);
+    <P extends Collection<T>, C extends Collection<R>> void toAllWithPermExcept(@NonNull String permission, @NonNull P exclude, C collection);
 
 }

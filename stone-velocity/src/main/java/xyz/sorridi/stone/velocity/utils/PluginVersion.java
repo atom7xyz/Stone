@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * A {@link VersionVerbose} implementation for Velocity plugins.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public final class PluginVersion extends VersionVerbose<PluginContainer, PluginDescription>

@@ -15,7 +15,7 @@ import java.util.HashSet;
 /**
  * Messaging utilities.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class ReplyImpl implements IReply<Player, TextComponent>

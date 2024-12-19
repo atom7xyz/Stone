@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * Class used to calculate the average of a given set of numbers.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class AvgHistory

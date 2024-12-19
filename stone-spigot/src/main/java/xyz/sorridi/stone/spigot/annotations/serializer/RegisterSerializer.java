@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation used to register custom serializers.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 @SupportedSourceVersion(SourceVersion.RELEASE_17)

@@ -5,21 +5,23 @@ import me.lucko.helper.Services;
 import java.util.function.Consumer;
 
 /**
- * Services utilities.
+ * Utility class for working with services provided by plugins.
+ * Facilitates retrieving and interacting with registered services.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Serve
 {
 
     /**
-     * Gets a service that a plugin might have.
+     * Retrieves a service of the specified type.
+     * If the service is not found, a {@link ServiceNotFoundException} is thrown.
      *
-     * @param target The target service to get.
-     * @param <G>    The service type.
-     * @return The service.
-     * @throws NullPointerException If the service is not found.
+     * @param target The target service class to retrieve.
+     * @param <G>    The type of the service.
+     * @return The service instance.
+     * @throws ServiceNotFoundException If the service is not found.
      */
     public static <G> G of(Class<G> target) throws ServiceNotFoundException
     {
@@ -34,19 +36,26 @@ public class Serve
     }
 
     /**
-     * Gets a service that a plugin might have.
+     * Executes the provided action with the service of the specified type if it exists.
+     * If the service is not found, a {@link ServiceNotFoundException} is thrown.
      *
-     * @param target   The target service to get.
-     * @param consumer The action to execute if the service is found.
-     * @param <G>      The service type.
+     * @param target   The target service class to retrieve.
+     * @param consumer The action to perform with the retrieved service.
+     * @param <G>      The type of the service.
+     * @throws ServiceNotFoundException If the service is not found.
      */
     public static <G> void of(Class<G> target, Consumer<G> consumer) throws ServiceNotFoundException
     {
         var service = Services.get(target);
 
-        service.ifPresent(consumer);
-
-        throw new ServiceNotFoundException(target);
+        if (service.isPresent())
+        {
+            consumer.accept(service.get());
+        }
+        else
+        {
+            throw new ServiceNotFoundException(target);
+        }
     }
 
 }

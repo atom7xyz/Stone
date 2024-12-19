@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * Cool downs for a target.
  *
  * @param <T> Target type.
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 @Getter

@@ -1,18 +1,20 @@
 package xyz.sorridi.stone.common.builders.expression;
 
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.Stack;
 
 /**
  * Implementation of the Djikstra's two stack algorithm for evaluating arithmetic expressions.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class ExpressionBuilder
 {
-    private final String raw;
+    @Setter
+    private String raw;
 
     private final Stack<String> operations;
     private final Stack<Double> values;

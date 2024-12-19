@@ -13,7 +13,7 @@ import java.util.HashSet;
 /**
  * {@link Reply} implementation for Spigot.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class ReplyImpl implements IReply<Player, String>

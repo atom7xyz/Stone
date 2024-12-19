@@ -11,17 +11,12 @@ import xyz.sorridi.stone.common.utils.data.Array;
 /**
  * Evaluation of locations.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class LocationEvaluate
 {
-    public static final SoftMap<Array.Wrapper, Boolean> IS_NEAR_CACHE;
-
-    static
-    {
-        IS_NEAR_CACHE = new SoftMap<>();
-    }
+    public static final SoftMap<Array.Wrapper, Boolean> IS_NEAR_CACHE = new SoftMap<>();
 
     /**
      * Checks if two locations are equal in terms of X, Y, Z (ignoring yaw and pitch).
@@ -35,15 +30,13 @@ public class LocationEvaluate
         World world = location.getWorld();
         World _world = toCompare.getWorld();
 
-        double x = location.getX();
-        double y = location.getY();
-        double z = location.getZ();
+        if (world != _world) {
+            return false;
+        }
 
-        double _x = toCompare.getX();
-        double _y = toCompare.getY();
-        double _z = toCompare.getZ();
-
-        return (world == _world) && (x == _x) && (y == _y) && (z == _z);
+        return location.getX() == toCompare.getX()
+                && location.getY() == toCompare.getY()
+                && location.getZ() == toCompare.getZ();
     }
 
     /**
@@ -58,15 +51,13 @@ public class LocationEvaluate
         World world = location.getWorld();
         World _world = toCompare.getWorld();
 
-        int x = (int) location.getX();
-        int y = (int) location.getY();
-        int z = (int) location.getZ();
+        if (world != _world) {
+            return false;
+        }
 
-        int _x = (int) toCompare.getX();
-        int _y = (int) toCompare.getY();
-        int _z = (int) toCompare.getZ();
-
-        return (world == _world) && (x == _x) && (y == _y) && (z == _z);
+        return (int) location.getX() == (int) toCompare.getX()
+                && (int) location.getY() == (int) toCompare.getY()
+                && (int) location.getZ() == (int) toCompare.getZ();
     }
 
     /**
@@ -80,8 +71,8 @@ public class LocationEvaluate
     {
         World world = location.getWorld();
 
-        double x = (int) location.getX() + .5;
-        double z = (int) location.getZ() + .5;
+        double x = (int) location.getX() + 0.5;
+        double z = (int) location.getZ() + 0.5;
         double y = location.getY();
 
         float yaw = yawPitch ? location.getYaw() : 0;
@@ -101,9 +92,9 @@ public class LocationEvaluate
     {
         World world = location.getWorld();
 
-        double x = (int) location.getX() + .5;
-        double z = (int) location.getZ() + .5;
-        double y = (int) location.getY() + .5;
+        double x = (int) location.getX() + 0.5;
+        double z = (int) location.getZ() + 0.5;
+        double y = (int) location.getY() + 0.5;
 
         float yaw = yawPitch ? location.getYaw() : 0;
         float pitch = yawPitch ? location.getPitch() : 0;
@@ -146,14 +137,9 @@ public class LocationEvaluate
 
         if (shouldBeMiddle)
         {
-            if (middleFull)
-            {
-                location = getMiddleLocationFull(location, false);
-            }
-            else
-            {
-                location = getMiddleLocation(location, false);
-            }
+            location = middleFull
+                    ? getMiddleLocationFull(location, false)
+                    : getMiddleLocation(location, false);
         }
         else if (!exact)
         {
@@ -170,10 +156,9 @@ public class LocationEvaluate
         }
 
         var key = new Array.Wrapper(location, staticTarget);
-        var cached = IS_NEAR_CACHE.get(key);
+        Boolean cached = IS_NEAR_CACHE.get(key);
 
-        if (cached != null)
-        {
+        if (cached != null) {
             return cached;
         }
 
@@ -192,6 +177,5 @@ public class LocationEvaluate
     {
         return IS_NEAR_CACHE.size();
     }
-
 
 }

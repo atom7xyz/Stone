@@ -9,8 +9,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Constructor caller utilities.
+ * <p>
+ * This utility class provides methods to call a constructor of a class with the given arguments.
+ * It uses reflection to instantiate objects dynamically.
+ * </p>
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class ConstructorCaller
@@ -19,10 +23,10 @@ public class ConstructorCaller
     /**
      * Calls a constructor with the given parameters.
      *
-     * @param clazz The class to call.
-     * @param args  The arguments to pass.
+     * @param clazz The class whose constructor should be called.
+     * @param args  The arguments to pass to the constructor.
      * @param <T>   The type of the class.
-     * @return The created object.
+     * @return An Optional containing the created object, or an empty Optional if instantiation fails.
      */
     public static <T> Optional<T> call(Class<T> clazz, Object... args)
     {
@@ -30,13 +34,13 @@ public class ConstructorCaller
     }
 
     /**
-     * Calls a constructor with the given parameters.
+     * Calls a specific constructor with the given parameters.
      *
-     * @param clazz The class to call.
-     * @param index The index of the constructor to call.
-     * @param args  The arguments to pass.
+     * @param clazz The class whose constructor should be called.
+     * @param index The index of the constructor to call (if multiple constructors exist).
+     * @param args  The arguments to pass to the constructor.
      * @param <T>   The type of the class.
-     * @return The created object.
+     * @return An Optional containing the created object, or an empty Optional if instantiation fails.
      */
     public static <T> Optional<T> call(@NonNull Class<T> clazz, int index, Object... args)
     {

@@ -13,19 +13,21 @@ import java.util.stream.Stream;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * Sound utilities.
+ * Utility class for playing sounds to players or nearby entities.
+ * Provides multiple overloaded methods for flexibility in specifying sound volume, pitch, location, and range.
+ * Ensures proper input validation for parameters such as volume and pitch.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class PlaySound
 {
 
     /**
-     * Plays a sound to a player.
+     * Plays a sound to a player with default volume and pitch at the player's current location.
      *
-     * @param player Player to play the sound to.
-     * @param sound  Sound to play.
+     * @param player The player to play the sound to.
+     * @param sound  The sound to play.
      */
     public static void play(@NonNull Player player, @NonNull Sound sound)
     {
@@ -33,11 +35,11 @@ public class PlaySound
     }
 
     /**
-     * Plays a sound to a player.
+     * Plays a sound to a player with a specified volume and default pitch at the player's current location.
      *
-     * @param player Player to play the sound to.
-     * @param sound  Sound to play.
-     * @param volume Volume of the sound.
+     * @param player The player to play the sound to.
+     * @param sound  The sound to play.
+     * @param volume The volume of the sound (must be non-negative).
      */
     public static void play(@NonNull Player player, @NonNull Sound sound, int volume)
     {
@@ -45,12 +47,12 @@ public class PlaySound
     }
 
     /**
-     * Plays a sound to a player.
+     * Plays a sound to a player with specified volume and pitch at the player's current location.
      *
-     * @param player Player to play the sound to.
-     * @param sound  Sound to play.
-     * @param volume Volume of the sound.
-     * @param pitch  Pitch of the sound.
+     * @param player The player to play the sound to.
+     * @param sound  The sound to play.
+     * @param volume The volume of the sound (must be non-negative).
+     * @param pitch  The pitch of the sound (must be non-negative).
      */
     public static void play(@NonNull Player player, @NonNull Sound sound, int volume, int pitch)
     {
@@ -58,11 +60,11 @@ public class PlaySound
     }
 
     /**
-     * Plays a sound to a player.
+     * Plays a sound to a player at a specific location with default volume and pitch.
      *
-     * @param player   Player to play the sound to.
-     * @param sound    Sound to play.
-     * @param location Location to play the sound at.
+     * @param player   The player to play the sound to.
+     * @param sound    The sound to play.
+     * @param location The location to play the sound at.
      */
     public static void play(@NonNull Player player,
                             @NonNull Sound sound,
@@ -72,13 +74,13 @@ public class PlaySound
     }
 
     /**
-     * Plays a sound to a player.
+     * Plays a sound to a player with specified volume, pitch, and location.
      *
-     * @param player   Player to play the sound to.
-     * @param sound    Sound to play.
-     * @param volume   Volume of the sound.
-     * @param pitch    Pitch of the sound.
-     * @param location Location to play the sound at.
+     * @param player   The player to play the sound to.
+     * @param sound    The sound to play.
+     * @param volume   The volume of the sound (must be non-negative).
+     * @param pitch    The pitch of the sound (must be non-negative).
+     * @param location The location to play the sound at.
      */
     public static void play(@NonNull Player player,
                             @NonNull Sound sound,
@@ -93,11 +95,12 @@ public class PlaySound
     }
 
     /**
-     * Plays a sound to players nearby an entity.
+     * Plays a sound to all players within a certain range of an entity.
+     * Default volume and pitch are used.
      *
-     * @param entity Entity to play the sound to.
-     * @param sound  Sound to play.
-     * @param range  Range of the sound.
+     * @param entity The entity used as the center of the range.
+     * @param sound  The sound to play.
+     * @param range  The range (radius) within which players will hear the sound.
      */
     public static void playNearby(@NonNull Entity entity, @NonNull Sound sound, int range)
     {
@@ -105,13 +108,13 @@ public class PlaySound
     }
 
     /**
-     * Plays a sound to players nearby an entity.
+     * Plays a sound to all players within a certain range of an entity with specified volume and pitch.
      *
-     * @param entity Entity to play the sound to.
-     * @param sound  Sound to play.
-     * @param volume Volume of the sound.
-     * @param pitch  Pitch of the sound.
-     * @param range  Range of the sound.
+     * @param entity The entity used as the center of the range.
+     * @param sound  The sound to play.
+     * @param volume The volume of the sound (must be non-negative).
+     * @param pitch  The pitch of the sound (must be non-negative).
+     * @param range  The range (radius) within which players will hear the sound.
      */
     public static void playNearby(@NonNull Entity entity, @NonNull Sound sound, int volume, int pitch, int range)
     {
@@ -119,12 +122,13 @@ public class PlaySound
     }
 
     /**
-     * Plays a sound to players nearby an entity.
+     * Plays a sound to all players within a certain range of an entity at a specific location.
+     * Default volume and pitch are used.
      *
-     * @param entity   Entity to play the sound to.
-     * @param sound    Sound to play.
-     * @param range    Range of the sound.
-     * @param location Location to play the sound at.
+     * @param entity   The entity used as the center of the range.
+     * @param sound    The sound to play.
+     * @param range    The range (radius) within which players will hear the sound.
+     * @param location The location where the sound will be played.
      */
     public static void playNearby(@NonNull Entity entity, @NonNull Sound sound, int range, @NonNull Location location)
     {
@@ -132,14 +136,15 @@ public class PlaySound
     }
 
     /**
-     * Plays a sound to players nearby an entity.
+     * Plays a sound to all players within a certain range of an entity at a specific location,
+     * with specified volume and pitch.
      *
-     * @param entity   Entity to play the sound to.
-     * @param sound    Sound to play.
-     * @param volume   Volume of the sound.
-     * @param pitch    Pitch of the sound.
-     * @param range    Range of the sound.
-     * @param location Location to play the sound at.
+     * @param entity   The entity used as the center of the range.
+     * @param sound    The sound to play.
+     * @param volume   The volume of the sound (must be non-negative).
+     * @param pitch    The pitch of the sound (must be non-negative).
+     * @param range    The range (radius) within which players will hear the sound.
+     * @param location The location where the sound will be played.
      */
     public static void playNearby(@NonNull Entity entity,
                                   @NonNull Sound sound,
@@ -152,11 +157,11 @@ public class PlaySound
     }
 
     /**
-     * Gets the players within a certain radius of an entity.
+     * Retrieves all players within a certain radius of a given entity.
      *
-     * @param entity Entity to get the players around.
-     * @param radius Radius to get the players in.
-     * @return Stream of players within the range.
+     * @param entity The entity used as the center of the range.
+     * @param radius The radius within which to find players.
+     * @return A stream of players within the given radius.
      */
     private static Stream<Player> toPlayers(Entity entity, int radius)
     {

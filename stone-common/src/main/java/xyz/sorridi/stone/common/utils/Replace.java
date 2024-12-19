@@ -12,8 +12,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Replacements utilities for strings.
+ * <p>
+ * This class provides utility methods to perform string replacements.
+ * It supports replacing a single target string with an object, as well as replacing multiple targets at once.
+ * The class also provides caching of results for efficiency.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Replace
@@ -28,10 +32,11 @@ public class Replace
     /**
      * Replaces the target with the object in the string.
      *
-     * @param what   The string to replace.
-     * @param target The target to replace.
-     * @param with   The object to replace with.
-     * @return The replaced string.
+     * @param what   The string to replace within.
+     * @param target The target substring to replace.
+     * @param with   The object to replace the target with.
+     * @param <T>    The type of the replacement object.
+     * @return The string with the target replaced by the object.
      */
     public static <T> String of(@NonNull String what, @NonNull String target, @NonNull T with)
     {
@@ -51,12 +56,13 @@ public class Replace
     }
 
     /**
-     * Replaces the target with the object in the string.
+     * Replaces multiple targets with corresponding objects in the string.
      *
-     * @param what   The string to replace.
-     * @param target The target to replace.
-     * @param with   The object to replace with.
-     * @return The replaced string.
+     * @param what   The string to replace within.
+     * @param target An array of targets to replace.
+     * @param with   The objects to replace the targets with.
+     * @param <T>    The type of the replacement objects.
+     * @return The string with all targets replaced by the corresponding objects.
      */
     @SafeVarargs
     public static <T> String of(@NonNull String what, @NonNull String[] target, @NonNull T... with)
@@ -72,7 +78,6 @@ public class Replace
         }
 
         String result = what;
-
         for (int i = 0; i < target.length; i++)
         {
             result = result.replace(target[i], with[i].toString());
@@ -86,10 +91,11 @@ public class Replace
     /**
      * Replaces the target with the object in the array of strings.
      *
-     * @param what   The array of strings to replace.
-     * @param target The target to replace.
-     * @param with   The object to replace with.
-     * @return The replaced array of strings.
+     * @param what   The array of strings to replace within.
+     * @param target The target substring to replace.
+     * @param with   The object to replace the target with.
+     * @param <T>    The type of the replacement object.
+     * @return The array of strings with the target replaced by the object.
      */
     public static <T> String[] of(@NonNull String[] what, @NonNull String target, @NonNull T with)
     {
@@ -102,8 +108,8 @@ public class Replace
         }
 
         String[] result = Arrays.stream(what)
-                                .map(s -> s.replace(target, with.toString()))
-                                .toArray(String[]::new);
+                .map(s -> s.replace(target, with.toString()))
+                .toArray(String[]::new);
 
         CACHE.putIfAbsent(key, result);
 
@@ -111,12 +117,13 @@ public class Replace
     }
 
     /**
-     * Replaces the array of targets with the object(s) in the array of strings.
+     * Replaces multiple targets with corresponding objects in the array of strings.
      *
-     * @param what   The array of strings to replace.
+     * @param what   The array of strings to replace within.
      * @param target The array of targets to replace.
-     * @param with   The array of objects to replace with.
-     * @return The replaced array of strings.
+     * @param with   The array of objects to replace the targets with.
+     * @param <T>    The type of the replacement objects.
+     * @return The array of strings with all targets replaced by the corresponding objects.
      */
     @SafeVarargs
     public static <T> String[] of(@NonNull String[] what, @NonNull String[] target, @NonNull T... with)
@@ -132,7 +139,6 @@ public class Replace
         }
 
         String[] result = what.clone();
-
         for (int i = 0; i < result.length; i++)
         {
             for (int j = 0; j < target.length; j++)
@@ -149,10 +155,12 @@ public class Replace
     /**
      * Replaces the target with the object in the collection of strings.
      *
-     * @param what   The collection of strings to replace.
-     * @param target The target to replace.
-     * @param with   The object to replace with.
-     * @return The replaced collection of strings.
+     * @param what   The collection of strings to replace within.
+     * @param target The target substring to replace.
+     * @param with   The object to replace the target with.
+     * @param <W>    The type of the collection.
+     * @param <T>    The type of the replacement object.
+     * @return The collection of strings with the target replaced by the object.
      */
     @SuppressWarnings("unchecked")
     public static <W extends Collection<String>, T> W of(@NonNull W what, @NonNull String target, @NonNull T with)
@@ -166,8 +174,8 @@ public class Replace
         }
 
         W result = (W) what.stream()
-                           .map(s -> s.replace(target, with.toString()))
-                           .toList();
+                .map(s -> s.replace(target, with.toString()))
+                .toList();
 
         CACHE.putIfAbsent(key, result);
 
@@ -175,12 +183,14 @@ public class Replace
     }
 
     /**
-     * Replaces the array of targets with the object(s) in the collection of strings.
+     * Replaces multiple targets with corresponding objects in the collection of strings.
      *
-     * @param what   The collection of strings to replace.
+     * @param what   The collection of strings to replace within.
      * @param target The array of targets to replace.
-     * @param with   The array of objects to replace with.
-     * @return The replaced collection of strings.
+     * @param with   The array of objects to replace the targets with.
+     * @param <W>    The type of the collection.
+     * @param <T>    The type of the replacement objects.
+     * @return The collection of strings with all targets replaced by the corresponding objects.
      */
     @SuppressWarnings("unchecked")
     public static <W extends Collection<String>, T> W of(@NonNull W what, @NonNull String[] target, @NonNull T... with)
@@ -196,15 +206,15 @@ public class Replace
         }
 
         W result = (W) what.stream()
-                           .map(s ->
-                                {
-                                    for (int i = 0; i < target.length; i++)
-                                    {
-                                        s = s.replace(target[i], with[i].toString());
-                                    }
-                                    return s;
-                                })
-                           .toList();
+                .map(s ->
+                {
+                    for (int i = 0; i < target.length; i++)
+                    {
+                        s = s.replace(target[i], with[i].toString());
+                    }
+                    return s;
+                })
+                .toList();
 
         CACHE.putIfAbsent(key, result);
 
@@ -220,5 +230,4 @@ public class Replace
     {
         return CACHE.size();
     }
-
 }

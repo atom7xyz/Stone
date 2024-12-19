@@ -8,7 +8,7 @@ import java.sql.Connection;
 /**
  * Represents an action that can be performed on a database.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public interface DataAction

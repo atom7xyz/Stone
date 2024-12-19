@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  *
  * @param <K> The key of the Map.
  * @param <V> The value of the Map.
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class SoftMap<K, V>
@@ -293,17 +293,14 @@ public class SoftMap<K, V>
         AtomicInteger count = new AtomicInteger();
 
         entrySet().removeIf(entry ->
-                            {
-                                var soft = entry.getValue();
-
-                                if (soft.get() == null)
-                                {
-                                    count.getAndIncrement();
-                                    return true;
-                                }
-
-                                return false;
-                            });
+        {
+            if (entry.getValue().get() == null)
+            {
+                count.incrementAndGet();
+                return true;
+            }
+            return false;
+        });
 
         return count.get();
     }

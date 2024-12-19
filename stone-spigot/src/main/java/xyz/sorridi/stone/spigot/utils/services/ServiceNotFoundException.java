@@ -3,7 +3,7 @@ package xyz.sorridi.stone.spigot.utils.services;
 /**
  * Exception thrown when a service is not found.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class ServiceNotFoundException extends RuntimeException

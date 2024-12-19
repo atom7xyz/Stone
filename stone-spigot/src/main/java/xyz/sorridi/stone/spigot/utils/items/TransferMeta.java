@@ -5,16 +5,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * ItemMeta utilities.
+ * Utilities for working with ItemMeta.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class TransferMeta
 {
 
     /**
-     * Transfers the name from an item to another.
+     * Transfers the name from one item to another (v1.8).
      *
      * @param from The item to get the name from.
      * @param to   The item to set the name to.
@@ -28,7 +28,7 @@ public class TransferMeta
     }
 
     /**
-     * Transfers the lore from an item to another.
+     * Transfers the lore from one item to another (v1.8).
      *
      * @param from The item to get the lore from.
      * @param to   The item to set the lore to.
@@ -42,7 +42,7 @@ public class TransferMeta
     }
 
     /**
-     * Transfers the name from an item to another.
+     * Transfers the name from one item to another (v1.13).
      *
      * @param from The item to get the name from.
      * @param to   The item to set the name to.
@@ -56,7 +56,7 @@ public class TransferMeta
     }
 
     /**
-     * Transfers the lore from an item to another.
+     * Transfers the lore from one item to another (v1.13).
      *
      * @param from The item to get the lore from.
      * @param to   The item to set the lore to.

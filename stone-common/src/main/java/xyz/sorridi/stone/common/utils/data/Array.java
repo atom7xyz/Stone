@@ -8,8 +8,12 @@ import java.util.Objects;
 
 /**
  * Array utilities.
+ * <p>
+ * This class provides methods to work with arrays and collections, such as creating arrays from elements or lists,
+ * checking if arrays or collections are empty, and wrapping arrays in a custom wrapper class.
+ * </p>
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Array
@@ -44,7 +48,7 @@ public class Array
      * Checks if the given array is empty.
      *
      * @param array The array to check.
-     * @return If the array is empty.
+     * @return True if the array is empty, false otherwise.
      */
     public static boolean isEmpty(Object[] array)
     {
@@ -55,7 +59,7 @@ public class Array
      * Checks if the given collection is empty.
      *
      * @param list The collection to check.
-     * @return If the collection is empty.
+     * @return True if the collection is empty, false otherwise.
      */
     public static boolean isEmpty(Collection<?> list)
     {
@@ -63,12 +67,17 @@ public class Array
     }
 
     /**
-     * Wrapper for any type of Object.
+     * Wrapper for any type of Object, allowing for custom equality and string representation.
      */
     public static class Wrapper
     {
         private Object array;
 
+        /**
+         * Constructor to initialize the wrapper with an array of objects.
+         *
+         * @param array The array to wrap.
+         */
         public Wrapper(Object... array)
         {
             this.array = array;
@@ -76,6 +85,7 @@ public class Array
 
         /**
          * Gets the array.
+         *
          * @return The array.
          */
         public Object get()
@@ -85,6 +95,7 @@ public class Array
 
         /**
          * Sets the array.
+         *
          * @param array The array to set.
          * @return The wrapper.
          */
@@ -94,6 +105,12 @@ public class Array
             return this;
         }
 
+        /**
+         * Compares this wrapper to another object for equality.
+         *
+         * @param o The object to compare.
+         * @return True if the objects are equal, false otherwise.
+         */
         @Override
         public boolean equals(Object o)
         {
@@ -110,12 +127,22 @@ public class Array
             return Objects.deepEquals(array, ((Wrapper) o).array);
         }
 
+        /**
+         * Returns the hash code for this wrapper.
+         *
+         * @return The hash code of the wrapped array.
+         */
         @Override
         public int hashCode()
         {
             return Arrays.deepHashCode((Object[]) array);
         }
 
+        /**
+         * Returns a string representation of the wrapper.
+         *
+         * @return A string representation of the wrapped array.
+         */
         @Override
         public String toString()
         {

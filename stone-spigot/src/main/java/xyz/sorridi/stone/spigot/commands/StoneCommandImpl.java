@@ -32,9 +32,7 @@ public class StoneCommandImpl extends StoneCommand implements FunctionalCommandH
                 c.reply(verMessage);
 
                 if (!source.hasPermission(STONE_STATS))
-                {
                     break;
-                }
 
                 updateStats(SoftCleaner.getNumInstances(),
                             Replace.getCacheSize(),
@@ -45,14 +43,10 @@ public class StoneCommandImpl extends StoneCommand implements FunctionalCommandH
             case 1 ->
             {
                 if (!source.hasPermission(STONE_CLEAN))
-                {
                     break;
-                }
 
                 if (args.get(0).equalsIgnoreCase("clean"))
-                {
                     c.reply(SoftCleaner.clean());
-                }
             }
         }
     }

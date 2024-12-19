@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Registers custom serializers present in a given plugin.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class SerializerProcessor implements IProcessor

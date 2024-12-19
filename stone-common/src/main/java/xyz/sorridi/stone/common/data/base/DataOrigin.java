@@ -19,13 +19,13 @@ import java.util.logging.Logger;
 /**
  * Represents a connection to a database.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class DataOrigin implements IOrigin<DataOrigin>
 {
-    private HikariDataSource dataSource;
-    private HikariConfig config;
+    protected HikariDataSource dataSource;
+    protected HikariConfig config;
 
     private String host, port, username, password;
     private int poolSize;

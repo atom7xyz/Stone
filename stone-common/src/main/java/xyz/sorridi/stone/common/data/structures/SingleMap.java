@@ -9,7 +9,7 @@ import java.util.stream.Stream;
  * An {@link HashMap} with a single value.
  *
  * @param <K> The key and the value of the Map.
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class SingleMap<K> extends HashMap<K, K>

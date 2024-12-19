@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * An automated scheduled cleaner for {@link SoftMap}s.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class SoftCleaner
@@ -97,10 +97,20 @@ public class SoftCleaner
                               }
                           });
 
-        var message = "Expired / Removed / Left: " + count.get() + " / " + TO_REMOVE.size() + " / " + INSTANCES.size();
+        var builder = new StringBuilder();
+
+        builder .append("expired=")
+                .append(count.get())
+                .append(" removed=")
+                .append(TO_REMOVE.size())
+                .append(" left=")
+                .append(INSTANCES.size());
+
 
         TO_REMOVE.forEach(SoftCleaner::remove);
         TO_REMOVE.clear();
+
+        String message = builder.toString();
 
         if (logging)
         {

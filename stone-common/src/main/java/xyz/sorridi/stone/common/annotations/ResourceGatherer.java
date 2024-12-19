@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 /**
  * Class used to gather resources via Reflection.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class ResourceGatherer
@@ -163,12 +163,9 @@ public class ResourceGatherer
                 .filter(method ->
                         {
                             for (var predicate : predicates)
-                            {
                                 if (!predicate.test(method))
-                                {
                                     return false;
-                                }
-                            }
+
                             return true;
                         })
                 .forEach(consumer);

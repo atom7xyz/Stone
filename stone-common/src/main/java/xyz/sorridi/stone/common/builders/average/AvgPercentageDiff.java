@@ -3,9 +3,10 @@ package xyz.sorridi.stone.common.builders.average;
 import java.util.LinkedList;
 
 /**
- * Class used to calculate the average of a given set of numbers.
+ * Class used to calculate the average percentage difference between two sets of numbers.
+ * The calculation is based on the formula: ((second value - first value) / first value) * 100.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class AvgPercentageDiff
@@ -19,9 +20,10 @@ public class AvgPercentageDiff
     }
 
     /**
-     * Calculates the average of the values in the history.
+     * Calculates the average percentage difference between corresponding values in the history lists.
+     * The calculation is based on the formula: ((second value - first value) / first value) * 100.
      *
-     * @return The average of the values in the history.
+     * @return The average percentage difference of the values in the history.
      */
     public double calculate()
     {
@@ -42,7 +44,7 @@ public class AvgPercentageDiff
     /**
      * Adds a new value to the first list of values.
      *
-     * @param v The value to add.
+     * @param v The value to add to the first list.
      */
     public void addFirst(double v)
     {
@@ -52,7 +54,7 @@ public class AvgPercentageDiff
     /**
      * Adds a new value to the second list of values.
      *
-     * @param v The value to add.
+     * @param v The value to add to the second list.
      */
     public void addSecond(double v)
     {
@@ -60,7 +62,7 @@ public class AvgPercentageDiff
     }
 
     /**
-     * Adds new values to the first and second list of values.
+     * Adds new values to both the first and second lists.
      *
      * @param first  The value to add to the first list.
      * @param second The value to add to the second list.
@@ -72,7 +74,7 @@ public class AvgPercentageDiff
     }
 
     /**
-     * Clears the history.
+     * Clears the history of both the first and second lists.
      */
     public void clear()
     {
@@ -81,9 +83,10 @@ public class AvgPercentageDiff
     }
 
     /**
-     * Gets the (minimum) size of the history.
+     * Gets the minimum size of the two history lists.
+     * The size is based on the smaller of the two lists.
      *
-     * @return The size of the history.
+     * @return The size of the smallest history list.
      */
     public int size()
     {

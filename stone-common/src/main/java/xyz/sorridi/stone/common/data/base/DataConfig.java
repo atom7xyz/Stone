@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Configuration interface for the database.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public interface DataConfig

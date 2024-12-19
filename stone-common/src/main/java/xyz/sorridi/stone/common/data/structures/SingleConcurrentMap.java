@@ -9,7 +9,7 @@ import java.util.stream.Stream;
  * A {@link ConcurrentHashMap} with a single value.
  *
  * @param <K> The key and the value of the Map.
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class SingleConcurrentMap<K> extends ConcurrentHashMap<K, K>

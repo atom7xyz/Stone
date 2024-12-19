@@ -9,7 +9,7 @@ import java.util.Base64;
 /**
  * Ciphering utils.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Ciphering

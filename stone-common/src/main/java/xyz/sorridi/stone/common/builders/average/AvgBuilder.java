@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * Class used to calculate the average of a given set of numbers. Lightweight version of {@link AvgHistory}.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class AvgBuilder

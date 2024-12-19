@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 /**
  * A simple logger that sends messages to a Discord channel.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 @Getter

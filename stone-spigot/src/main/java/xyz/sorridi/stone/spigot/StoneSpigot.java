@@ -17,8 +17,8 @@ import xyz.sorridi.stone.spigot.commands.StoneCommandImpl;
 @Plugin(name = "stone-spigot",
         version = "1.0-SNAPSHOT",
         description = "Yet another spigot plugin library.",
-        authors = "Sorridi",
-        website = "https://sorridi.xyz",
+        authors = "atom7xyz",
+        website = "https://atom7.xyz",
         load = PluginLoadOrder.STARTUP,
         depends = @PluginDependency("helper"))
 

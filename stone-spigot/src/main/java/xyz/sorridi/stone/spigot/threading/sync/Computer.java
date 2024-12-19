@@ -9,9 +9,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * A computer that executes tasks synchronously without exceeding a maximum amount of time per tick.
+ * A scheduler that executes tasks synchronously within a specified maximum amount of time per tick.
+ * Tasks (computations) are queued and executed as long as there is time left in the current tick
+ * (up to the configured `maxMsPerTick`).
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Computer
@@ -21,11 +23,20 @@ public class Computer
 
     private final ConcurrentLinkedQueue<Computation> compQueue;
 
+    /**
+     * Constructs a Computer instance with the default maximum milliseconds allowed per tick.
+     */
     public Computer()
     {
         this(DEFAULT_MAX_MS_PER_TICK);
     }
 
+    /**
+     * Constructs a Computer instance with a specified maximum milliseconds allowed per tick.
+     *
+     * @param maxMsPerTick Maximum time in milliseconds allowed per tick for executing tasks. Must be positive.
+     * @throws IllegalArgumentException if `maxMsPerTick` is not positive.
+     */
     public Computer(int maxMsPerTick)
     {
         checkArgument(maxMsPerTick > 0, Err.MUST_BE_POSITIVE.expect("maxMsPerTick"));
@@ -35,9 +46,9 @@ public class Computer
     }
 
     /**
-     * Adds a computation to the queue.
+     * Adds a computation to the task queue for execution.
      *
-     * @param computation Computation to add.
+     * @param computation The computation to add to the queue.
      */
     public void addComp(Computation computation)
     {
@@ -45,9 +56,9 @@ public class Computer
     }
 
     /**
-     * Retrieves a computation from the queue.
+     * Retrieves and removes the next computation from the queue.
      *
-     * @return The computation.
+     * @return An {@code Optional} containing the next computation, or an empty {@code Optional} if the queue is empty.
      */
     public Optional<Computation> getComp()
     {
@@ -55,20 +66,24 @@ public class Computer
     }
 
     /**
-     * Computes the computations in the queue.
+     * Starts processing computations from the queue. Computations are executed synchronously
+     * without exceeding the configured time limit per tick (`maxMsPerTick`).
+     * The execution is scheduled to run repeatedly at a fixed interval of 1 tick.
      */
     public void compute()
     {
-        Schedulers.sync()
-                  .runRepeating(() ->
-                                {
-                                    long stopTime = System.currentTimeMillis() + maxMsPerTick;
+        Runnable runnable = () ->
+        {
+            long stopTime = System.currentTimeMillis() + maxMsPerTick;
 
-                                    while (!compQueue.isEmpty() && System.currentTimeMillis() <= stopTime)
-                                    {
-                                        getComp().ifPresent(Computation::execute);
-                                    }
-                                }, 1L, 1L);
+            while (!compQueue.isEmpty() && System.currentTimeMillis() <= stopTime)
+            {
+                getComp().ifPresent(Computation::execute);
+            }
+        };
+
+        Schedulers.sync()
+                .runRepeating(runnable, 1L, 1L);
     }
 
 }

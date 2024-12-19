@@ -14,8 +14,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * String conversion utilities.
+ * <p>
+ * This class provides methods to convert different types of data (e.g., time, strings, numbers) to various
+ * human-readable formats, including converting milliseconds to human-readable time, converting numbers to Roman numerals,
+ * and formatting strings like snake_case to camelCase or proper case.
+ * </p>
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class StringConverter
@@ -37,11 +42,16 @@ public class StringConverter
 
     /**
      * Converts a long to a human-readable format.
+     * <p>
+     * Converts a time in milliseconds into a readable string in the format of:
+     * [days] [hours] [minutes] [seconds] [milliseconds].
+     * The singular or plural form of each time unit is determined based on the value.
+     * </p>
      *
      * @param plurals   The plurals of the time units.
      * @param singulars The singulars of the time units.
-     * @param time      The time to convert.
-     * @return The converted time.
+     * @param time      The time in milliseconds to convert.
+     * @return The human-readable time string.
      */
     public static String fromMillisToHuman(@NonNull String[] plurals, @NonNull String[] singulars, long time)
     {
@@ -51,8 +61,7 @@ public class StringConverter
         var key = new Array.Wrapper(time, plurals, singulars);
         var val = MILLS_TO_HUMAN_CACHE.get(key);
 
-        if (val != null)
-        {
+        if (val != null) {
             return val;
         }
 
@@ -171,10 +180,10 @@ public class StringConverter
     }
 
     /**
-     * Converts minutes to HH:mm format.
+     * Converts minutes to a time string in the format HH:mm.
      *
-     * @param minutes The minutes to convert.
-     * @return The converted minutes.
+     * @param minutes The total number of minutes.
+     * @return The converted time in HH:mm format.
      */
     public static String fromMinutesToHHmm(int minutes)
     {
@@ -187,12 +196,12 @@ public class StringConverter
         return String.format("%02dh %02dm", hours, remainMinutes);
     }
 
-
     /**
-     * Extracts a number from a string.
+     * Extracts the first number found in the given string.
      *
-     * @param string The string to extract from.
+     * @param string The string from which to extract the number.
      * @return The extracted number.
+     * @throws NumberFormatException If no valid number is found.
      */
     public static long extractNumber(@NonNull String string) throws NumberFormatException
     {
@@ -200,10 +209,10 @@ public class StringConverter
     }
 
     /**
-     * Converts a sneak-case String to a camel-case String.
+     * Converts a snake_case string to camelCase.
      *
      * @param string The string to convert.
-     * @return The converted string.
+     * @return The converted string in camelCase format.
      */
     public static String fromSneakToCamel(@NonNull String string)
     {
@@ -230,17 +239,16 @@ public class StringConverter
     }
 
     /**
-     * Sets the first letter of a string to uppercase, the rest to lowercase.
+     * Converts the first letter of a string to uppercase and the rest to lowercase.
      *
      * @param string The string to convert.
-     * @return The converted string.
+     * @return The string in proper case.
      */
     public static String toProperCase(@NonNull String string)
     {
         var cached = PROPERCASE_CACHE.get(string);
 
-        if (cached != null)
-        {
+        if (cached != null) {
             return cached;
         }
 
@@ -251,9 +259,9 @@ public class StringConverter
     }
 
     /**
-     * Converts the current time into a String, using HH:mm:ss dd/MM/yy format.
+     * Converts the current system time to a string in HH:mm:ss dd/MM/yy format.
      *
-     * @return The converted time.
+     * @return The formatted current time.
      */
     public static String convertCurrentTime()
     {
@@ -261,10 +269,10 @@ public class StringConverter
     }
 
     /**
-     * Converts the given time into a String, using HH:mm:ss dd/MM/yy format.
+     * Converts the given time in milliseconds to a string in HH:mm:ss dd/MM/yy format.
      *
-     * @param time The time to convert.
-     * @return The converted time.
+     * @param time The time in milliseconds.
+     * @return The formatted time.
      */
     public static String convertTime(long time)
     {
@@ -272,10 +280,11 @@ public class StringConverter
     }
 
     /**
-     * Converts the given time into a String, using the specified format.
+     * Converts the given time in milliseconds to a string using a custom format.
      *
-     * @param timeFormat The format to use.
-     * @return The converted time.
+     * @param timeFormat The format to use for the conversion.
+     * @param time       The time in milliseconds to convert.
+     * @return The formatted time string.
      */
     public static String convertTime(@NonNull String timeFormat, long time)
     {
@@ -286,10 +295,10 @@ public class StringConverter
     }
 
     /**
-     * Converts a number into Roman numerals.
+     * Converts an integer to its Roman numeral equivalent.
      *
-     * @param input The number to convert.
-     * @return The converted number.
+     * @param input The integer to convert.
+     * @return The Roman numeral representation.
      */
     public static String toRoman(int input)
     {
@@ -374,5 +383,4 @@ public class StringConverter
 
         return result;
     }
-
 }

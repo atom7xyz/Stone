@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 /**
  * Players utility class for Velocity.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Players

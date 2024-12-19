@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * Translate color codes.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Translate

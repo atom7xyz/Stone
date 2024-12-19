@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * {@link IReply} implementation for Velocity.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Reply

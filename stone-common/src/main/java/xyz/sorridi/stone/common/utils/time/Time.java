@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 /**
  * Time utilities.
  *
- * @author Sorridi
+ * @author atom7xyz
  * @since 1.0
  */
 public class Time

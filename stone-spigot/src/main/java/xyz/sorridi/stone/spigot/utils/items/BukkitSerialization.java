@@ -14,7 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * A class to serialize and deserialize inventories.
+ * A class for serializing and deserializing inventories.
  * Original source <a href="https://gist.github.com/graywolf336/8153678">here.</a>
  *
  * @author graywolf336
@@ -24,15 +24,15 @@ public class BukkitSerialization
 {
 
     /**
-     * Converts the player inventory to a String array of Base64 strings.
-     * First string is the content and second string is the armor.
+     * Converts a player inventory to a String array of Base64 strings.
+     * The first string is the content and the second string is the armor.
      *
-     * @param playerInventory to turn into an array of strings.
-     * @return Array of strings: [ main content, armor content ]
+     * @param playerInventory The player inventory to convert into a Base64 string array.
+     * @return An array of strings: [main content, armor content]
      */
     public static String[] playerInventoryToBase64(PlayerInventory playerInventory) throws IllegalStateException
     {
-        //get the main content part, this doesn't return the armor
+        // Get the main content part (does not include the armor)
         String content = toBase64(playerInventory);
         String armor = itemStackArrayToBase64(playerInventory.getArmorContents());
 
@@ -40,11 +40,11 @@ public class BukkitSerialization
     }
 
     /**
-     * A method to serialize an {@link ItemStack} array to Base64 String.
-     * Based off of {@link #toBase64(Inventory)}.
+     * Serializes an array of {@link ItemStack} objects to a Base64 string.
+     * Based on {@link #toBase64(Inventory)}.
      *
-     * @param items to turn into a Base64 String.
-     * @return Base64 string of the items.
+     * @param items The array of ItemStacks to serialize to a Base64 string.
+     * @return A Base64 string representing the serialized ItemStack array.
      */
     public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException
     {
@@ -62,7 +62,7 @@ public class BukkitSerialization
                 dataOutput.writeObject(item);
             }
 
-            // Serialize that array
+            // Serialize the array and return as a Base64 string
             dataOutput.close();
             return Base64Coder.encodeLines(outputStream.toByteArray());
         }
@@ -73,13 +73,13 @@ public class BukkitSerialization
     }
 
     /**
-     * A method to serialize an inventory to Base64 string.
+     * Serializes an inventory to a Base64 string.
      * Special thanks to Comphenix in the Bukkit forums or also known
      * as aadnk on GitHub.
      * <a href="https://gist.github.com/aadnk/8138186">Original Source</a>
      *
-     * @param inventory to serialize
-     * @return Base64 string of the provided inventory
+     * @param inventory The inventory to serialize to a Base64 string.
+     * @return A Base64 string representing the serialized inventory.
      */
     public static String toBase64(Inventory inventory) throws IllegalStateException
     {
@@ -97,7 +97,7 @@ public class BukkitSerialization
                 dataOutput.writeObject(inventory.getItem(i));
             }
 
-            // Serialize that array
+            // Serialize the array and return as a Base64 string
             dataOutput.close();
             return Base64Coder.encodeLines(outputStream.toByteArray());
         }
@@ -108,13 +108,14 @@ public class BukkitSerialization
     }
 
     /**
-     * A method to get an {@link Inventory} from an encoded, Base64, string.
+     * Converts a Base64 string back into an {@link Inventory}.
      * Special thanks to Comphenix in the Bukkit forums or also known
      * as aadnk on GitHub.
      * <a href="https://gist.github.com/aadnk/8138186">Original Source</a>
      *
-     * @param data Base64 string of data containing an inventory.
-     * @return Inventory created from the Base64 string.
+     * @param data The Base64 string containing the serialized inventory.
+     * @return The Inventory created from the Base64 string.
+     * @throws IOException If there is an issue with decoding or reading the data.
      */
     public static Inventory fromBase64(String data) throws IOException
     {
@@ -140,11 +141,12 @@ public class BukkitSerialization
     }
 
     /**
-     * Gets an array of ItemStacks from Base64 string.
-     * Base off of {@link #fromBase64(String)}.
+     * Converts a Base64 string back into an array of {@link ItemStack} objects.
+     * Based on {@link #fromBase64(String)}.
      *
-     * @param data Base64 string to convert to ItemStack array.
-     * @return ItemStack array created from the Base64 string.
+     * @param data The Base64 string to convert to an array of ItemStacks.
+     * @return An array of ItemStacks created from the Base64 string.
+     * @throws IOException If there is an issue with decoding or reading the data.
      */
     public static ItemStack[] itemStackArrayFromBase64(String data) throws IOException
     {
@@ -154,7 +156,7 @@ public class BukkitSerialization
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
             ItemStack[] items = new ItemStack[dataInput.readInt()];
 
-            // Read the serialized inventory
+            // Read the serialized inventory into an ItemStack array
             for (int i = 0; i < items.length; i++)
             {
                 items[i] = (ItemStack) dataInput.readObject();
